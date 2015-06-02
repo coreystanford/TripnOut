@@ -1,7 +1,6 @@
-tripnoutApp.controller('homeController', function($scope) {
+"use strict";
 
-    // define variables and objects on this
-    // this lets them be available to our views
+tripnoutApp.controller('homeController', function($scope) {
 
     // define a basic variable
     $scope.message = 'Hey there! Come and see how good I look!';

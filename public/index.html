@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Super Cool Site</title>
+	<title>TripnOut</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Favicon -->
+  	<link rel="shortcut icon" type="image/png" href="">
+  	<!-- Styles -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<!-- AngularJS + UI-Router -->
 	<script src="assets/lib/angular.min.js"></script>
     <script src="assets/lib/angular-ui-router.min.js"></script>
 </head>
-<body ng-app="tripnoutApp" ng-controller="homeController">
+<body ng-app="tripnoutApp">
 
 	<div id="public">
 		
@@ -15,10 +20,16 @@
 
 	</div>
 
+<!-- Module -->
 <script type="text/javascript" src="app/app.module.js"></script>
+<!-- Routes -->
 <script type="text/javascript" src="app/app.routes.js"></script>
-
+<!-- Controllers -->
 <script type="text/javascript" src="app/components/home/homeController.js"></script>
+<!-- Services -->
+<script type="text/javascript" src="app/shared/authService.js"></script>
+<script type="text/javascript" src="app/shared/userService.js"></script>
+<!-- Directives -->
 
 </body>
 </html>

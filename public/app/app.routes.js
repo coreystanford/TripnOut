@@ -1,3 +1,5 @@
+"use strict";
+
 tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
     $stateProvider
