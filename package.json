@@ -1,5 +1,5 @@
 {
-  "name": "mean_test",
+  "name": "tripnout",
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
