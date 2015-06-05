@@ -5,11 +5,10 @@ var Schema = mongoose.Schema;
 // user schema 
 var TripSchema   = new Schema({
 	title: String,
-    description: Text,
+    description: String,
     content: Array,
     privacy: Boolean
 });
 
 // return the model
-
 module.exports = mongoose.model('Trip', TripSchema);

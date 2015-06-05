@@ -1,14 +1,20 @@
+ // load schemas
  var User     = require('../models/user.js');
- var config     = require('../../config');
- var jwt        = require('jsonwebtoken');
+ var Trip     = require('../models/trip.js');
+ var Tutorial = require('../models/tutorial.js');
 
+ // load configuration and tokens
+ var config   = require('../../config');
+ var jwt      = require('jsonwebtoken');
+
+ // add to exports
  module.exports = function(app, express) {
 
- // get an instance of the express router
- var apiRouter = express.Router();
- 
- // route to authenticate a user (POST http://localhost:8080/api/authenticate)
- apiRouter.post('/authenticate', function(req, res) {
+  // get an instance of the express router
+  var apiRouter = express.Router();
+  
+  // route to authenticate a user (POST http://localhost:8080/api/authenticate)
+  apiRouter.post('/authenticate', function(req, res) {
  
    // find the user
    // select the name username and password explicitly
@@ -59,10 +65,10 @@
 
  // middleware to use for all requests
  apiRouter.use(function(req, res, next) {
-	// do logging
-	console.log('Somebody just came to our app!');
+	 // do logging
+	 console.log('Somebody just came to our app!');
 
-  // check header or url parameters or post parameters for token
+   // check header or url parameters or post parameters for token
    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
  
    // decode token
@@ -95,17 +101,17 @@
      
    }
  
- });
-
- // test route to make sure everything is working 
- // (accessed at GET http://localhost:8080/api)
- apiRouter.get('/', function(req, res) {
- 	res.json({ message: 'hooray! welcome to our api!' });	
- });
+  });
  
- // on routes that end in /users
- // ----------------------------------------------------
- apiRouter.route('/users')
+  // test route to make sure everything is working 
+  // (accessed at GET http://localhost:8080/api)
+  apiRouter.get('/', function(req, res) {
+  	res.json({ message: 'hooray! welcome to our api!' });	
+  });
+ 
+  // on routes that end in /users
+  // ----------------------------------------------------
+  apiRouter.route('/users')
  
  	// create a user (accessed at POST http://localhost:8080/api/users)
  	.post(function(req, res) {

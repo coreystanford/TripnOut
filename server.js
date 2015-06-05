@@ -8,7 +8,7 @@
  var bodyParser = require('body-parser'); // get body-parser
  var morgan     = require('morgan'); // used to see requests
  var mongoose   = require('mongoose'); // for working w/ our database
- var path 		  = require('path');
+ var path 		= require('path');
 
  // DATABASE CONNECTION -------------------
 

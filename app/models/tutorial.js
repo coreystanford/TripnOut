@@ -5,11 +5,10 @@ var Schema = mongoose.Schema;
 // user schema 
 var TutorialSchema   = new Schema({
 	title: String,
-    description: Text,
+    description: String,
     content: Array,
     approved: Boolean
 });
 
 // return the model
-
 module.exports = mongoose.model('Tutorial', TutorialSchema);
