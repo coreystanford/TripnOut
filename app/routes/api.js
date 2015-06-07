@@ -13,7 +13,10 @@
   // get an instance of the express router
   var apiRouter = express.Router();
   
-  // route to authenticate a user (POST http://localhost:8080/api/authenticate)
+  // -------------------------------- //
+  // -------- AUTHENTICATION -------- //
+  // -------------------------------- //
+
   apiRouter.post('/authenticate', function(req, res) {
  
    // find the user
@@ -63,10 +66,12 @@
    });
  });
 
+  // ---------------------------- //
+  // -------- MIDDLEWARE -------- //
+  // ---------------------------- //
+
  // middleware to use for all requests
  apiRouter.use(function(req, res, next) {
-	 // do logging
-	 console.log('Somebody just came to our app!');
 
    // check header or url parameters or post parameters for token
    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
@@ -102,18 +107,14 @@
    }
  
   });
+
+
+  // ----------------------- //
+  // -------- USERS -------- //
+  // ----------------------- //
  
-  // test route to make sure everything is working 
-  // (accessed at GET http://localhost:8080/api)
-  apiRouter.get('/', function(req, res) {
-  	res.json({ message: 'hooray! welcome to our api!' });	
-  });
- 
-  // on routes that end in /users
-  // ----------------------------------------------------
   apiRouter.route('/users')
- 
- 	// create a user (accessed at POST http://localhost:8080/api/users)
+
  	.post(function(req, res) {
  		
  		// create a new instance of the User model
@@ -139,7 +140,7 @@
  		});
 
   })
-  // get all the users (accessed at GET http://localhost:8080/api/users)
+
  	.get(function(req, res) {
  		User.find(function(err, users) {
  			if (err) res.send(err);
@@ -148,12 +149,11 @@
  		});
  	});
 
- // on routes that end in /users/:user_id
- // ----------------------------------------------------
+  // -------- USER BY ID -------- //
+
  apiRouter.route('/users/:user_id')
  
   // get the user with that id 
-  // (accessed at GET http://localhost:8080/api/users/:user_id)
   .get(function(req, res) {
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
@@ -161,8 +161,8 @@
       res.json(user);
     });
   })
+  
   // update the user with this id 
-  // (accessed at PUT http://localhost:8080/api/users/:user_id)
   .put(function(req, res) {
  
     // use our user model to find the user we want
@@ -183,8 +183,8 @@
  
     });
   })
+  
   // delete the user with this id 
-  // (accessed at DELETE http://localhost:8080/api/users/:user_id)
   .delete(function(req, res) {
     User.remove({
       _id: req.params.user_id
@@ -198,6 +198,92 @@
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
     res.send(req.decoded);
+  });
+
+  // ----------------------- //
+  // -------- TRIPS -------- //
+  // ----------------------- //
+
+  apiRouter.route('/trips')
+
+  .post(function(req, res) {
+    
+    // create a new instance of the User model
+    var trip = new Trip();    
+ 
+    // set the users information (comes from the request)
+    trip.name = req.body.name;  
+    trip.username = req.body.username;
+    trip.password = req.body.password;
+ 
+    // save the user and check for errors
+    trip.save(function(err) {
+             if (err) {
+                 // duplicate entry
+                 if (err.code == 11000) 
+                     return res.json({ success: false, message: 'A trip with that\
+  username already exists. '});
+                 else 
+                     return res.send(err);
+             }
+ 
+      res.json({ message: 'Trip created!' });
+    });
+
+  })
+
+  .get(function(req, res) {
+    Trip.find(function(err, trips) {
+      if (err) res.send(err);
+      // return the trips
+      res.json(trips);
+    });
+  });
+
+  // -------- Trip BY ID -------- //
+
+ apiRouter.route('/trips/:trip_id')
+ 
+  // get the trip with that id 
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      res.json(trip);
+    });
+  })
+
+  // update the trip with this id 
+  .put(function(req, res) {
+ 
+    // use our trip model to find the trip we want
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+ 
+      // update the trips info only if its new
+      if (req.body.name) trip.name = req.body.name;
+      if (req.body.username) trip.username = req.body.username;
+      if (req.body.password) trip.password = req.body.password;
+ 
+      // save the trip
+      trip.save(function(err) {
+        if (err) res.send(err);
+        // return a message
+        res.json({ message: 'User updated!' });
+      });
+ 
+    });
+  })
+
+  // delete the trip with this id 
+  .delete(function(req, res) {
+    Trip.remove({
+      _id: req.params.trip_id
+    }, function(err, trip) {
+      if (err) return res.send(err);
+ 
+      res.json({ message: 'Successfully deleted' });
+    });
   });
 
   return apiRouter;
