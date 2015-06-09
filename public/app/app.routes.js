@@ -14,19 +14,19 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('login', {
           url: '/login',
-          templateUrl: 'app/views/login.html',
+          templateUrl: 'app/componenets/login/login.html',
           controller: 'mainController'
         })
 
         .state('create', {
           url: '/user/create',
-          templateUrl: 'app/views/pages/login.html',
+          templateUrl: 'app/components/login/login.html',
           controller: 'userCreateController'
         })
 
         .state('user', {
           url: '/users/:user_id',
-          templateUrl: 'app/views/pages/users/single.html',
+          templateUrl: 'app/components/login/single.html',
           controller: 'userEditController'
         });
 
