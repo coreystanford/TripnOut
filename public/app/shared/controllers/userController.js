@@ -1,29 +1,28 @@
-//start our angular module and inject userService
-angular.module('userCtrl', ['userService'])
+
 
 //user controller for the main page
 //inject the User factory
-.controller('userController', function(User){
-  var vm = this;
+tripinoutApp.controller('userController', function(User){
+
 
   //set a processing variable to show loading things
-  vm.processing = true;
+  $scope.processing = true;
 
   //grab all the users at page locationProvider
   User.all()
       .success(function(data) {
 
         //when all the users come back, remove the processing variable
-        vm.processing = false;
+        $scope.processing = false;
 
-        //bind the users that come back to vm.users
-        vm.users = data;
+        //bind the users that come back to $scope.users
+        $scope.users = data;
       });
 
 
       //function to delete a user
-      vm.deleteUser = function(id){
-        vm.processing = true;
+      $scope.deleteUser = function(id){
+        $scope.processing = true;
 
         //accepts the user id as a paramets
         User.delete(id) {
@@ -34,8 +33,8 @@ angular.module('userCtrl', ['userService'])
             //to return the list of users with the delete call
             User.all()
               .success(function(data){
-                vm.processing = false;
-                vm.users = data;
+                $scope.processing = false;
+                $scope.users = data;
               });
 
           });
@@ -44,27 +43,27 @@ angular.module('userCtrl', ['userService'])
         // controller applied to user creation page
         .controller('userCreateController', function(User){
 
-          var vm = this;
+          var $scope = this;
 
           //variable to hide/show elements of the views
           //differentiates between create or edit pages
-          vm.type = 'create';
+          $scope.type = 'create';
 
           //function to create a user
-          vm.saveUser = function()  {
-            vm.processing = true;
+          $scope.saveUser = function()  {
+            $scope.processing = true;
 
             //clear the message
-            vm.message = '';
+            $scope.message = '';
 
             //use the create function in the userService
-            User.create(vm.userData)
+            User.create($scope.userData)
               .success(function(data) {
-                vm.processing = false;
+                $scope.processing = false;
 
                 //clear the form
-                vm.userData = {};
-                vm.message = data.message;
+                $scope.userData = {};
+                $scope.message = data.message;
               });
 
           };
@@ -74,28 +73,28 @@ angular.module('userCtrl', ['userService'])
       }
 
       //controller applied to user edit page
-      .cotroller('userEditController', function($routeParams, User) {
+      .controller('userEditController', function($routeParams, User) {
 
-        var vm = this;
+        var $scope = this;
 
         //variable to hide/show elements of the view
         //differentiates between create or edit pages
-        vm.type = 'edit';
+        $scope.type = 'edit';
 
         //get the user data for the user you want to edit
         //$routeParams is the waywe grab data from the url
         User.get($routeParams.user_id)
           .success(function(data) {
-            vm.processing = false;
+            $scope.processing = false;
 
             //clear the form
-            vm.userData = {};
+            $scope.userData = {};
 
-            //bind the message from our API to vm.message
-            vm.message = data.message;
+            //bind the message from our API to $scope.message
+            $scope.message = data.message;
           });
         };
-        
+
       });
 
 })
