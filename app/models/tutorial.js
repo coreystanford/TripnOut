@@ -6,7 +6,14 @@ var Schema = mongoose.Schema;
 var TutorialSchema   = new Schema({
 	title: String,
     description: String,
-    content: Array,
+    participants: Number,
+    story_link: String,
+    content: [{
+    	type: String,
+    	content: String
+    }],
+    author: { type: Number, ref: 'User' },
+    date: Date,
     approved: Boolean
 });
 
