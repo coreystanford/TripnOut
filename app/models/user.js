@@ -8,7 +8,8 @@ var UserSchema   = new Schema({
 	name: String,
     username: { type: String, required: true, index: { unique: true }},
     password: { type: String, required: true, select: false },
-    trips: [{ type: Schema.Types.ObjectId, ref: 'Trip' }]
+    trips: [{ type: Schema.Types.ObjectId, ref: 'Trip' }],
+    tutorials: [{ type: Schema.Types.ObjectId, ref: 'Tutorial' }]
 });
 
 // hash the password before the user is saved
