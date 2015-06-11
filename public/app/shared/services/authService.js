@@ -54,7 +54,7 @@ tripnoutApp.factory('Auth', function($http, $q, AuthToken) {
 });
 
 
-tripnoutApp.factory('AuthToken', function($window, $localStorage) {
+tripnoutApp.factory('AuthToken', function($window) {
 
 	var authTokenFactory = {};
 

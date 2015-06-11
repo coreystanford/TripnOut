@@ -108,7 +108,6 @@
  
   });
 
-
   // ----------------------- //
   // -------- USERS -------- //
   // ----------------------- //
@@ -161,7 +160,7 @@
       res.json(user);
     });
   })
-  
+
   // update the user with this id 
   .put(function(req, res) {
  
@@ -183,7 +182,7 @@
  
     });
   })
-  
+
   // delete the user with this id 
   .delete(function(req, res) {
     User.remove({
@@ -212,9 +211,12 @@
     var trip = new Trip();    
  
     // set the users information (comes from the request)
-    trip.name = req.body.name;  
-    trip.username = req.body.username;
-    trip.password = req.body.password;
+    trip.title = req.body.title; 
+    trip.description = req.body.description;
+    for (var i = 0; i <= req.body.content.length(); i++) {
+          push(trip.content, req.body.content[i]);
+        };
+    trip.privacy = req.body.privacy;
  
     // save the user and check for errors
     trip.save(function(err) {
@@ -261,9 +263,14 @@
       if (err) res.send(err);
  
       // update the trips info only if its new
-      if (req.body.name) trip.name = req.body.name;
-      if (req.body.username) trip.username = req.body.username;
-      if (req.body.password) trip.password = req.body.password;
+      if (req.body.title) trip.title = req.body.title;
+      if (req.body.description) trip.description = req.body.description;
+      if (req.body.content) {
+        for (var i = 0; i <= req.body.content.length(); i++) {
+          push(trip.content, req.body.content[i]);
+        };
+      }
+      if (req.body.privacy) trip.privacy = req.body.privacy;
  
       // save the trip
       trip.save(function(err) {
