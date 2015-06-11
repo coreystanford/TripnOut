@@ -1,7 +1,6 @@
 
 tripnoutApp.controller('mainController', function($rootScope, $scope, $location, Auth) {
 
-
   //get info if a person is logged in
   $scope.loggedIn = Auth.isLoggedIn();
 
