@@ -292,6 +292,96 @@
       res.json({ message: 'Successfully deleted' });
     });
   });
+     
+  // ---------------------- //
+  // ------- TUTORIAL ----- //
+  // ---------------------- //
+
+  apiRouter.route('/tutorials')
+
+  .post(function(req, res) {
+    
+    var tutorial = new Tutorial();    
+ 
+    tutorial.title = req.body.title; 
+    tutorial.description = req.body.description;
+    tutorial.participants = req.body.participants;
+    if(req.body.story_link) tutorial.story_link = req.body.story_link;  
+    for (var i = 0; i <= req.body.content.length(); i++) {
+          push(tutorial.content, req.body.content[i]);
+        };
+    tutorial.author = req.body.author;
+    tutorial.date = new Date();  
+    tutorial.approved = req.body.approved;
+ 
+    tutorial.save(function(err) {
+             if (err) {
+
+                 if (err.code == 11000) 
+                     return res.json({ success: false, message: 'A tutorial with that name already exists. '});
+                 else 
+                     return res.send(err);
+             }
+ 
+      res.json({ message: 'Tutorial created!' });
+    });
+
+  })
+
+  .get(function(req, res) {
+    Tutorial.find(function(err, tutorials) {
+      if (err) res.send(err);
+
+      res.json(tutorials);
+    });
+  });
+
+  // -------- Tutorial BY ID -------- //
+
+ apiRouter.route('/tutorial/:tutorial_id')
+ 
+  .get(function(req, res) {
+    Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
+      if (err) res.send(err);
+        
+      res.json(tutorial);
+    });
+  })
+
+  .put(function(req, res) {
+ 
+    Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
+      if (err) res.send(err);
+ 
+      if (req.body.title) tutorial.title = req.body.title;
+      if (req.body.description) tutorial.description = req.body.description;
+      if (req.body.participants) tutorial.participants = req.body.participants;
+      if (req.body.story_link) tutorial.story_link = req.body.story_link;    
+      if (req.body.content) {
+        for (var i = 0; i <= req.body.content.length(); i++) {
+          push(tutorial.content, req.body.content[i]);
+        };
+      }
+      if (req.body.author) tutorial.author = req.body.author;
+      if (req.body.approved) tutorial.approved = req.body.approved;
+ 
+      trip.save(function(err) {
+        if (err) res.send(err);
+        res.json({ message: 'Tutorial updated!' });
+      });
+ 
+    });
+  })
+
+  .delete(function(req, res) {
+    Tutorial.remove({
+      _id: req.params.tutorial_id
+    }, function(err, tutorial) {
+      if (err) return res.send(err);
+ 
+      res.json({ message: 'Successfully Deleted' });
+    });
+  });     
 
   return apiRouter;
 
