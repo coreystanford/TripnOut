@@ -10,7 +10,10 @@ var TutorialSchema   = new Schema({
     story_link: String,
     content: [{
     	type: String,
-    	content: String
+        data: [{
+            title: String,
+            input: String
+        }]
     }],
     author: { type: Number, ref: 'User' },
     date: Date,

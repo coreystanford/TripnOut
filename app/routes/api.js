@@ -307,10 +307,13 @@
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
     if(req.body.story_link) tutorial.story_link = req.body.story_link;  
-    for (var i = 0; i <= req.body.content.length(); i++) {
-          push(tutorial.content, req.body.content[i]);
-        };
-    tutorial.author = req.body.author;
+    tutorial.content = [{
+        type: String,
+        data: [{
+            title: String,
+            input: String
+        }]
+    }],
     tutorial.date = new Date();  
     tutorial.approved = req.body.approved;
  
@@ -338,7 +341,7 @@
 
   // -------- Tutorial BY ID -------- //
 
- apiRouter.route('/tutorial/:tutorial_id')
+ apiRouter.route('/tutorials/:tutorial_id')
  
   .get(function(req, res) {
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
