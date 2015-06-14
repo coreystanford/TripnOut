@@ -13,7 +13,7 @@ var TripSchema   = new Schema({
     	type: String,
     	content: String
     }],
-    author: { type: Number, ref: 'User' },
+    author: { type: String, ref: 'User' },
     date: Date,
     privacy: Boolean
 });
