@@ -16,13 +16,13 @@ tripnoutApp.factory('Trip', function($http) {
 	};
 
 	// create a user
-	tripFactory.create = function(userData) {
-	  return $http.post('/api/trips/', userData);
+	tripFactory.create = function(tripData) {
+	  return $http.post('/api/trips/', tripData);
 	};
 
 	// update a user
-	tripFactory.update = function(id, userData) {
-	  return $http.put('/api/trips/' + id, userData);
+	tripFactory.update = function(id, tripData) {
+	  return $http.put('/api/trips/' + id, tripData);
 	};
 
 	// delete a user
