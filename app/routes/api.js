@@ -157,7 +157,9 @@
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
       // return that user
-      res.json(user);
+      User.populate(user, {path: 'trips.trip'}, function(err, user){
+        res.json(user);
+      });
     });
   })
 
@@ -213,9 +215,13 @@
     // set the users information (comes from the request)
     trip.title = req.body.title; 
     trip.description = req.body.description;
-    for (var i = 0; i <= req.body.content.length(); i++) {
-          push(trip.content, req.body.content[i]);
-        };
+    trip.content = req.body.content;
+    //for (var i = 0; i <= req.body.content.length; i++) {
+    //      console.log(req.body.content);
+    //      push(trip.content, req.body.content[i]);
+    //    };
+    trip.author = req.body.author;
+    trip.date = new Date().now;
     trip.privacy = req.body.privacy;
  
     // save the user and check for errors
@@ -230,7 +236,23 @@
              }
  
       res.json({ message: 'Trip created!' });
+
     });
+
+    // Add the trip to the array of trips associated with the User's account
+    var newTrip = {
+      trip: trip._id
+    };
+
+    User.findByIdAndUpdate(
+        req.body.author,
+        { $push: { trips: newTrip }},
+        { safe: true, upsert: true },
+        function(err, model) {
+            if (err) res.send(err);
+            res.json({ message: 'User trip added!' });
+        }
+    );
 
   })
 
@@ -251,7 +273,9 @@
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
       // return that trip
-      res.json(trip);
+      Trip.populate(trip, {path: 'author'}, function(err, trip){
+        res.json(trip);
+      });
     });
   })
 
