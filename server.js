@@ -43,7 +43,7 @@
  // SEND USERS TO FRONTEND ------------
 
  // set the public folder to serve public assets
- app.use(express.static(__dirname + '/public'));
+ app.use('/static', express.static(__dirname + '/public'));
 
  // has to be registered after API ROUTES
  app.get('*', function(req, res) {
