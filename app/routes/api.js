@@ -157,7 +157,7 @@
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
       // return that user
-      User.populate(user, {path: 'trips.trip'}, function(err, user){
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
         res.json(user);
       });
     });
@@ -242,7 +242,7 @@
         req.body.author,
         { $push: { trips: newTrip }},
         { safe: true, upsert: true },
-        function(err, model) {
+        function(err, trip) {
             if (err) res.send(err);
             res.json({ message: 'User trip added!' });
         }
@@ -300,9 +300,6 @@
   .delete(function(req, res) {
 
     Trip.find({ _id: req.params.trip_id }, function(err, trip) {
-      
-      console.log("**** " + Object.prototype.toString.call(trip) + " ****");
-      console.log("**** " + trip[0].author + " ****");
 
       User.findOneAndUpdate(
        { _id: trip[0].author },
@@ -338,14 +335,9 @@
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
     if(req.body.story_link) tutorial.story_link = req.body.story_link;  
-    tutorial.content = [{
-        type: String,
-        data: [{
-            title: String,
-            input: String
-        }]
-    }],
-    tutorial.date = new Date();  
+    tutorial.content = req.body.content
+    tutorial.date = new Date();
+    tutorial.author = req.body.author;
     tutorial.approved = req.body.approved;
  
     tutorial.save(function(err) {
@@ -357,8 +349,25 @@
                      return res.send(err);
              }
  
-      res.json({ message: 'Tutorial created!' });
+      //res.json({ message: 'Tutorial created!' });
     });
+      
+    console.log("**** " + tutorial._id + " ****" );  
+    var newTutorial = {
+      tutorial: tutorial._id
+    };
+
+    User.findByIdAndUpdate(
+        req.body.author,
+        { $push: { tutorials: newTutorial }},
+        
+        { safe: true, upsert: true },
+        
+        function(err, tutorial) {
+            if (err) res.send(err);
+            res.json({ message: 'User Tutorial added!' });
+        }
+    ); 
 
   })
 
@@ -377,8 +386,9 @@
   .get(function(req, res) {
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
       if (err) res.send(err);
-        
-      res.json(tutorial);
+      Tutorial.populate(tutorial, {path: 'author'}, function(err, tutorial){
+        res.json(tutorial);
+      });
     });
   })
 
@@ -391,11 +401,7 @@
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
       if (req.body.story_link) tutorial.story_link = req.body.story_link;    
-      if (req.body.content) {
-        for (var i = 0; i <= req.body.content.length(); i++) {
-          push(tutorial.content, req.body.content[i]);
-        };
-      }
+      if (req.body.content) tutorial.content = req.body.content;
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
  
@@ -410,7 +416,7 @@
   .delete(function(req, res) {
     Tutorial.remove({
       _id: req.params.tutorial_id
-    }, function(err, tutorial) {
+    }, function(err, model) {
       if (err) return res.send(err);
  
       res.json({ message: 'Successfully Deleted' });
