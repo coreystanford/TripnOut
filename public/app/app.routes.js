@@ -28,6 +28,18 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           url: '/users/:user_id',
           templateUrl: 'app/components/login/single.html',
           controller: 'userEditController'
+        })
+
+        .state('user.trips', {
+          url: '/trips',
+          templateUrl: 'app/components/trips/single.trips.html',
+          controller: 'tripController'
+        })
+        
+        .state('user.trips.create', {
+          url: '/create',
+          templateUrl: 'app/components/trips/single.trips.create.html',
+          controller: 'tripController'
         });
 
     $urlRouterProvider.otherwise('/');
