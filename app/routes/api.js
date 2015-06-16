@@ -157,7 +157,7 @@
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
       // return that user
-      User.populate(user, {path: 'trips.trip'}, function(err, user){
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
         res.json(user);
       });
     });
@@ -386,12 +386,9 @@
   .get(function(req, res) {
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
       if (err) res.send(err);
-        
-        Tutorial.populate(tutorial, {path: 'author'}, function(err, tutorial){
+      Tutorial.populate(tutorial, {path: 'author'}, function(err, tutorial){
         res.json(tutorial);
       });
-        
-      res.json(tutorial);
     });
   })
 
