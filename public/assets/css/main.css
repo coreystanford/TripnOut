@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
 * {
   margin: 0;
   padding: 0;
@@ -16,15 +17,27 @@ body {
   font-size: 16px; }
 
 h1 {
-  font-size: 2em; }
+  font-family: "Josefin Slab", sans-serif;
+  font-size: 2em;
+  font-weight: 300; }
 
 h2 {
-  font-size: 1.7em; }
+  font-family: "Josefin Slab", sans-serif;
+  font-size: 1.7em;
+  font-weight: 300; }
 
 h3 {
-  font-size: 1.3em; }
+  font-family: "Josefin Slab", sans-serif;
+  font-size: 1.3em;
+  font-weight: 300; }
+
+a {
+  color: black;
+  text-decoration: none; }
 
 .container {
+  height: 100%;
+  margin-bottom: -50px;
   -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -32,40 +45,45 @@ h3 {
   .container.menu {
     transform: translateX(100%); }
 
-.hamburger {
-  -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-  text-align: left;
-  position: fixed;
-  left: 0px;
-  min-height: 68px;
-  padding: 15px;
-  padding-top: 10px;
-  padding-right: 20px; }
-  .hamburger i {
-    cursor: pointer; }
-  .hamburger.menu {
-    transform: translateX(-100%);
-    left: 0; }
-  @media only screen and (min-width: 768px) {
-    .hamburger {
-      display: none; } }
-
 .header {
-  padding: 15px; }
-  .header h1 {
-    text-align: right;
-    float: right;
-    min-height: 68px;
-    position: relative;
-    z-index: 9999;
-    font-size: 3em; }
+  padding: 15px;
+  background: black;
+  color: white; }
+  .header a {
+    color: white; }
+  .header .title {
+    display: table;
+    width: 100%; }
+    .header .title h1 {
+      display: table-cell;
+      vertical-align: center;
+      text-align: center;
+      min-height: 68px;
+      position: relative;
+      z-index: 9999; }
+    .header .title .hamburger {
+      display: table-cell;
+      -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+      -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+      -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+      transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+      text-align: left;
+      left: 0px;
+      min-height: 68px; }
+      .header .title .hamburger i {
+        cursor: pointer; }
+      .header .title .hamburger.menu {
+        transform: translateX(-100%);
+        color: black;
+        left: 0; }
+      @media only screen and (min-width: 768px) {
+        .header .title .hamburger {
+          display: none; } }
   .header .main-nav {
     transform: translateX(-100%);
+    background: black;
+    height: 100%;
     width: 100%;
-    margin-top: 60px;
     clear: both;
     position: absolute;
     padding: 15px 30px;
@@ -79,7 +97,8 @@ h3 {
       padding: 15px; }
       .header .main-nav ul li {
         list-style: none;
-        margin: 20px 0; }
+        margin: 20px 0;
+        font-size: 1.4em; }
         @media only screen and (min-width: 768px) {
           .header .main-nav ul li {
             display: inline-block; } }
@@ -89,7 +108,14 @@ h3 {
     clear: both; }
 
 main {
+  height: 100%;
+  margin-bottom: -50px;
   padding: 15px;
   text-align: center; }
+
+.footer {
+  background: black;
+  color: white;
+  height: 50px; }
 
 /*# sourceMappingURL=main.css.map */

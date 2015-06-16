@@ -4,6 +4,10 @@ tripnoutApp.controller('mainController', function($scope, $location, Auth) {
   //menu boolean
   $scope.menu = false;
 
+  $scope.showMain = function(){
+    $scope.menu = false;
+  }
+
   //get info if a person is logged in
   $scope.loggedIn = Auth.isLoggedIn();
 
