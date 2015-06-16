@@ -1,9 +1,6 @@
 "use strict";
 
-
-
-
-tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
+tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
     $stateProvider
         .state('home', {
@@ -44,5 +41,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
+
+    $httpProvider.interceptors.push('AuthInterceptor');
 
 }]);
