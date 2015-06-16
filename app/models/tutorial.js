@@ -15,8 +15,8 @@ var TutorialSchema   = new Schema({
             input: String
         }]
     }],
-    author: { type: Number, ref: 'User' },
-    date: Date,
+    author: { type: Schema.ObjectId, ref: 'User' },
+    date: { type: Date, default: Date.now },
     approved: Boolean
 });
 
