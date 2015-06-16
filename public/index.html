@@ -26,8 +26,8 @@
 			<h1>Trip'n Out</h1>
 			<nav class="main-nav">
 				<ul ng-if="!loggedIn">
-					<li><i class="fa fa-sign-in fa-lg fa-fw"></i> Login</li>
-					<li><i class="fa fa-user-plus fa-lg fa-fw"></i> Register</li>
+					<li><a ui-sref="login"><i class="fa fa-sign-in fa-lg fa-fw"></i> Login</a></li>
+					<li><a ui-sref="register"><i class="fa fa-user-plus fa-lg fa-fw"></i> Register</a></li>
 				</ul>
 				<ul ng-if="loggedIn">
 					<li><i class="fa fa-user fa-lg fa-fw"></i>My Profile</li>

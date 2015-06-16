@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700);
 * {
   margin: 0;
   padding: 0;
@@ -16,13 +17,19 @@ body {
   font-size: 16px; }
 
 h1 {
-  font-size: 2em; }
+  font-family: "Quattrocento Sans", sans-serif;
+  font-size: 2em;
+  font-weight: 300; }
 
 h2 {
-  font-size: 1.7em; }
+  font-family: "Quattrocento Sans", sans-serif;
+  font-size: 1.7em;
+  font-weight: 300; }
 
 h3 {
-  font-size: 1.3em; }
+  font-family: "Quattrocento Sans", sans-serif;
+  font-size: 1.3em;
+  font-weight: 300; }
 
 .container {
   -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -56,8 +63,7 @@ h3 {
 .header {
   padding: 15px; }
   .header h1 {
-    text-align: right;
-    float: right;
+    text-align: center;
     min-height: 68px;
     position: relative;
     z-index: 9999;

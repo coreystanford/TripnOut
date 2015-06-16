@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,700)
+
 *
 	margin: 0
 	padding: 0
@@ -7,6 +9,7 @@
 $small-break: 768px
 $big-break: 1024px
 
+$head-font: 'Quattrocento Sans', sans-serif
 $main-font: 'Open Sans', sans-serif
 $master-font-size: 16px
 
@@ -56,15 +59,21 @@ body
 
 h1
 	font:
+		family: $head-font
 		size: $h1-size
+		weight: 300
 
 h2
 	font:
+		family: $head-font
 		size: $h2-size
+		weight: 300
 
 h3 
 	font:
+		family: $head-font
 		size: $h3-size
+		weight: 300
 
 // container ============================
 .container
@@ -94,8 +103,7 @@ h3
 .header
 	padding: $content-pad
 	h1
-		text-align: right
-		float: right
+		text-align: center
 		min-height: 68px
 		position: relative
 		z-index: 9999
