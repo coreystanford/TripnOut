@@ -13,8 +13,8 @@ var TripSchema   = new Schema({
     	type: String,
     	content: String
     }],
-    author: { type: Number, ref: 'User' },
-    date: Date,
+    author: { type: Schema.ObjectId, ref: 'User' },
+    date: { type: Date, default: Date.now },
     privacy: Boolean
 });
 
