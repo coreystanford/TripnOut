@@ -14,7 +14,7 @@ var TripSchema   = new Schema({
     	content: String
     }],
     author: { type: Schema.ObjectId, ref: 'User' },
-    date: Date,
+    date: { type: Date, default: Date.now },
     privacy: Boolean
 });
 
