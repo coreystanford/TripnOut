@@ -242,7 +242,7 @@
         req.body.author,
         { $push: { trips: newTrip }},
         { safe: true, upsert: true },
-        function(err, model) {
+        function(err, trip) {
             if (err) res.send(err);
             res.json({ message: 'User trip added!' });
         }
@@ -300,9 +300,6 @@
   .delete(function(req, res) {
 
     Trip.find({ _id: req.params.trip_id }, function(err, trip) {
-      
-      console.log("**** " + Object.prototype.toString.call(trip) + " ****");
-      console.log("**** " + trip[0].author + " ****");
 
       User.findOneAndUpdate(
        { _id: trip[0].author },
