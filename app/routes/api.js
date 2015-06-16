@@ -157,7 +157,7 @@
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
       // return that user
-      User.populate(user, {path: 'trips.trip'}, function(err, user){
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
         res.json(user);
       });
     });
