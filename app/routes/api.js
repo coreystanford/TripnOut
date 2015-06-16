@@ -216,12 +216,7 @@
     trip.title = req.body.title; 
     trip.description = req.body.description;
     trip.content = req.body.content;
-    //for (var i = 0; i <= req.body.content.length; i++) {
-    //      console.log(req.body.content);
-    //      push(trip.content, req.body.content[i]);
-    //    };
     trip.author = req.body.author;
-    trip.date = new Date().now;
     trip.privacy = req.body.privacy;
  
     // save the user and check for errors
@@ -229,13 +224,12 @@
              if (err) {
                  // duplicate entry
                  if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A trip with that\
-  username already exists. '});
+                     return res.json({ success: false, message: 'A trip with that username already exists. '});
                  else 
                      return res.send(err);
              }
  
-      res.json({ message: 'Trip created!' });
+      //res.json({ message: 'Trip created!' });
 
     });
 
@@ -289,11 +283,7 @@
       // update the trips info only if its new
       if (req.body.title) trip.title = req.body.title;
       if (req.body.description) trip.description = req.body.description;
-      if (req.body.content) {
-        for (var i = 0; i <= req.body.content.length(); i++) {
-          push(trip.content, req.body.content[i]);
-        };
-      }
+      if (req.body.content) trip.content = req.body.content;
       if (req.body.privacy) trip.privacy = req.body.privacy;
  
       // save the trip
@@ -308,13 +298,30 @@
 
   // delete the trip with this id 
   .delete(function(req, res) {
-    Trip.remove({
-      _id: req.params.trip_id
-    }, function(err, trip) {
-      if (err) return res.send(err);
- 
-      res.json({ message: 'Successfully deleted' });
+
+    Trip.find({ _id: req.params.trip_id }, function(err, trip) {
+      
+      console.log("**** " + Object.prototype.toString.call(trip) + " ****");
+      console.log("**** " + trip[0].author + " ****");
+
+      User.findOneAndUpdate(
+       { _id: trip[0].author },
+       { $pull: { 'trips': { 'trip': trip[0]._id } } },function(err, user){
+
+         if (err) return res.send(err);
+
+         Trip.remove({
+            _id: req.params.trip_id
+         }, function(err, trip) {
+           if (err) return res.send(err);
+           
+           res.json({ message: 'Successfully deleted' });
+         });
+  
+       });
+    
     });
+  
   });
      
   // ---------------------- //
