@@ -387,6 +387,10 @@
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
       if (err) res.send(err);
         
+        Tutorial.populate(tutorial, {path: 'author'}, function(err, tutorial){
+        res.json(tutorial);
+      });
+        
       res.json(tutorial);
     });
   })
