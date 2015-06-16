@@ -338,14 +338,9 @@
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
     if(req.body.story_link) tutorial.story_link = req.body.story_link;  
-    tutorial.content = [{
-        type: String,
-        data: [{
-            title: String,
-            input: String
-        }]
-    }],
-    tutorial.date = new Date();  
+    tutorial.content = req.body.content
+    tutorial.date = new Date();
+    tutorial.author = req.body.author;
     tutorial.approved = req.body.approved;
  
     tutorial.save(function(err) {
@@ -357,8 +352,25 @@
                      return res.send(err);
              }
  
-      res.json({ message: 'Tutorial created!' });
+      //res.json({ message: 'Tutorial created!' });
     });
+      
+    console.log("**** " + tutorial._id + " ****" );  
+    var newTutorial = {
+      tutorial: tutorial._id
+    };
+
+    User.findByIdAndUpdate(
+        req.body.author,
+        { $push: { tutorials: newTutorial }},
+        
+        { safe: true, upsert: true },
+        
+        function(err, tutorial) {
+            if (err) res.send(err);
+            res.json({ message: 'User Tutorial added!' });
+        }
+    ); 
 
   })
 
@@ -391,11 +403,7 @@
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
       if (req.body.story_link) tutorial.story_link = req.body.story_link;    
-      if (req.body.content) {
-        for (var i = 0; i <= req.body.content.length(); i++) {
-          push(tutorial.content, req.body.content[i]);
-        };
-      }
+      if (req.body.content) tutorial.content = req.body.content;
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
  
@@ -410,7 +418,7 @@
   .delete(function(req, res) {
     Tutorial.remove({
       _id: req.params.tutorial_id
-    }, function(err, tutorial) {
+    }, function(err, model) {
       if (err) return res.send(err);
  
       res.json({ message: 'Successfully Deleted' });
