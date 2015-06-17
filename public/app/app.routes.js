@@ -27,14 +27,14 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           controller: 'userEditController'
         })
 
-        .state('user.trips', {
-          url: '/trips',
+        .state('trips', {
+          url: '/users/:user_id/trips',
           templateUrl: 'static/app/components/trips/single.trips.html',
           controller: 'tripController'
         })
         
-        .state('user.trips.create', {
-          url: '/create',
+        .state('trips-create', {
+          url: '/users/:user_id/trips/create',
           templateUrl: 'static/app/components/trips/single.trips.create.html',
           controller: 'tripController'
         });
