@@ -46,6 +46,19 @@ $bezier: cubic-bezier(.42,0,.58,1)
 @mixin menuHam
 	transform: translateX(-100%)
 
+@mixin keyframes($name)
+	@-webkit-keyframes #{$name}
+		@content
+	@-moz-keyframes #{$name}
+		@content
+	@keyframes #{$name}
+		@content
+
+@mixin animation($string)
+	-webkit-animation: #{$string}
+	-moz-animation: #{$string}
+	animation: #{$string}
+
 // general =============================
 html
 	overflow-x: hidden !important
@@ -164,3 +177,19 @@ main
 	background: black
 	color: white
 	height: 50px
+
+// Angular animation ENTER LEAVE
+
+@include keyframes('appear')
+	from
+		opacity: 0 
+
+@include keyframes('disappear')
+	to
+		opacity: 0
+
+.ng-enter
+	@include animation('appear 0.5s')
+
+.ng-leave
+	@include animation('disappear 0.5s')

@@ -118,4 +118,32 @@ main {
   color: white;
   height: 50px; }
 
+@-webkit-keyframes appear {
+  from {
+    opacity: 0; } }
+@-moz-keyframes appear {
+  from {
+    opacity: 0; } }
+@keyframes appear {
+  from {
+    opacity: 0; } }
+@-webkit-keyframes disappear {
+  to {
+    opacity: 0; } }
+@-moz-keyframes disappear {
+  to {
+    opacity: 0; } }
+@keyframes disappear {
+  to {
+    opacity: 0; } }
+.ng-enter {
+  -webkit-animation: appear 0.5s;
+  -moz-animation: appear 0.5s;
+  animation: appear 0.5s; }
+
+.ng-leave {
+  -webkit-animation: disappear 0.5s;
+  -moz-animation: disappear 0.5s;
+  animation: disappear 0.5s; }
+
 /*# sourceMappingURL=main.css.map */
