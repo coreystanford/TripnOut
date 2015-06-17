@@ -72,29 +72,6 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
-  // ---- GET USERS / USER ---- //
-
-  apiRouter.route('/users')
-  .get(function(req, res) {
-    User.find(function(err, users) {
-      if (err) res.send(err);
-      // return the users
-      res.json(users);
-    });
-  });
-
-  apiRouter.route('/users/:user_id')
-  // get the user with that id 
-  .get(function(req, res) {
-    User.findById(req.params.user_id, function(err, user) {
-      if (err) res.send(err);
-      // return that user
-      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
-        res.json(user);
-      });
-    });
-  });
-
   // ---- GET TRIPS / TRIP ---- //
 
   apiRouter.route('/trips')
@@ -164,6 +141,8 @@
   // -------- USERS -------- //
   // ----------------------- //
  
+  // ---- Create User ---- //
+
   apiRouter.route('/users')
 
  	.post(function(req, res) {
@@ -190,11 +169,29 @@
  			res.json({ message: 'User created!' });
  		});
 
+  })
+  .get(function(req, res) {
+    User.find(function(err, users) {
+      if (err) res.send(err);
+      // return the users
+      res.json(users);
+    });
   });
 
-  // -------- USER BY ID -------- //
+  // -------- Update / Delete USER BY ID -------- //
 
  apiRouter.route('/users/:user_id')
+
+  // get the user with that id 
+  .get(function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+      if (err) res.send(err);
+      // return that user
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
+        res.json(user);
+      });
+    });
+  })
 
   // update the user with this id 
   .put(function(req, res) {
