@@ -1,6 +1,7 @@
 tripnoutApp.controller('tripController', function($rootScope, $scope, $location, $stateParams, Auth, User) {
 
-	//get info if a person is logged in
+	  //get info if a person is logged in
+    // !!!! is this set in rootScope??
   	$scope.loggedIn = Auth.isLoggedIn();
 
   	User.get($stateParams.user_id)
