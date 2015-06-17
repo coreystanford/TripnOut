@@ -7,7 +7,7 @@ var TutorialSchema   = new Schema({
 	title: String,
     description: String,
     participants: Number,
-    story_link: String,
+    trip_link: String,
     content: [{
     	type: String,
         data: [{

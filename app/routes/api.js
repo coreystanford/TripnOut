@@ -336,7 +336,7 @@
     tutorial.title = req.body.title; 
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
-    if(req.body.story_link) tutorial.story_link = req.body.story_link;  
+    if(req.body.trip_link) tutorial.trip_link = req.body.trip_link;  
     tutorial.content = req.body.content
     tutorial.date = new Date();
     tutorial.author = req.body.author;
@@ -402,7 +402,7 @@
       if (req.body.title) tutorial.title = req.body.title;
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
-      if (req.body.story_link) tutorial.story_link = req.body.story_link;    
+      if (req.body.trip_link) tutorial.trip_link = req.body.trip_link;    
       if (req.body.content) tutorial.content = req.body.content;
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
@@ -415,15 +415,29 @@
     });
   })
 
-  .delete(function(req, res) {
-    Tutorial.remove({
-      _id: req.params.tutorial_id
-    }, function(err, model) {
-      if (err) return res.send(err);
- 
-      res.json({ message: 'Successfully Deleted' });
+   .delete(function(req, res) {
+
+    Tutorial.find({ _id: req.params.tutorial_id }, function(err, tutorial) {
+
+      User.findOneAndUpdate(
+       { _id: tutorial[0].author },
+       { $pull: { 'tutorials': { 'tutorial': tutorial[0]._id } } },function(err, user){
+
+         if (err) return res.send(err);
+
+         Tutorial.remove({
+            _id: req.params.tutorial_id
+         }, function(err, tutorial) {
+           if (err) return res.send(err);
+           
+           res.json({ message: 'Successfully deleted' });
+         });
+  
+       });
+    
     });
-  });     
+  
+  });   
 
   return apiRouter;
 
