@@ -2,7 +2,7 @@
 
 //user controller for the main page
 //inject the User factory
-tripnoutApp.controller('userController', function(User){
+tripnoutApp.controller('userController', function($scope, User){
 
   //set a processing variable to show loading things
   $scope.processing = true;
@@ -24,7 +24,7 @@ tripnoutApp.controller('userController', function(User){
         $scope.processing = true;
 
         //accepts the user id as a paramets
-        User.delete(id) {
+        User.delete(id)
           .success(function(data) {
 
             //get all users to update the table
@@ -37,57 +37,8 @@ tripnoutApp.controller('userController', function(User){
               });
 
           });
-        };
       }
 });
 
-//controller applied to user edit page
-tripnoutApp.controller('userEditController', function($routeParams, User) {
 
-  //variable to hide/show elements of the view
-  //differentiates between create or edit pages
-  $scope.type = 'edit';
 
-  //get the user data for the user you want to edit
-  //$routeParams is the waywe grab data from the url
-  User.get($routeParams.user_id)
-    .success(function(data) {
-      $scope.processing = false;
-
-      //clear the form
-      $scope.userData = {};
-
-      //bind the message from our API to $scope.message
-      $scope.message = data.message;
-    });
-  };
-
-});
-
-// controller applied to user creation page
-tripnoutApp.controller('userCreateController', function(User){
-
-  //variable to hide/show elements of the views
-  //differentiates between create or edit pages
-  $scope.type = 'create';
-
-  //function to create a user
-  $scope.saveUser = function()  {
-    $scope.processing = true;
-
-    //clear the message
-    $scope.message = '';
-
-    //use the create function in the userService
-    User.create($scope.userData)
-      .success(function(data) {
-        $scope.processing = false;
-
-        //clear the form
-        $scope.userData = {};
-        $scope.message = data.message;
-      });
-
-  };
-
-});

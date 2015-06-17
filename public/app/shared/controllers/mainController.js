@@ -1,23 +1,15 @@
 
-tripnoutApp.controller('mainController', function($rootScope, $scope, $location, Auth) {
+tripnoutApp.controller('mainController', function($scope, $location, Auth) {
 
   //menu boolean
   $scope.menu = false;
 
+  $scope.showMain = function(){
+    $scope.menu = false;
+  }
+
   //get info if a person is logged in
   $scope.loggedIn = Auth.isLoggedIn();
-
-
-    //check to see if a user is logged in on every request
-    $rootScope.$on('$routeChangeStart', function() {
-      $scope.loggedIn = Auth.isLoggedIn();
-
-      //get user information on route change
-      Auth.getUser()
-        .success(function(data) {
-          $scope.user = data;
-        });
-    });
 
     //function to handle login form
     $scope.doLogin = function() {
@@ -33,7 +25,7 @@ tripnoutApp.controller('mainController', function($rootScope, $scope, $location,
 
           //if a user successfully logs in, redirect to users page
           if(data.success)
-          $location.path('/users');
+          $location.path('/users/'+ data.id);
           else
             $scope.error = data.message;
         });

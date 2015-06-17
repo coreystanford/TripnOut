@@ -23,7 +23,7 @@
    // select the name username and password explicitly
    User.findOne({
      username: req.body.username
-   }).select('name username password').exec(function(err, user) {
+   }).select('_id name username password').exec(function(err, user) {
  
      if (err) throw err;
  
@@ -52,12 +52,14 @@
                     }, config.secret, {
                      expiresInMinutes: 1440 // expires in 24 hours
                     });
- 
+
+
          // return the information including token as JSON
          res.json({
            success: true,
            message: 'Enjoy your token!',
-           token: token
+           token: token,
+           id: user._id
          });
        }   
  
@@ -74,7 +76,7 @@
  apiRouter.use(function(req, res, next) {
 
    // check header or url parameters or post parameters for token
-   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+   var token = req.body.token || req.params.token || req.headers['x-access-token'];
  
    // decode token
    if (token) {

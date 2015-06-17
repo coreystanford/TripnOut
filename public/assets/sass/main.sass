@@ -1,12 +1,18 @@
+// google fonts
+@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700)
+
 *
 	margin: 0
 	padding: 0
 	box-sizing: border-box
 
 // variables =======================
+$body-color: black
+
 $small-break: 768px
 $big-break: 1024px
 
+$head-font: 'Josefin Slab', sans-serif
 $main-font: 'Open Sans', sans-serif
 $master-font-size: 16px
 
@@ -56,55 +62,72 @@ body
 
 h1
 	font:
+		family: $head-font
 		size: $h1-size
+		weight: 300
 
 h2
 	font:
+		family: $head-font
 		size: $h2-size
+		weight: 300
 
 h3 
 	font:
+		family: $head-font
 		size: $h3-size
+		weight: 300
+
+a
+	color: $body-color
+	text-decoration: none
 
 // container ============================
 .container
+	height: 100%
+	margin-bottom: -50px
 	@include addAnim
 	&.menu
 		@include menuTrans
 
 
 // header and menu ===========================
-.hamburger
-	@include addAnim
-	text-align: left
-	position: fixed
-	left: 0px
-	min-height: 68px
-	padding: $content-pad
-	padding-top: $content-pad - 5px
-	padding-right: $content-pad + 5px
-	i
-		cursor: pointer
-	&.menu
-		@include menuHam
-		left: 0
-	@include respond($small-break)
-		display: none
 
 .header
 	padding: $content-pad
-	h1
-		text-align: right
-		float: right
-		min-height: 68px
-		position: relative
-		z-index: 9999
-		font:
-			size: 3em
+	background: black
+	color: white
+	a
+		color: white
+	.title
+		display: table
+		width: 100%
+		h1
+			display: table-cell
+			vertical-align: center
+			text-align: center
+			min-height: 68px
+			position: relative
+			z-index: 9999
+		.hamburger
+			display: table-cell
+			@include addAnim
+			text-align: left
+			left: 0px
+			min-height: 68px
+			i
+				cursor: pointer
+			&.menu
+				@include menuHam
+				color: black
+				left: 0
+			@include respond($small-break)
+				display: none
 	.main-nav
 		transform: translateX(-100%)
+		background: black
+		height: 100%
 		width: 100%
-		margin-top: 60px
 		clear: both
 		position: absolute
 		padding: $content-pad 30px
@@ -118,6 +141,8 @@ h3
 			li
 				list-style: none
 				margin: 20px 0
+				font:
+					size: 1.4em
 				@include respond($small-break)
 					display: inline-block
 	&:after
@@ -128,5 +153,14 @@ h3
 // main =================================
 
 main
+	height: 100%
+	margin-bottom: -50px
 	padding: $content-pad
 	text-align: center
+
+// footer =================================
+
+.footer
+	background: black
+	color: white
+	height: 50px
