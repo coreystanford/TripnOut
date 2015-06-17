@@ -23,7 +23,7 @@
    // select the name username and password explicitly
    User.findOne({
      username: req.body.username
-   }).select('name username password').exec(function(err, user) {
+   }).select('_id name username password').exec(function(err, user) {
  
      if (err) throw err;
  
@@ -52,12 +52,14 @@
                     }, config.secret, {
                      expiresInMinutes: 1440 // expires in 24 hours
                     });
- 
+
+
          // return the information including token as JSON
          res.json({
            success: true,
            message: 'Enjoy your token!',
-           token: token
+           token: token,
+           id: user._id
          });
        }   
  
@@ -65,6 +67,56 @@
  
    });
  });
+
+  // -------------------------------------------- //
+  // -------- ALLOWED ANONYMOUS REQUESTS -------- //
+  // -------------------------------------------- //
+
+  // ---- GET USERS / USER ---- //
+
+  apiRouter.route('/users')
+  .get(function(req, res) {
+    User.find(function(err, users) {
+      if (err) res.send(err);
+      // return the users
+      res.json(users);
+    });
+  });
+
+  apiRouter.route('/users/:user_id')
+  // get the user with that id 
+  .get(function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+      if (err) res.send(err);
+      // return that user
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
+        res.json(user);
+      });
+    });
+  });
+
+  // ---- GET TRIPS / TRIP ---- //
+
+  apiRouter.route('/trips')
+   .get(function(req, res) {
+    Trip.find(function(err, trips) {
+      if (err) res.send(err);
+      // return the trips
+      res.json(trips);
+    });
+  });
+
+  apiRouter.route('/trips/:trip_id')
+  // get the trip with that id 
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      Trip.populate(trip, {path: 'author'}, function(err, trip){
+        res.json(trip);
+      });
+    });
+  });
 
   // ---------------------------- //
   // -------- MIDDLEWARE -------- //
@@ -74,7 +126,7 @@
  apiRouter.use(function(req, res, next) {
 
    // check header or url parameters or post parameters for token
-   var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+   var token = req.body.token || req.params.token || req.headers['x-access-token'];
  
    // decode token
    if (token) {
@@ -138,30 +190,11 @@
  			res.json({ message: 'User created!' });
  		});
 
-  })
-
- 	.get(function(req, res) {
- 		User.find(function(err, users) {
- 			if (err) res.send(err);
- 			// return the users
- 			res.json(users);
- 		});
- 	});
+  });
 
   // -------- USER BY ID -------- //
 
  apiRouter.route('/users/:user_id')
- 
-  // get the user with that id 
-  .get(function(req, res) {
-    User.findById(req.params.user_id, function(err, user) {
-      if (err) res.send(err);
-      // return that user
-      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
-        res.json(user);
-      });
-    });
-  })
 
   // update the user with this id 
   .put(function(req, res) {
@@ -196,6 +229,10 @@
     });
   });
 
+  // ------------------------------- //
+  // -------- GET USER INFO -------- //
+  // ------------------------------- //
+
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
     res.send(req.decoded);
@@ -204,6 +241,8 @@
   // ----------------------- //
   // -------- TRIPS -------- //
   // ----------------------- //
+
+  // ---- Create Trip ---- //
 
   apiRouter.route('/trips')
 
@@ -248,30 +287,11 @@
         }
     );
 
-  })
-
-  .get(function(req, res) {
-    Trip.find(function(err, trips) {
-      if (err) res.send(err);
-      // return the trips
-      res.json(trips);
-    });
   });
 
-  // -------- Trip BY ID -------- //
+  // -------- Update/Delete Trip BY ID -------- //
 
  apiRouter.route('/trips/:trip_id')
- 
-  // get the trip with that id 
-  .get(function(req, res) {
-    Trip.findById(req.params.trip_id, function(err, trip) {
-      if (err) res.send(err);
-      // return that trip
-      Trip.populate(trip, {path: 'author'}, function(err, trip){
-        res.json(trip);
-      });
-    });
-  })
 
   // update the trip with this id 
   .put(function(req, res) {
@@ -334,7 +354,7 @@
     tutorial.title = req.body.title; 
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
-    if(req.body.story_link) tutorial.story_link = req.body.story_link;  
+    if(req.body.trip_link) tutorial.trip_link = req.body.trip_link;  
     tutorial.content = req.body.content
     tutorial.date = new Date();
     tutorial.author = req.body.author;
@@ -400,7 +420,7 @@
       if (req.body.title) tutorial.title = req.body.title;
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
-      if (req.body.story_link) tutorial.story_link = req.body.story_link;    
+      if (req.body.trip_link) tutorial.trip_link = req.body.trip_link;    
       if (req.body.content) tutorial.content = req.body.content;
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
@@ -413,15 +433,29 @@
     });
   })
 
-  .delete(function(req, res) {
-    Tutorial.remove({
-      _id: req.params.tutorial_id
-    }, function(err, model) {
-      if (err) return res.send(err);
- 
-      res.json({ message: 'Successfully Deleted' });
+   .delete(function(req, res) {
+
+    Tutorial.find({ _id: req.params.tutorial_id }, function(err, tutorial) {
+
+      User.findOneAndUpdate(
+       { _id: tutorial[0].author },
+       { $pull: { 'tutorials': { 'tutorial': tutorial[0]._id } } },function(err, user){
+
+         if (err) return res.send(err);
+
+         Tutorial.remove({
+            _id: req.params.tutorial_id
+         }, function(err, tutorial) {
+           if (err) return res.send(err);
+           
+           res.json({ message: 'Successfully deleted' });
+         });
+  
+       });
+    
     });
-  });     
+  
+  });   
 
   return apiRouter;
 
