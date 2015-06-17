@@ -1,7 +1,7 @@
 "use strict";
 
 // controller applied to user creation page
-tripnoutApp.controller('userCreateController', function(User){
+tripnoutApp.controller('userCreateController', function($scope, User){
 
   //variable to hide/show elements of the views
   //differentiates between create or edit pages

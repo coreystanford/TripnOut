@@ -2,7 +2,7 @@
 
 //user controller for the main page
 //inject the User factory
-tripnoutApp.controller('userController', function(User){
+tripnoutApp.controller('userController', function($scope, User){
 
   //set a processing variable to show loading things
   $scope.processing = true;
