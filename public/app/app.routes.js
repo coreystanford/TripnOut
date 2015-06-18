@@ -16,8 +16,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('login', {
           url: '/login',
-          templateUrl: 'static/app/components/login/login.html',
-          controller: 'mainController'
+          templateUrl: 'static/app/components/login/login.html'
         })
 
         .state('create', {
@@ -47,7 +46,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           templateUrl: 'static/app/components/trips/views/my-trips.html',
           controller: 'crTripController'
         })
-        
+
         .state('create-my-trip', {
           url: '/users/:user_id/trips/create',
           templateUrl: 'static/app/components/trips/views/create.html',

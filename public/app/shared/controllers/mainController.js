@@ -36,7 +36,7 @@ tripnoutApp.controller('mainController', function($scope, $location, Auth) {
       Auth.logout();
       //reset all user info
       $scope.user = {};
-      $location.apth('/login');
+      $location.path('/login');
     };
 
 });
