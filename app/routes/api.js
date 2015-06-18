@@ -178,7 +178,7 @@
     });
   });
 
-  // -------- Update / Delete USER BY ID -------- //
+  // -------- Get / Update / Delete USER BY ID -------- //
 
  apiRouter.route('/users/:user_id')
 
@@ -286,7 +286,7 @@
 
   });
 
-  // -------- Update/Delete Trip BY ID -------- //
+  // -------- Update / Delete Trip BY ID -------- //
 
  apiRouter.route('/trips/:trip_id')
 
