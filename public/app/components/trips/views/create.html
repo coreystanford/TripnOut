@@ -35,10 +35,10 @@ https://github.com/flowjs/ng-flow
 			
 		</div>
 
-		<div ng-if="displayButton">
+		<div ng-show="displayButton">
 			<a ng-click="showOptions()">Add Section</a>
 		</div>
-		<div ng-if="!displayButton">
+		<div ng-hide="displayButton">
 			<addsection datatype="text" ng-click="showOptions()">Text Area</addsection>
 			<addsection datatype="image" ng-click="showOptions()">Image</addsection>
 			<addsection datatype="video" ng-click="showOptions()">Video</addsection>
