@@ -10,8 +10,8 @@ var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'ngMa
 
 .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-        .primaryPalette('red')
-        .accentPalette('orange');  
+        .primaryPalette('deep-orange')
+        .accentPalette('blue');  
 }); 
 
 tripnoutApp.run([ '$rootScope', 'Auth',function($rootScope, Auth){
