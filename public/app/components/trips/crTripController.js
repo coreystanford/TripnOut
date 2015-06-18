@@ -1,4 +1,4 @@
-tripnoutApp.controller('myTripController', function($rootScope, $scope, $location, $stateParams, Auth, User) {
+tripnoutApp.controller('crTripController', function($rootScope, $scope, $location, $stateParams, Auth, User) {
 
 	  //get info if a person is logged in
   	$scope.loggedIn = Auth.isLoggedIn();
