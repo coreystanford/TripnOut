@@ -25,7 +25,7 @@ tripnoutApp.controller('mainController', function($scope, $location, Auth) {
 
           //if a user successfully logs in, redirect to users page
           if(data.success)
-          $location.path('/users/'+ data.id);
+          $location.path('/me');
           else
             $scope.error = data.message;
         });
