@@ -1,0 +1,23 @@
+<div>
+	
+	<h1>{{ trip.title }}</h1>
+
+	<div>
+		
+		<div ng-repeat="content in trip.content">
+
+			<div ng-if="content.type == text">
+				<p>{{ content.content }}</p>
+			</div>
+			<div ng-if="content.type == image">
+				<img ng-src="content.content" alt="{{content.alt}}">
+			</div>
+			<div ng-if="content.type == video">
+				<video ng-src="content.content" poster="/static/assets/imgs/{{ content.alt }}"></video>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
