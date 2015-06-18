@@ -5,7 +5,7 @@ tripnoutApp.factory('Trip', function($http) {
 	// create a new object
 	var tripFactory = {};
 
-	// get latest public trips
+	// get latest public trips (w/ infinite scroll)
 	tripFactory.latest = function(limit, offset) {
 	  return $http.get('/api/trips/latest/' + limit +'/' + offset);
 	};
