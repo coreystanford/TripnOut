@@ -1,5 +1,5 @@
 // google fonts
-@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700)
+@import url(http://fonts.googleapis.com/css?family=Didact+Gothic)
 
 *
 	margin: 0
@@ -12,7 +12,7 @@ $body-color: black
 $small-break: 768px
 $big-break: 1024px
 
-$head-font: 'Josefin Slab', sans-serif
+$head-font: 'Didact Gothic', sans-serif
 $main-font: 'Open Sans', sans-serif
 $master-font-size: 16px
 
@@ -46,6 +46,19 @@ $bezier: cubic-bezier(.42,0,.58,1)
 @mixin menuHam
 	transform: translateX(-100%)
 
+@mixin keyframes($name)
+	@-webkit-keyframes #{$name}
+		@content
+	@-moz-keyframes #{$name}
+		@content
+	@keyframes #{$name}
+		@content
+
+@mixin animation($string)
+	-webkit-animation: #{$string}
+	-moz-animation: #{$string}
+	animation: #{$string}
+
 // general =============================
 html
 	overflow-x: hidden !important
@@ -78,6 +91,10 @@ h3
 		size: $h3-size
 		weight: 300
 
+li
+	font:
+		family: $head-font
+
 a
 	color: $body-color
 	text-decoration: none
@@ -102,25 +119,35 @@ a
 	.title
 		display: table
 		width: 100%
+		@include respond($small-break)
+			display: block
+			float: left
 		h1
 			display: table-cell
 			vertical-align: center
 			text-align: center
 			min-height: 68px
 			position: relative
-			z-index: 9999
+			z-index: 1
+			@include respond($small-break)
+				display: block
+				float: left
 		.hamburger
-			display: table-cell
+			display: block
+			position: absolute
+			left: 10px
+			top: 10px
 			@include addAnim
 			text-align: left
-			left: 0px
 			min-height: 68px
+			width: 42px
+			z-index: 9999
 			i
 				cursor: pointer
 			&.menu
 				@include menuHam
 				color: black
-				left: 0
+				left: -10px
 			@include respond($small-break)
 				display: none
 	.main-nav
@@ -128,14 +155,17 @@ a
 		background: black
 		height: 100%
 		width: 100%
-		clear: both
 		position: absolute
 		padding: $content-pad 30px
 		left: 0
 		@include respond($small-break)
+			transform: translateX(0)
+			position: static
 			float: right
+			width: auto
+			height: auto
 		ul:first-child
-			border-bottom: 1px solid black
+			border-bottom: 1px solid white
 		ul
 			padding: $content-pad
 			li
@@ -145,6 +175,7 @@ a
 					size: 1.4em
 				@include respond($small-break)
 					display: inline-block
+					margin: 20px
 	&:after
 		content: ""
 		display: block
@@ -153,10 +184,19 @@ a
 // main =================================
 
 main
+	position: relative
 	height: 100%
 	margin-bottom: -50px
 	padding: $content-pad
 	text-align: center
+
+#public
+	height: 100%
+	position: relative
+
+.viewContent
+	position: absolute
+	width: 100%
 
 // footer =================================
 
@@ -164,3 +204,19 @@ main
 	background: black
 	color: white
 	height: 50px
+
+// Angular animation ENTER LEAVE
+
+@include keyframes('appear')
+	from
+		opacity: 0 
+
+@include keyframes('disappear')
+	to
+		opacity: 0
+
+.ng-enter
+	@include animation('appear 0.5s')
+
+.ng-leave
+	@include animation('disappear 0.5s')
