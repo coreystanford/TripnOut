@@ -76,12 +76,14 @@
 
   apiRouter.route('/trips/latest/:limit/:offset')
    .get(function(req, res) {
-    Trip.find(function(err, trips) {
+    Trip.find( { $where: 'this.privacy == false' }, function(err, trips) {
       if (err) res.send(err);
       // return the trips
       res.json(trips);
     }).limit(req.params.limit).skip(req.params.offset).sort( { date: 1 } );
   });
+
+   // ---- GET TRIP BY ID ---- //
 
   apiRouter.route('/trips/:trip_id')
   // get the trip with that id 
@@ -284,6 +286,14 @@
         }
     );
 
+  })
+
+   .get(function(req, res) {
+    Trip.find(function(err, trips) {
+      if (err) res.send(err);
+      // return the trips
+      res.json(trips);
+    });
   });
 
   // -------- Update / Delete Trip BY ID -------- //
