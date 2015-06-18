@@ -2,7 +2,7 @@
 
 	<h1>My Trips</h1>
 
-	<a ui-sref="create-my-trip">Create a Trip</a>
+	<a ui-sref="create-my-trip({user_id: user_id})">Create a Trip</a>
 
 	<div ng-if="trips" ng-repeat="trip in trips">
 
