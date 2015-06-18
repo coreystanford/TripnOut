@@ -3,11 +3,9 @@
 tripnoutApp.directive("addsection", function($compile){
 	return function(scope, element, attrs) {
 
-    	console.log(element);
-
-    	scope.count = 0;
-
 		element.bind("click", function(){
+
+			if(!scope.count){scope.count = 0;}
 
 			switch(attrs.datatype) {
 
