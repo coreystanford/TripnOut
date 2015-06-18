@@ -3,29 +3,29 @@
   <div class="jumbotron">
     <h1>Login</h1>
 
-    <form ng-submit="doLogin() ">
+    <form ng-submit="doLogin()" class="loginForm">
 
       <!--USERNAME INPUT-->
-      <div class="form-group">
+      <md-input-container>
         <label>Username</label>
         <input type="text" class="form-control" ng-model="loginData.username">
-      </div>
+      </md-input-container>
 
       <!--PASSWORD INPUT-->
-      <div class="form-group">
+      <md-input-container>
         <label>Password</label>
         <input type="password" class="form-control" ng-model="loginData.password">
-      </div>
+      </md-input-container>
       <div class="alert alert-danger" ng-if="error">
         {{ error }}
       </div>
       <!-- LOGIN BUTTON-->
-      <button type="submit" class="btn btn-block btn-primary">
+      <md-button type="submit" class="md-raised">
         <span ng-if="!processing">Login</span>
 
         <span ng-if="processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
 
-      </button>
+      </md-button>
 
     </form>
   </div>
