@@ -6,7 +6,7 @@
 
 "use strict";
 
-var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'flow']);
+var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'flow']);
 
 tripnoutApp.run([ '$rootScope', 'Auth',function($rootScope, Auth){
 	

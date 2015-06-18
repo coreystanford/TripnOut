@@ -76,11 +76,11 @@
 
   apiRouter.route('/trips/latest/:limit/:offset')
    .get(function(req, res) {
-    Trip.find( { $where: 'this.privacy == false' }, function(err, trips) {
+    Trip.find( { $where: 'this.public_trip == true' }, function(err, trips) {
       if (err) res.send(err);
       // return the trips
       res.json(trips);
-    }).limit(req.params.limit).skip(req.params.offset).sort( { date: 1 } );
+    }).sort( { date: -1 } ).limit(req.params.limit).skip(req.params.offset);
   });
 
    // ---- GET TRIP BY ID ---- //
@@ -91,7 +91,7 @@
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
       // return that trip
-      Trip.populate(trip, {path: 'author'}, function(err, trip){
+      Trip.populate(trip, { path: 'author' }, function(err, trip){
         res.json(trip);
       });
     });
@@ -253,9 +253,11 @@
     // set the users information (comes from the request)
     trip.title = req.body.title; 
     trip.description = req.body.description;
-    trip.content = req.body.content;
     trip.author = req.body.author;
-    trip.privacy = req.body.privacy;
+    trip.country = req.body.country;
+    trip.thumbnail = req.body.thumbnail;
+    trip.content = req.body.content;
+    trip.public_trip = req.body.public_trip;
  
     // save the user and check for errors
     trip.save(function(err) {
@@ -266,9 +268,6 @@
                  else 
                      return res.send(err);
              }
- 
-      //res.json({ message: 'Trip created!' });
-
     });
 
     // Add the trip to the array of trips associated with the User's account
@@ -306,12 +305,15 @@
     // use our trip model to find the trip we want
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
- 
+
       // update the trips info only if its new
       if (req.body.title) trip.title = req.body.title;
       if (req.body.description) trip.description = req.body.description;
+      if (req.body.author) trip.author = req.body.author;
+      if (req.body.country) trip.country = req.body.country;
+      if (req.body.thumbnail) trip.thumbnail = req.body.thumbnail;
       if (req.body.content) trip.content = req.body.content;
-      if (req.body.privacy) trip.privacy = req.body.privacy;
+      if (req.body.public_trip) trip.public_trip = req.body.public_trip;
  
       // save the trip
       trip.save(function(err) {

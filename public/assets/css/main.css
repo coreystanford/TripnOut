@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+@import url(http://fonts.googleapis.com/css?family=Didact+Gothic);
 * {
   margin: 0;
   padding: 0;
@@ -17,19 +17,22 @@ body {
   font-size: 16px; }
 
 h1 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 2em;
   font-weight: 300; }
 
 h2 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 1.7em;
   font-weight: 300; }
 
 h3 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 1.3em;
   font-weight: 300; }
+
+li {
+  font-family: "Didact Gothic", sans-serif; }
 
 a {
   color: black;
@@ -51,31 +54,46 @@ a {
   color: white; }
   .header a {
     color: white; }
+  .header:after {
+    content: "";
+    display: block;
+    clear: both; }
   .header .title {
     display: table;
     width: 100%; }
+    @media only screen and (min-width: 768px) {
+      .header .title {
+        display: block; } }
     .header .title h1 {
       display: table-cell;
       vertical-align: center;
       text-align: center;
       min-height: 68px;
       position: relative;
-      z-index: 9999; }
+      z-index: 1; }
+      @media only screen and (min-width: 768px) {
+        .header .title h1 {
+          display: block;
+          float: left; } }
     .header .title .hamburger {
-      display: table-cell;
+      display: block;
+      position: absolute;
+      left: 10px;
+      top: 10px;
       -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       text-align: left;
-      left: 0px;
-      min-height: 68px; }
+      min-height: 68px;
+      width: 42px;
+      z-index: 9999; }
       .header .title .hamburger i {
         cursor: pointer; }
       .header .title .hamburger.menu {
         transform: translateX(-100%);
         color: black;
-        left: 0; }
+        left: -10px; }
       @media only screen and (min-width: 768px) {
         .header .title .hamburger {
           display: none; } }
@@ -84,38 +102,83 @@ a {
     background: black;
     height: 100%;
     width: 100%;
-    clear: both;
     position: absolute;
     padding: 15px 30px;
     left: 0; }
+    .header .main-nav:after {
+      content: "";
+      display: block;
+      clear: both; }
     @media only screen and (min-width: 768px) {
       .header .main-nav {
-        float: right; } }
+        transform: translateX(0);
+        padding: 0;
+        position: static;
+        float: right;
+        width: auto;
+        height: auto; } }
     .header .main-nav ul:first-child {
-      border-bottom: 1px solid black; }
+      border-bottom: 1px solid white; }
     .header .main-nav ul {
       padding: 15px; }
+      @media only screen and (min-width: 768px) {
+        .header .main-nav ul {
+          padding: 0; } }
       .header .main-nav ul li {
         list-style: none;
         margin: 20px 0;
         font-size: 1.4em; }
         @media only screen and (min-width: 768px) {
           .header .main-nav ul li {
-            display: inline-block; } }
-  .header:after {
-    content: "";
-    display: block;
-    clear: both; }
+            display: inline-block;
+            margin: 10px 20px; } }
 
 main {
+  position: relative;
   height: 100%;
   margin-bottom: -50px;
   padding: 15px;
   text-align: center; }
 
+#public {
+  height: 100%;
+  position: relative; }
+
+.viewContent {
+  position: absolute;
+  width: 100%; }
+
 .footer {
   background: black;
   color: white;
   height: 50px; }
+
+@-webkit-keyframes appear {
+  from {
+    opacity: 0; } }
+@-moz-keyframes appear {
+  from {
+    opacity: 0; } }
+@keyframes appear {
+  from {
+    opacity: 0; } }
+@-webkit-keyframes disappear {
+  to {
+    opacity: 0; } }
+@-moz-keyframes disappear {
+  to {
+    opacity: 0; } }
+@keyframes disappear {
+  to {
+    opacity: 0; } }
+.ng-enter {
+  -webkit-animation: appear 0.5s;
+  -moz-animation: appear 0.5s;
+  animation: appear 0.5s; }
+
+.ng-leave {
+  -webkit-animation: disappear 0.5s;
+  -moz-animation: disappear 0.5s;
+  animation: disappear 0.5s; }
 
 /*# sourceMappingURL=main.css.map */
