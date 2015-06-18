@@ -68,6 +68,33 @@
    });
  });
 
+  // -------------------------------------------- //
+  // -------- ALLOWED ANONYMOUS REQUESTS -------- //
+  // -------------------------------------------- //
+
+  // ---- GET TRIPS / TRIP ---- //
+
+  apiRouter.route('/trips')
+   .get(function(req, res) {
+    Trip.find(function(err, trips) {
+      if (err) res.send(err);
+      // return the trips
+      res.json(trips);
+    });
+  });
+
+  apiRouter.route('/trips/:trip_id')
+  // get the trip with that id 
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      Trip.populate(trip, {path: 'author'}, function(err, trip){
+        res.json(trip);
+      });
+    });
+  });
+
   // ---------------------------- //
   // -------- MIDDLEWARE -------- //
   // ---------------------------- //
@@ -114,6 +141,8 @@
   // -------- USERS -------- //
   // ----------------------- //
  
+  // ---- Create User ---- //
+
   apiRouter.route('/users')
 
  	.post(function(req, res) {
@@ -141,19 +170,18 @@
  		});
 
   })
+  .get(function(req, res) {
+    User.find(function(err, users) {
+      if (err) res.send(err);
+      // return the users
+      res.json(users);
+    });
+  });
 
- 	.get(function(req, res) {
- 		User.find(function(err, users) {
- 			if (err) res.send(err);
- 			// return the users
- 			res.json(users);
- 		});
- 	});
-
-  // -------- USER BY ID -------- //
+  // -------- Update / Delete USER BY ID -------- //
 
  apiRouter.route('/users/:user_id')
- 
+
   // get the user with that id 
   .get(function(req, res) {
     User.findById(req.params.user_id, function(err, user) {
@@ -198,6 +226,10 @@
     });
   });
 
+  // ------------------------------- //
+  // -------- GET USER INFO -------- //
+  // ------------------------------- //
+
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
     res.send(req.decoded);
@@ -206,6 +238,8 @@
   // ----------------------- //
   // -------- TRIPS -------- //
   // ----------------------- //
+
+  // ---- Create Trip ---- //
 
   apiRouter.route('/trips')
 
@@ -250,30 +284,11 @@
         }
     );
 
-  })
-
-  .get(function(req, res) {
-    Trip.find(function(err, trips) {
-      if (err) res.send(err);
-      // return the trips
-      res.json(trips);
-    });
   });
 
-  // -------- Trip BY ID -------- //
+  // -------- Update/Delete Trip BY ID -------- //
 
  apiRouter.route('/trips/:trip_id')
- 
-  // get the trip with that id 
-  .get(function(req, res) {
-    Trip.findById(req.params.trip_id, function(err, trip) {
-      if (err) res.send(err);
-      // return that trip
-      Trip.populate(trip, {path: 'author'}, function(err, trip){
-        res.json(trip);
-      });
-    });
-  })
 
   // update the trip with this id 
   .put(function(req, res) {
