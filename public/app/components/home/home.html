@@ -4,7 +4,7 @@
 	
 	<div ng-repeat="trip in trips">
 
-		<trip details="trip"></trip>
+		<trip details="trip" ui-sref="trip({trip_id: trip._id})"></trip>
 
 	</div>	
 

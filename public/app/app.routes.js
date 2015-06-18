@@ -36,7 +36,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('trip', {
           url: '/trip/:trip_id',
-          templateUrl: 'static/app/components/trips/trip.html',
+          templateUrl: 'static/app/components/trips/views/trip.html',
           controller: 'tripController'
         })
 
@@ -44,26 +44,26 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('my-trips', {
           url: '/users/:user_id/trips',
-          templateUrl: 'static/app/components/trips/my-trips.html',
-          controller: 'myTripController'
+          templateUrl: 'static/app/components/trips/views/my-trips.html',
+          controller: 'crTripController'
         })
         
         .state('create-my-trip', {
           url: '/users/:user_id/trips/create',
-          templateUrl: 'static/app/components/trips/create.html',
-          controller: 'myTripController'
+          templateUrl: 'static/app/components/trips/views/create.html',
+          controller: 'crTripController'
         })
 
         .state('update-my-trip', {
-          url: '/users/:user_id/trips/create',
-          templateUrl: 'static/app/components/trips/update.html',
-          controller: 'myTripController'
+          url: '/users/:user_id/trips/update/:trip_id',
+          templateUrl: 'static/app/components/trips/views/update.html',
+          controller: 'udTripController'
         })
 
         .state('delete-my-trip', {
-          url: '/users/:user_id/trips/create',
-          templateUrl: 'static/app/components/trips/delete.html',
-          controller: 'myTripController'
+          url: '/users/:user_id/trips/delete/:trip_id',
+          templateUrl: 'static/app/components/trips/views/delete.html',
+          controller: 'udTripController'
         });
 
     // Default route
