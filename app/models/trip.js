@@ -9,6 +9,7 @@ var Schema = mongoose.Schema;
 var TripSchema   = new Schema({
 	title: String,
     description: String,
+    thumbnail: { type: String, default: 'default.jpg' },
     content: [{
     	type: String,
     	content: String

@@ -1,15 +1,30 @@
 "use strict";
 
-tripnoutApp.controller('homeController', function($scope) {
+tripnoutApp.controller('homeController', function($scope, Trip) {
 
-    // define a basic variable
-    $scope.message = 'Hey there! Come and see how good I look!';
+    $scope.processing = true;
 
-    // define a list of items
-    $scope.computers = [
-        { name: 'Macbook Pro', color: 'Silver', nerdness: 7 },
-        { name: 'Yoga 2 Pro', color: 'Gray', nerdness: 6 },
-        { name: 'Chromebook', color: 'Black', nerdness: 5 }
-    ];
+    var offset = 0;
+    var run = 1;
+    var limit = 5;
+
+    Trip.latest(limit, offset)
+    .success(function(data) {
+      $scope.processing = false;
+      console.log(data);
+      $scope.trips = data;
+    });
+
+    $scope.loadMore = function(){
+    	run++;
+    	offset = (run * limit) - run;
+
+    	Trip.latest(limit, offset)
+	    .success(function(data) {
+	      $scope.processing = false;
+	      console.log(data);
+	      $scope.trips += data;
+	    });
+    };
 
 });

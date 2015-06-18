@@ -1,0 +1,19 @@
+<div>
+
+	<h1>My Trips</h1>
+
+	<a ui-sref="create-my-trip">Create a Trip</a>
+
+	<div ng-if="trips" ng-repeat="trip in trips">
+
+		<my-trip details="trip.trip"></my-trip>
+
+	</div>	
+
+	<div ng-if="!trips">
+		
+		<h3>You haven't created any trips yet!</h3>
+
+	</div>
+
+</div>

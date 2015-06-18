@@ -1,19 +1,14 @@
-tripnoutApp.controller('tripController', function($rootScope, $scope, $location, $stateParams, Auth, User) {
+tripnoutApp.controller('tripController', function($rootScope, $scope, $location, $stateParams, Auth, Trip) {
 
-	//get info if a person is logged in
+	  //get info if a person is logged in
   	$scope.loggedIn = Auth.isLoggedIn();
 
-  	User.get($stateParams.user_id)
+  	Trip.get($stateParams.trip_id)
     .success(function(data) {
-      $scope.processing = false;
 
       console.log(data);
+      $scope.trip = data;
 
-      //clear the form
-      $scope.userData = {};
-
-      //bind the message from our API to $scope.message
-      $scope.message = data.message;
     });
 
 });

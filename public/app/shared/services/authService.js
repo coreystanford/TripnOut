@@ -79,7 +79,7 @@ tripnoutApp.factory('AuthToken', function($window) {
 
 });
 
-tripnoutApp.factory('AuthInterceptor', function($q, AuthToken) {
+tripnoutApp.factory('AuthInterceptor', function($q, $location, AuthToken) {
 
 	var interceptorFactory = {};
 
