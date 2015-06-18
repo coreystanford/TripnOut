@@ -57,28 +57,40 @@ a {
   .header .title {
     display: table;
     width: 100%; }
+    @media only screen and (min-width: 768px) {
+      .header .title {
+        display: block;
+        float: left; } }
     .header .title h1 {
       display: table-cell;
       vertical-align: center;
       text-align: center;
       min-height: 68px;
       position: relative;
-      z-index: 9999; }
+      z-index: 1; }
+      @media only screen and (min-width: 768px) {
+        .header .title h1 {
+          display: block;
+          float: left; } }
     .header .title .hamburger {
-      display: table-cell;
+      display: block;
+      position: absolute;
+      left: 10px;
+      top: 10px;
       -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
       text-align: left;
-      left: 0px;
-      min-height: 68px; }
+      min-height: 68px;
+      width: 42px;
+      z-index: 9999; }
       .header .title .hamburger i {
         cursor: pointer; }
       .header .title .hamburger.menu {
         transform: translateX(-100%);
         color: black;
-        left: 0; }
+        left: -10px; }
       @media only screen and (min-width: 768px) {
         .header .title .hamburger {
           display: none; } }
@@ -87,15 +99,18 @@ a {
     background: black;
     height: 100%;
     width: 100%;
-    clear: both;
     position: absolute;
     padding: 15px 30px;
     left: 0; }
     @media only screen and (min-width: 768px) {
       .header .main-nav {
-        float: right; } }
+        transform: translateX(0);
+        position: static;
+        float: right;
+        width: auto;
+        height: auto; } }
     .header .main-nav ul:first-child {
-      border-bottom: 1px solid black; }
+      border-bottom: 1px solid white; }
     .header .main-nav ul {
       padding: 15px; }
       .header .main-nav ul li {
@@ -104,17 +119,27 @@ a {
         font-size: 1.4em; }
         @media only screen and (min-width: 768px) {
           .header .main-nav ul li {
-            display: inline-block; } }
+            display: inline-block;
+            margin: 20px; } }
   .header:after {
     content: "";
     display: block;
     clear: both; }
 
 main {
+  position: relative;
   height: 100%;
   margin-bottom: -50px;
   padding: 15px;
   text-align: center; }
+
+#public {
+  height: 100%;
+  position: relative; }
+
+.viewContent {
+  position: absolute;
+  width: 100%; }
 
 .footer {
   background: black;
