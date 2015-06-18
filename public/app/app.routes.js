@@ -70,6 +70,11 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           url: '/users/:user_id/trips/delete/:trip_id',
           templateUrl: 'static/app/components/trips/views/delete.html',
           controller: 'udTripController'
+        })
+        .state('main-tutorials', {
+            url: '/tutorials',
+            templateUrl: 'static/app/components/tutorials/main-tutorials.html',
+            controller: 'tutorialController'
         });
 
     // Default route
