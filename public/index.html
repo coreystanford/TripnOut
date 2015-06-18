@@ -31,10 +31,12 @@
 			</div>
 			<nav class="main-nav">
 				<ul ng-if="!loggedIn">
+					<li><a ng-click="showMain()" ui-sref="home"><i class="fa fa-home fa-lg fa-fw"></i> Home</a></li>
 					<li><a ng-click="showMain()" ui-sref="login"><i class="fa fa-sign-in fa-lg fa-fw"></i> Login</a></li>
 					<li><a ng-click="menu=!menu" ui-sref="register"><i class="fa fa-user-plus fa-lg fa-fw"></i> Register</a></li>
 				</ul>
 				<ul ng-if="loggedIn">
+					<li><a ng-click="showMain()" ui-sref="home"><i class="fa fa-home fa-lg fa-fw"></i> Home</a></li>
 					<li><i class="fa fa-user fa-lg fa-fw"></i>My Profile</li>
 					<li><i class="fa fa-sign-out fa-lg fa-fw"></i>Logout</li>
 				</ul>

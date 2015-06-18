@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+@import url(http://fonts.googleapis.com/css?family=Didact+Gothic);
 * {
   margin: 0;
   padding: 0;
@@ -17,19 +17,22 @@ body {
   font-size: 16px; }
 
 h1 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 2em;
   font-weight: 300; }
 
 h2 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 1.7em;
   font-weight: 300; }
 
 h3 {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Didact Gothic", sans-serif;
   font-size: 1.3em;
   font-weight: 300; }
+
+li {
+  font-family: "Didact Gothic", sans-serif; }
 
 a {
   color: black;
