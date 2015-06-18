@@ -1,4 +1,6 @@
-app.directive('trip', function(){
+"use strict";
+
+tripnoutApp.directive('trip', function(){
   return {
     restrict: 'E',
     scope: {
