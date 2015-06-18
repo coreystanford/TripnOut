@@ -9,14 +9,15 @@ var Schema = mongoose.Schema;
 var TripSchema   = new Schema({
 	title: String,
     description: String,
+    country: String,
+    author: { type: Schema.ObjectId, ref: 'User' },
     thumbnail: { type: String, default: 'default.jpg' },
     content: [{
     	type: String,
     	content: String
     }],
-    author: { type: Schema.ObjectId, ref: 'User' },
     date: { type: Date, default: Date.now },
-    privacy: Boolean
+    public_trip: Boolean
 });
 
 // return the model
