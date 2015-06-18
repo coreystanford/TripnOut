@@ -72,15 +72,15 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
-  // ---- GET TRIPS / TRIP ---- //
+  // ---- GET LATEST TRIPS ---- //
 
-  apiRouter.route('/trips')
+  apiRouter.route('/trips/latest/:limit/:offset')
    .get(function(req, res) {
     Trip.find(function(err, trips) {
       if (err) res.send(err);
       // return the trips
       res.json(trips);
-    });
+    }).limit(req.params.limit).skip(req.params.offset).sort( { date: 1 } );
   });
 
   apiRouter.route('/trips/:trip_id')

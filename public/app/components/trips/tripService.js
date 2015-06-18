@@ -5,12 +5,17 @@ tripnoutApp.factory('Trip', function($http) {
 	// create a new object
 	var tripFactory = {};
 
-	// get a single user
+	// get latest public trips
+	tripFactory.latest = function(limit, offset) {
+	  return $http.get('/api/trips/latest/' + limit +'/' + offset);
+	};
+
+	// get a single trip
 	tripFactory.get = function(id) {
 	  return $http.get('/api/trips/' + id);
 	};
 
-	// get all users
+	// get all trips
 	tripFactory.all = function() {
 	  return $http.get('/api/trips/');
 	};
