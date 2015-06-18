@@ -1,1 +1,17 @@
-<h1>View Specific User's Trips</h1>
+<div>
+
+	<h1>My Trips</h1>
+
+	<div ng-if="trips" ng-repeat="trip in trips">
+
+		<trip details="trip.trip"></trip>
+
+	</div>	
+
+	<div ng-if="!trips">
+		
+		<h3>You haven't created any trips yet!</h3>
+
+	</div>
+
+</div>
