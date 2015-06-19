@@ -7,12 +7,11 @@ tripnoutApp.controller('homeController', function($scope, Trip) {
 
     var offset = 0;
     var run = 1;
-    var limit = 1;
+    var limit = 3;
 
     Trip.latest(limit, offset)
     .success(function(data) {
       $scope.processing = false;
-      console.log(data);
       $scope.trips = data;
     });
 
@@ -26,7 +25,6 @@ tripnoutApp.controller('homeController', function($scope, Trip) {
 	      if(data.length){
 		      for (var i = 0; i < data.length; i++) {
 		      	$scope.trips.push(data[i]);
-		      	console.log(data[i]);
 		      };
 		      $scope.processing = false;
 		  } else {
