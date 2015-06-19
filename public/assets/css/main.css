@@ -118,16 +118,24 @@ a {
         transform: translateX(0);
         padding: 0;
         position: static;
-        float: right;
-        width: auto;
-        height: auto; } }
-    .header .main-nav ul:first-child {
-      border-bottom: 1px solid white; }
+        text-align: right;
+        right: 0;
+        width: 100%;
+        height: auto; }
+        .header .main-nav .loggedMenu {
+          width: 100%; }
+          .header .main-nav .loggedMenu ul {
+            position: absolute;
+            width: 100%;
+            top: 0; } }
     .header .main-nav ul {
       padding: 15px; }
       @media only screen and (min-width: 768px) {
         .header .main-nav ul {
-          padding: 0; } }
+          padding: 0;
+          position: absolute;
+          bottom: 0;
+          right: 0; } }
       .header .main-nav ul li {
         list-style: none;
         margin: 20px 0;
@@ -175,6 +183,50 @@ main {
 @keyframes disappear {
   to {
     opacity: 0; } }
+@-webkit-keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@-moz-keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@-webkit-keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+@-moz-keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+@keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+.loggedIn.ng-enter, .loggedOut.ng-enter {
+  -webkit-animation: appear 0.5s;
+  -moz-animation: appear 0.5s;
+  animation: appear 0.5s; }
+  @media only screen and (min-width: 768px) {
+    .loggedIn.ng-enter, .loggedOut.ng-enter {
+      -webkit-animation: slideLeft 0.5s;
+      -moz-animation: slideLeft 0.5s;
+      animation: slideLeft 0.5s; } }
+
+.loggedIn.ng-leave, .loggedOut.ng-leave {
+  -webkit-animation: disappear 0.5s;
+  -moz-animation: disappear 0.5s;
+  animation: disappear 0.5s; }
+  @media only screen and (min-width: 768px) {
+    .loggedIn.ng-leave, .loggedOut.ng-leave {
+      -webkit-animation: slideRight 0.5s;
+      -moz-animation: slideRight 0.5s;
+      animation: slideRight 0.5s; } }
+
 .ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
