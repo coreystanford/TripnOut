@@ -13,6 +13,10 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
   	$scope.tripdata = {};
   	$scope.tripdata.content = new Array();
   	
+    $scope.textType = "text";
+    $scope.imageType = "image";
+    $scope.videoType = "video";
+
   	$scope.displayButton = true;
 
   	$scope.message = $stateParams.msg;

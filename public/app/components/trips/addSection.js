@@ -8,13 +8,15 @@ tripnoutApp.directive("addsection", function($compile){
 
 			if(!scope.count){scope.count = 0;}
 
+			scope.thisType = attrs.datatype;
+
 			switch(attrs.datatype) {
 
 				case "text":
 					// add a text field
 					angular.element(document.getElementById('content'))
 					.append(
-		                $compile("<div class='section'><input type='hidden' ng-model='tripdata.content["+scope.count+"].datatype' value='text'><textarea ng-model='tripdata.content["+scope.count+"].content'></textarea></div>")(scope)
+		                $compile("<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = textType'><textarea ng-model='tripdata.content["+scope.count+"].content'></textarea></div>")(scope)
 		            );
 				break;
 
@@ -23,7 +25,7 @@ tripnoutApp.directive("addsection", function($compile){
 					angular.element(document.getElementById('content'))
 					.append(
 		                $compile(
-	                        "<div class='section'><input type='hidden' ng-model='tripdata.content["+scope.count+"].datatype' value='image'><input type='file' ng-model='tripdata.content["+scope.count+"].content'></div>")(scope)
+	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = imageType'><input type='file' ng-model='tripdata.content["+scope.count+"].content'></div>")(scope)
 		            );
 				break;
 
@@ -32,7 +34,7 @@ tripnoutApp.directive("addsection", function($compile){
 					angular.element(document.getElementById('content'))
 					.append(
 		                $compile(
-	                        "<div class='section'><input type='hidden' ng-model='tripdata.content["+scope.count+"].datatype' value='image'><input type='text' ng-model='tripdata.content["+scope.count+"].content'></div>")(scope)
+	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = videoType'><input type='text' ng-model='tripdata.content["+scope.count+"].content'></div>")(scope)
 		            );
 				break;
 
