@@ -234,7 +234,12 @@
 
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
-    res.send(req.decoded);
+    var me = req.decoded;
+    User.find({username: me.username}, function(err, user){
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
+        res.json(user[0]);
+      });
+    });
   });
 
   // ----------------------- //
@@ -250,10 +255,16 @@
     // create a new instance of the User model
     var trip = new Trip();    
  
+    console.log(req.body);
+
     // set the users information (comes from the request)
     trip.title = req.body.title; 
     trip.description = req.body.description;
     trip.author = req.body.author;
+    for (var i = 0; i < req.body.content.length; i++) {
+      console.log(req.body.content[i]);
+      trip.content.push(req.body.content[i]);
+    };
     trip.country = req.body.country;
     trip.thumbnail = req.body.thumbnail;
     trip.content = req.body.content;
@@ -297,7 +308,7 @@
 
   // -------- Update / Delete Trip BY ID -------- //
 
- apiRouter.route('/trips/:trip_id')
+ apiRouter.route('/trips/:trip_id/:user_id')
 
   // update the trip with this id 
   .put(function(req, res) {
@@ -306,22 +317,35 @@
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
 
-      // update the trips info only if its new
-      if (req.body.title) trip.title = req.body.title;
-      if (req.body.description) trip.description = req.body.description;
-      if (req.body.author) trip.author = req.body.author;
-      if (req.body.country) trip.country = req.body.country;
-      if (req.body.thumbnail) trip.thumbnail = req.body.thumbnail;
-      if (req.body.content) trip.content = req.body.content;
-      if (req.body.public_trip) trip.public_trip = req.body.public_trip;
- 
-      // save the trip
-      trip.save(function(err) {
-        if (err) res.send(err);
-        // return a message
-        res.json({ message: 'User updated!' });
-      });
- 
+      if(trip.author == req.params.user_id){
+
+        // update the trips info only if its new
+        if (req.body.title) trip.title = req.body.title;
+        if (req.body.description) trip.description = req.body.description;
+        if (req.body.author) trip.author = req.body.author;
+        if (req.body.country) trip.country = req.body.country;
+        if (req.body.thumbnail) trip.thumbnail = req.body.thumbnail;
+        if (req.body.content) {
+          trip.content = new Array();
+          for (var i = 0; i < req.body.content.length; i++) {
+            trip.content.push(req.body.content[i]);
+          };
+        }
+        if (req.body.public_trip) trip.public_trip = req.body.public_trip;
+   
+        // save the trip
+        trip.save(function(err) {
+          if (err) res.send(err);
+          // return a message
+          res.json({ message: 'User updated!' });
+        });
+
+      } else {
+
+        res.json({ message: 'Unauthorized' });
+      
+      }
+   
     });
   })
 
@@ -330,21 +354,28 @@
 
     Trip.find({ _id: req.params.trip_id }, function(err, trip) {
 
-      User.findOneAndUpdate(
-       { _id: trip[0].author },
-       { $pull: { 'trips': { 'trip': trip[0]._id } } },function(err, user){
+      if(trip[0].author == req.params.user_id){
 
-         if (err) return res.send(err);
+        User.findOneAndUpdate(
+         { _id: trip[0].author },
+         { $pull: { 'trips': { 'trip': trip[0]._id } } },function(err, user){
 
-         Trip.remove({
-            _id: req.params.trip_id
-         }, function(err, trip) {
            if (err) return res.send(err);
-           
-           res.json({ message: 'Successfully deleted' });
+
+           Trip.remove({
+              _id: req.params.trip_id
+           }, function(err, trip) {
+             if (err) return res.send(err); 
+             res.json({ message: 'Successfully deleted' });
+           });
+    
          });
-  
-       });
+
+      } else {
+
+        res.json({ message: 'Unauthorized' });
+      
+      }
     
     });
   

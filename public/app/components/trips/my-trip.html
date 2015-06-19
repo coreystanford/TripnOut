@@ -4,6 +4,6 @@
 <h4>{{ details.country }}</h4>
 <h5>{{ details.date | date }}</h5>
 
-<a ui-sref="update-my-trip({user_id: details.author, trip_id: details._id})">Update</a>
+<a ui-sref="update-my-trip({trip_id: details._id})">Update</a>
 <br/>
-<a ui-sref="delete-my-trip({user_id: details.author, trip_id: details._id})">Delete</a>
+<a ui-sref="delete-my-trip({trip_id: details._id})">Delete</a>

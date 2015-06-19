@@ -10,7 +10,7 @@ https://github.com/flowjs/ng-flow
 
 <form ng-submit="createTrip()" accept-charset="utf-8">
 
-	<input type="hidden" ng-model="tripdata.author" value="{{ trip.author }}">
+	<input type="hidden" ng-model="tripdata.author" value="{{ user_id }}">
 
 	<div>
 		<div id="details">
@@ -43,7 +43,11 @@ https://github.com/flowjs/ng-flow
 			<addsection datatype="image" ng-click="showOptions()">Image</addsection>
 			<addsection datatype="video" ng-click="showOptions()">Video</addsection>
 		</div>
+
+		<input type="submit" value="Create Trip">
 		
 	</div>
+
+	{{ tripdata }}
 
 </form>
