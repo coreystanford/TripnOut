@@ -7,6 +7,12 @@ tripnoutApp.controller('userController', function($scope, User){
   //set a processing variable to show loading things
   $scope.processing = true;
 
+  //grab logged in user
+  User.me().success(function(data){
+    console.log(data);
+    $scope.me = data;
+  })
+
   //grab all the users at page locationProvider
   User.all()
       .success(function(data) {

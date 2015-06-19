@@ -6,7 +6,13 @@
 
 "use strict";
 
-var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'flow']);
+var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'ngMaterial', 'flow'])
+
+.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('red')
+        .accentPalette('orange');  
+}); 
 
 tripnoutApp.run([ '$rootScope', 'Auth',function($rootScope, Auth){
 	

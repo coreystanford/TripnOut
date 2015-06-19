@@ -99,6 +99,10 @@ a
 	color: $body-color
 	text-decoration: none
 
+.loginForm
+	width: 300px
+	margin: 0 auto
+
 // container ============================
 .container
 	height: 100%
@@ -116,12 +120,15 @@ a
 	color: white
 	a
 		color: white
+	&:after
+		content: ""
+		display: block
+		clear: both
 	.title
 		display: table
 		width: 100%
 		@include respond($small-break)
 			display: block
-			float: left
 		h1
 			display: table-cell
 			vertical-align: center
@@ -158,8 +165,13 @@ a
 		position: absolute
 		padding: $content-pad 30px
 		left: 0
+		&:after
+			content: ""
+			display: block
+			clear: both
 		@include respond($small-break)
 			transform: translateX(0)
+			padding: 0
 			position: static
 			float: right
 			width: auto
@@ -168,6 +180,8 @@ a
 			border-bottom: 1px solid white
 		ul
 			padding: $content-pad
+			@include respond($small-break)
+				padding: 0
 			li
 				list-style: none
 				margin: 20px 0
@@ -175,11 +189,7 @@ a
 					size: 1.4em
 				@include respond($small-break)
 					display: inline-block
-					margin: 20px
-	&:after
-		content: ""
-		display: block
-		clear: both
+					margin: 10px 20px
 
 // main =================================
 

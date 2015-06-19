@@ -30,6 +30,11 @@ tripnoutApp.factory('User', function($http) {
 	  return $http.delete('/api/users/' + id);
 	};
 
+	//get logged in user
+	userFactory.me = function(){
+		return $http.get('/api/me');
+	}
+
 	// return entire userFactory object
 	return userFactory;
 

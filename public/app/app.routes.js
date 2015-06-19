@@ -20,6 +20,12 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           controller: 'mainController'
         })
 
+        .state('profile', {
+          url: '/me',
+          templateUrl: 'static/app/components/user/profile.html',
+          controller: 'userController'
+        })
+
         .state('create', {
           url: '/user/create',
           templateUrl: 'static/app/components/login/login.html',
@@ -47,7 +53,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           templateUrl: 'static/app/components/trips/views/my-trips.html',
           controller: 'crTripController'
         })
-        
+
         .state('create-my-trip', {
           url: '/users/:user_id/trips/create',
           templateUrl: 'static/app/components/trips/views/create.html',
@@ -64,6 +70,16 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           url: '/users/:user_id/trips/delete/:trip_id',
           templateUrl: 'static/app/components/trips/views/delete.html',
           controller: 'udTripController'
+        })
+        .state('main-tutorials', {
+            url: '/tutorials',
+            templateUrl: 'static/app/components/tutorials/views/main-tutorials.html',
+            controller: 'tutorialController'
+        })
+     .state('create-tutorial', {
+            url: '/create-tutorial',
+            templateUrl: 'static/app/components/tutorials/views/create-tutorial.html',
+            controller: ''
         });
 
     // Default route

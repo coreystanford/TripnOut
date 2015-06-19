@@ -38,6 +38,10 @@ a {
   color: black;
   text-decoration: none; }
 
+.loginForm {
+  width: 300px;
+  margin: 0 auto; }
+
 .container {
   height: 100%;
   margin-bottom: -50px;
@@ -54,13 +58,16 @@ a {
   color: white; }
   .header a {
     color: white; }
+  .header:after {
+    content: "";
+    display: block;
+    clear: both; }
   .header .title {
     display: table;
     width: 100%; }
     @media only screen and (min-width: 768px) {
       .header .title {
-        display: block;
-        float: left; } }
+        display: block; } }
     .header .title h1 {
       display: table-cell;
       vertical-align: center;
@@ -102,9 +109,14 @@ a {
     position: absolute;
     padding: 15px 30px;
     left: 0; }
+    .header .main-nav:after {
+      content: "";
+      display: block;
+      clear: both; }
     @media only screen and (min-width: 768px) {
       .header .main-nav {
         transform: translateX(0);
+        padding: 0;
         position: static;
         float: right;
         width: auto;
@@ -113,6 +125,9 @@ a {
       border-bottom: 1px solid white; }
     .header .main-nav ul {
       padding: 15px; }
+      @media only screen and (min-width: 768px) {
+        .header .main-nav ul {
+          padding: 0; } }
       .header .main-nav ul li {
         list-style: none;
         margin: 20px 0;
@@ -120,11 +135,7 @@ a {
         @media only screen and (min-width: 768px) {
           .header .main-nav ul li {
             display: inline-block;
-            margin: 20px; } }
-  .header:after {
-    content: "";
-    display: block;
-    clear: both; }
+            margin: 10px 20px; } }
 
 main {
   position: relative;
