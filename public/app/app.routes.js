@@ -48,34 +48,39 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         // ---- Admin Trip Routes ---- //
 
         .state('my-trips', {
-          url: '/users/:user_id/trips',
+          url: '/me/trips',
           templateUrl: 'static/app/components/trips/views/my-trips.html',
-          controller: 'crTripController'
+          controller: 'crTripController',
+          params: { msg: null }
         })
 
         .state('create-my-trip', {
-          url: '/users/:user_id/trips/create',
+          url: '/me/trips/create',
           templateUrl: 'static/app/components/trips/views/create.html',
           controller: 'crTripController'
         })
 
         .state('update-my-trip', {
-          url: '/users/:user_id/trips/update/:trip_id',
+          url: '/me/trips/update/:trip_id',
           templateUrl: 'static/app/components/trips/views/update.html',
           controller: 'udTripController'
         })
 
         .state('delete-my-trip', {
-          url: '/users/:user_id/trips/delete/:trip_id',
+          url: '/me/trips/delete/:trip_id',
           templateUrl: 'static/app/components/trips/views/delete.html',
           controller: 'udTripController'
         })
+
+        // ---- Tutorial Routes ---- //
+
         .state('main-tutorials', {
             url: '/tutorials',
             templateUrl: 'static/app/components/tutorials/views/main-tutorials.html',
             controller: 'tutorialController'
         })
-     .state('create-tutorial', {
+        
+        .state('create-tutorial', {
             url: '/create-tutorial',
             templateUrl: 'static/app/components/tutorials/views/create-tutorial.html',
             controller: ''

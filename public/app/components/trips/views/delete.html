@@ -1,5 +1,11 @@
 <div>
 
+	{{message}}
+
 	<h1>Delete {{ trip.title }}</h1>
 	
+	<button ng-click="deleteTrip(trip_id)">Delete</button>
+	<br/>
+	<button ui-sref="my-trips({user_id: user_id})">Cancel</button>
+
 </div>
