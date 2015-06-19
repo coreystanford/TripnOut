@@ -16,8 +16,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('login', {
           url: '/login',
-          templateUrl: 'static/app/components/login/login.html',
-          controller: 'mainController'
+          templateUrl: 'static/app/components/login/login.html'
         })
 
         .state('profile', {

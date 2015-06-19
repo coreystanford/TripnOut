@@ -9,7 +9,6 @@ tripnoutApp.controller('userController', function($scope, User){
 
   //grab logged in user
   User.me().success(function(data){
-    console.log(data);
     $scope.me = data;
   })
 
