@@ -6,13 +6,13 @@
 		
 		<div ng-repeat="content in trip.content">
 
-			<div ng-if="content.type == text">
+			<div ng-if="content.datatype == 'text'">
 				<p>{{ content.content }}</p>
 			</div>
-			<div ng-if="content.type == image">
+			<div ng-if="content.datatype == 'image'">
 				<img ng-src="content.content" alt="{{content.alt}}">
 			</div>
-			<div ng-if="content.type == video">
+			<div ng-if="content.datatype == 'video'">
 				<video ng-src="content.content" poster="/static/assets/imgs/{{ content.alt }}"></video>
 			</div>
 
