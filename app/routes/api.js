@@ -97,6 +97,34 @@
     });
   });
 
+  // ---- REGISTER USER ---- //
+  apiRouter.route('/users')
+  .post(function(req, res) {
+    
+    // create a new instance of the User model
+    var user = new User();    
+ 
+    // set the users information (comes from the request)
+    user.name = req.body.name;  
+    user.username = req.body.username;
+    user.password = req.body.password;
+ 
+    // save the user and check for errors
+    user.save(function(err) {
+             if (err) {
+                 // duplicate entry
+                 if (err.code == 11000) 
+                     return res.json({ success: false, message: 'A user with that\
+  username already exists. '});
+                 else 
+                     return res.send(err);
+             }
+ 
+      res.json({ message: 'User created!' });
+    });
+
+  })
+
   // ---------------------------- //
   // -------- MIDDLEWARE -------- //
   // ---------------------------- //
@@ -143,35 +171,9 @@
   // -------- USERS -------- //
   // ----------------------- //
  
-  // ---- Create User ---- //
+  // ---- Get All Users ---- //
 
   apiRouter.route('/users')
-
- 	.post(function(req, res) {
- 		
- 		// create a new instance of the User model
- 		var user = new User(); 		
- 
- 		// set the users information (comes from the request)
- 		user.name = req.body.name;  
- 		user.username = req.body.username;
- 		user.password = req.body.password;
- 
- 		// save the user and check for errors
- 		user.save(function(err) {
-             if (err) {
-                 // duplicate entry
-                 if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A user with that\
-  username already exists. '});
-                 else 
-                     return res.send(err);
-             }
- 
- 			res.json({ message: 'User created!' });
- 		});
-
-  })
   .get(function(req, res) {
     User.find(function(err, users) {
       if (err) res.send(err);

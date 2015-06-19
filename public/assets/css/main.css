@@ -199,6 +199,10 @@ main {
 @keyframes slideRight {
   to {
     transform: translateX(100%); } }
+.logInReg {
+  position: absolute;
+  width: 100%; }
+
 .loggedIn.ng-enter, .loggedOut.ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
@@ -219,12 +223,12 @@ main {
       -moz-animation: slideRight 0.5s;
       animation: slideRight 0.5s; } }
 
-.ng-enter {
+.ng-enter, .logInReg.ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
   animation: appear 0.5s; }
 
-.ng-leave {
+.ng-leave, .logInReg.ng-leave {
   -webkit-animation: disappear 0.5s;
   -moz-animation: disappear 0.5s;
   animation: disappear 0.5s; }

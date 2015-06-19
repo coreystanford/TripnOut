@@ -236,6 +236,10 @@ main
 	to
 		transform: translateX(100%)
 
+.logInReg
+	position: absolute
+	width: 100%
+
 
 
 .loggedIn.ng-enter, .loggedOut.ng-enter
@@ -248,8 +252,8 @@ main
 	@include respond($small-break)
 		@include animation('slideRight 0.5s')
 
-.ng-enter
+.ng-enter, .logInReg.ng-enter
 	@include animation('appear 0.5s')
 
-.ng-leave
+.ng-leave, .logInReg.ng-leave
 	@include animation('disappear 0.5s')
