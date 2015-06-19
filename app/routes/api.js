@@ -76,7 +76,7 @@
 
   apiRouter.route('/trips/latest/:limit/:offset')
    .get(function(req, res) {
-    Trip.find( { $where: 'this.public_trip == true' }, function(err, trips) {
+    Trip.find( { public_trip: { $ne: false } }, function(err, trips) {
       if (err) res.send(err);
       // return the trips
       res.json(trips);
@@ -270,15 +270,9 @@
     trip.content = req.body.content;
     trip.public_trip = req.body.public_trip;
  
-    // save the user and check for errors
+    // save the trip and check for errors
     trip.save(function(err) {
-             if (err) {
-                 // duplicate entry
-                 if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A trip with that username already exists. '});
-                 else 
-                     return res.send(err);
-             }
+      if (err) { return res.send(err); }
     });
 
     // Add the trip to the array of trips associated with the User's account

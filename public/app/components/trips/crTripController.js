@@ -29,11 +29,10 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
 
     $scope.createTrip = function(){
 
-    	$scope.tripdata.author = $scope.user_id;
+    	$scope.tripdata.author = $scope.me._id;
 
     	Trip.create($scope.tripdata)
     	.success(function(response){
-    		$scope.message = response;
     		$state.go('my-trips', {msg: response.message});
     	});
 
