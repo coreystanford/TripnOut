@@ -5,7 +5,6 @@ tripnoutApp.controller('udTripController', function($rootScope, $scope, $state, 
 
     //grab logged in user
     User.me().success(function(data){
-      console.log(data);
       $scope.me = data;
     });
 

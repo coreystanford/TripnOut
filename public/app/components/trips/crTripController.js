@@ -7,7 +7,6 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
 
 	  //grab logged in user
     User.me().success(function(data){
-      console.log(data);
       $scope.me = data;
       $scope.trips = data.trips;
     });
