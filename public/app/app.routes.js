@@ -38,6 +38,14 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           controller: 'userEditController'
         })
 
+        // ---- Profile Routes ---- //
+
+        .state('editProfile', {
+          url: '/me/edit',
+          templateUrl: 'static/app/components/user/editProfile.html',
+          controller: 'userEditController'
+        })
+
         // ---- Public Trip Routes ---- //
 
         .state('trip', {
