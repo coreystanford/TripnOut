@@ -7,7 +7,7 @@ tripnoutApp.controller('homeController', function($scope, Trip) {
 
     var offset = 0;
     var run = 1;
-    var limit = 2;
+    var limit = 5;
 
     Trip.latest(limit, offset)
     .success(function(data) {
