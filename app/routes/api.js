@@ -33,7 +33,7 @@
    // select the name username and password explicitly
    User.findOne({
      username: req.body.username
-   }).select('_id name username password').exec(function(err, user) {
+   }).select('_id name username pic password').exec(function(err, user) {
  
      if (err) throw err;
  
@@ -57,8 +57,10 @@
          // if user is found and password is right
          // create a token
          var token = jwt.sign({
+                     _id: user._id,
                      name: user.name,
-                     username: user.username
+                     username: user.username,
+                     pic: user.pic
                     }, config.secret, {
                      expiresInMinutes: 1440 // expires in 24 hours
                     });

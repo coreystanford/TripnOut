@@ -1,0 +1,19 @@
+<div class="editProfile">
+	<h1>{{ me.name }} - Edit Profile</h1>
+	<form ng-submit="saveUser()">
+		<md-input-container>
+			<label>Name</label>
+			<input type="text" ng-model="userData.name" required>
+		</md-input-container>
+		<md-input-container>
+			<label>Username</label>
+			<input type="text" ng-model="userData.username" required>
+		</md-input-container>
+		<md-button type="submit" aria-label="Register" class="md-raised">
+	      <span ng-if="!processing">Update</span>
+
+	      <span ng-if="processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
+
+	    </md-button>
+	</form>
+</div>
