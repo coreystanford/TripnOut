@@ -1,5 +1,5 @@
 
-tripnoutApp.controller('testController', function($state, $location, Auth) {
+tripnoutApp.controller('testController', function($state, $location, Auth, User) {
 
   var vm = this;
   //menu boolean
@@ -11,6 +11,12 @@ tripnoutApp.controller('testController', function($state, $location, Auth) {
 
   //get info if a person is logged in
   vm.loggedIn = Auth.isLoggedIn();
+
+    //get logged in user info
+    User.me().success(function(data){
+      vm.user = data;
+    })
+    
 
     //function to handle login form
     vm.doLogin = function() {

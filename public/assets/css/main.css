@@ -38,7 +38,7 @@ a {
   color: black;
   text-decoration: none; }
 
-.loginForm {
+.loginForm, .editProfile {
   width: 300px;
   margin: 0 auto; }
 
