@@ -4,7 +4,11 @@
 
 	<h1>My Trips</h1>
 
-	<a ui-sref="create-my-trip({user_id: user_id})">Create a Trip</a>
+	<div class="form-group">
+
+		<md-button class="md-raised" ui-sref="create-my-trip({user_id: user_id})">Create a Trip</md-button>
+
+	</div>
 
 	<div ng-if="trips" ng-repeat="trip in trips" class="my-trip">
 
@@ -19,9 +23,10 @@
 		</div>
 
 		<div class="buttons">
-			<a ui-sref="update-my-trip({trip_id: trip.trip._id})">Update</a>
-			<br/>
-			<a ui-sref="delete-my-trip({trip_id: trip.trip._id})">Delete</a>
+
+			<md-button class="md-raised" ui-sref="update-my-trip({trip_id: trip.trip._id})">Update</md-button>
+			<md-button class="md-raised md-warn" ui-sref="delete-my-trip({trip_id: trip.trip._id})">Delete</md-button>
+
 		</div>
 
 	</div>	

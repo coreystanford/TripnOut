@@ -61,7 +61,7 @@
 }
 #my-trips .my-trip .buttons {
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   right: 30px;
 }
 #my-trips .my-trip .buttons a {
@@ -73,7 +73,45 @@
   max-width: 800px;
   width: 90%;
   margin: 0 auto;
+  text-align: left;
 }
 #createTripForm img {
   width: 100%;
+}
+
+.form-group {
+  margin: 35px 0;
+}
+
+.form-group.center {
+  margin: 35px 0;
+  text-align: center;
+}
+
+.addSectionBtn {
+  margin: 25px 0;
+  background-color: #ffab40 !important;
+  color: white !important;
+}
+
+.submitBtn {
+  width: 400px;
+  max-width: 80%;
+}
+
+.drop {
+  padding: 15px;
+  margin: 10px 0;
+  border: 2px dashed #f1f1f1;
+  border-radius: 5px;
+  line-height: 34px;
+}
+
+.drop.drag-over {
+  background: #5cb85c;
+  color: white;
+}
+
+.uploadBtn {
+  cursor: pointer;
 }
