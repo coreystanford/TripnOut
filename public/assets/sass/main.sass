@@ -91,6 +91,7 @@ h3
 		weight: 300
 
 li
+	list-style: none
 	font:
 		family: $head-font
 
@@ -213,8 +214,22 @@ main
 	height: 100%
 	width: 100%
 
-// footer =================================
-
+// profile =================================
+.profile
+	nav
+		.btn
+			width: 100%
+		a
+			display: block
+			margin: 0 auto
+			width: 100%
+		li
+			margin: 15px 0
+		@include respond($small-break)
+			.btn
+				width: 400px
+			a
+				width: 400px
 
 // Angular animation ENTER LEAVE ========================
 

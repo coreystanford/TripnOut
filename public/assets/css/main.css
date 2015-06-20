@@ -31,6 +31,7 @@ h3 {
   font-weight: 300; }
 
 li {
+  list-style: none;
   font-family: "Didact Gothic", sans-serif; }
 
 a {
@@ -156,6 +157,20 @@ main {
   position: absolute;
   height: 100%;
   width: 100%; }
+
+.profile nav .btn {
+  width: 100%; }
+.profile nav a {
+  display: block;
+  margin: 0 auto;
+  width: 100%; }
+.profile nav li {
+  margin: 15px 0; }
+@media only screen and (min-width: 768px) {
+  .profile nav .btn {
+    width: 400px; }
+  .profile nav a {
+    width: 400px; } }
 
 @-webkit-keyframes appear {
   from {

@@ -1,4 +1,13 @@
-<p>Name: {{ me.name }}</p>
-<p>Username: {{ me.username }}</p>
+<div class="profile">
+	<h2>Hello, {{ me.name }}!</h2>
 
-<a ui-sref="my-trips">View My Trips</a>
+	<nav>
+		<ul>
+			<li><md-button class="btn md-raised">Edit Profile</md-button></li>
+			<li><md-button class="btn md-raised" ui-sref="my-trips">My Trips</md-button></li>
+			<li><md-button class="btn md-raised">My Tutorials</md-button></li>
+		</ul>
+	</nav>
+			
+		
+</div>
