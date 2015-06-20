@@ -27,8 +27,12 @@
   </form>
 </div>
 
-<div class="logInReg" ng-if="type=='create' && !success">
+<div class="logInReg" ng-if="type=='create'">
   <h1>Register</h1>
+  <div ng-if="type=='create' && success">
+    <h2 class="warning">{{ message }}</h2>
+  </div>
+
   <form ng-submit="saveUser()" class="loginForm">
     <!--NAME INPUT-->
     <md-input-container>
@@ -59,8 +63,4 @@
     </md-button>
 
   </form>
-</div>
-
-<div class="logInReg" ng-if="type=='create' && success">
-  <h1>Registered!</h1>
 </div>

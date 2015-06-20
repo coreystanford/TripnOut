@@ -27,7 +27,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         })
 
         .state('create', {
-          url: '/user/create',
+          url: '/register',
           templateUrl: 'static/app/components/login/login.html',
           controller: 'userCreateController'
         })

@@ -125,13 +125,12 @@
              if (err) {
                  // duplicate entry
                  if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A user with that\
-  username already exists. '});
+                     return res.json({ success: false, message: 'A user with that username already exists. '});
                  else 
                      return res.send(err);
              }
  
-      res.json({ message: 'User created!' });
+      res.json({ message: 'Registration Successful!' });
     });
 
   });
