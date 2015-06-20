@@ -94,6 +94,10 @@
   color: white !important;
 }
 
+.section {
+  margin: 20px 0;
+}
+
 .submitBtn {
   width: 400px;
   max-width: 80%;
@@ -114,4 +118,3 @@
 
 .uploadBtn {
   cursor: pointer;
-}
