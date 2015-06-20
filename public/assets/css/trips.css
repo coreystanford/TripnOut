@@ -68,3 +68,12 @@
   background: white;
   color: black;
 }
+
+#createTripForm {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+}
+#createTripForm img {
+  width: 100%;
+}

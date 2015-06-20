@@ -8,7 +8,7 @@ https://github.com/flowjs/ng-flow
 
 <h1>Create Trip</h1>
 
-<form ng-submit="createTrip()" accept-charset="utf-8">
+<form ng-submit="createTrip()" accept-charset="utf-8" id="createTripForm">
 
 	<input type="hidden" ng-model="tripdata.author" value="{{ user_id }}">
 
@@ -63,7 +63,7 @@ https://github.com/flowjs/ng-flow
 		
 		
 	</div>
-
+	<br><br><br>
 	{{ tripdata }}
 
 </form>
