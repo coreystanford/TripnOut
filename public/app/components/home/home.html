@@ -1,13 +1,15 @@
 <div id="home-trips">
 	
-	<div class="home-trip" class="clearfix" ng-repeat="trip in trips">
+	<div class="home-trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
 
-		<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ details.description }}">
-		
+		<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ trip.description }}">
+			
 		<div class="titles">
+
 			<h2>{{ trip.title }}</h2>
 			<h4>{{ trip.country }}</h4>
 			<h5>{{ trip.date | date }}</h5>
+
 		</div>
 
 	</div>	
