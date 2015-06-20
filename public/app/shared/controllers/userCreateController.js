@@ -6,7 +6,8 @@ tripnoutApp.controller('userCreateController', function($scope, User){
   //variable to hide/show elements of the views
   //differentiates between create or edit pages
   $scope.type = 'create';
-
+  $scope.success = false;
+  $scope.userData = {};
   //function to create a user
   $scope.saveUser = function()  {
     $scope.processing = true;
@@ -22,6 +23,7 @@ tripnoutApp.controller('userCreateController', function($scope, User){
         //clear the form
         $scope.userData = {};
         $scope.message = data.message;
+        $scope.success = true;
       });
 
   };

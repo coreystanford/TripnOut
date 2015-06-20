@@ -6,12 +6,11 @@
 
 html {
   overflow-x: hidden !important;
-  width: 100%;
-  height: 100%; }
+  min-height: 100%; }
 
 body {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  min-height: 100%;
   overflow-x: hidden !important;
   font-family: "Open Sans", sans-serif;
   font-size: 16px; }
@@ -32,6 +31,7 @@ h3 {
   font-weight: 300; }
 
 li {
+  list-style: none;
   font-family: "Didact Gothic", sans-serif; }
 
 a {
@@ -43,8 +43,7 @@ a {
   margin: 0 auto; }
 
 .container {
-  height: 100%;
-  margin-bottom: -50px;
+  min-height: 100%;
   -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -147,23 +146,31 @@ a {
 
 main {
   position: relative;
-  height: 100%;
-  margin-bottom: -50px;
   padding: 15px;
   text-align: center; }
 
 #public {
-  height: 100%;
+  min-height: 100%;
   position: relative; }
 
 .viewContent {
   position: absolute;
+  height: 100%;
   width: 100%; }
 
-.footer {
-  background: black;
-  color: white;
-  height: 50px; }
+.profile nav .btn {
+  width: 100%; }
+.profile nav a {
+  display: block;
+  margin: 0 auto;
+  width: 100%; }
+.profile nav li {
+  margin: 15px 0; }
+@media only screen and (min-width: 768px) {
+  .profile nav .btn {
+    width: 400px; }
+  .profile nav a {
+    width: 400px; } }
 
 @-webkit-keyframes appear {
   from {
@@ -207,6 +214,10 @@ main {
 @keyframes slideRight {
   to {
     transform: translateX(100%); } }
+.logInReg {
+  position: absolute;
+  width: 100%; }
+
 .loggedIn.ng-enter, .loggedOut.ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
@@ -227,12 +238,12 @@ main {
       -moz-animation: slideRight 0.5s;
       animation: slideRight 0.5s; } }
 
-.ng-enter {
+.ng-enter, .logInReg.ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
   animation: appear 0.5s; }
 
-.ng-leave {
+.ng-leave, .logInReg.ng-leave {
   -webkit-animation: disappear 0.5s;
   -moz-animation: disappear 0.5s;
   animation: disappear 0.5s; }
