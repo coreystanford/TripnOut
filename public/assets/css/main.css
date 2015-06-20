@@ -164,7 +164,7 @@ main {
   margin: 0 auto;
   width: 100%; }
 .profile nav li {
-  margin: 15px 0; }
+  margin: 15px; }
 @media only screen and (min-width: 768px) {
   .profile nav .btn {
     width: 400px; }
