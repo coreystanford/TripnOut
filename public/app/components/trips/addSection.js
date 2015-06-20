@@ -1,5 +1,7 @@
 "use strict";
 // http://jsfiddle.net/ftfish/KyEr3/
+// http://ngmodules.org/modules/ng-flow
+
 //Directive for adding section on click
 tripnoutApp.directive("addsection", function($compile){
 	return function(scope, element, attrs) {
@@ -25,7 +27,7 @@ tripnoutApp.directive("addsection", function($compile){
 					angular.element(document.getElementById('content'))
 					.append(
 		                $compile(
-	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = imageType'><input type='file' ng-model='tripdata.content["+scope.count+"].content'></div>")(scope)
+	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = imageType'><div flow-init flow-files-submitted='$flow.upload()'><div class='alert' flow-drop ng-if='!$flow.files[0]'><span class='btn' flow-btn>Upload File</span> Drag And Drop your file here</div><div ng-if='$flow.files[0]'><img flow-img='$flow.files[0]' /><span style='display:none' ng-init='tripdata.content["+scope.count+"].content = $flow.files[0].name'></span></div></div><div ng-flow-init>")(scope)
 		            );
 				break;
 
