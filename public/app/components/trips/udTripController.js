@@ -8,6 +8,8 @@ tripnoutApp.controller('udTripController', function($rootScope, $scope, $state, 
       $scope.me = data;
     });
 
+    $scope.dropClass = 'drop';
+
     $scope.trip_id = $stateParams.trip_id;
 
     $scope.tripdata = {};
