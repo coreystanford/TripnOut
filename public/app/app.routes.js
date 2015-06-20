@@ -2,6 +2,7 @@
 
 tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
+    // Angular UI Router - https://github.com/angular-ui/ui-router
     $stateProvider
 
         // ---- Homepage Route ---- //

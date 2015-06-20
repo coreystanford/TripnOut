@@ -10,7 +10,7 @@
 				<p>{{ content.content }}</p>
 			</div>
 			<div ng-if="content.datatype == 'image'">
-				<img ng-src="content.content" alt="{{content.alt}}">
+				<img src="/static/assets/img/{{content.content}}" alt="{{content.alt}}">
 			</div>
 			<div ng-if="content.datatype == 'video'">
 				<video ng-src="content.content" poster="/static/assets/imgs/{{ content.alt }}"></video>

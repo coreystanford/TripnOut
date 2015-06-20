@@ -1,3 +1,5 @@
+"use strict";
+// http://ngmodules.org/modules/ng-flow
 tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, $stateParams, Auth, User, Trip) {
 
 	  //get info if a person is logged in
