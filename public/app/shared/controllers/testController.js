@@ -13,9 +13,11 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
   vm.loggedIn = Auth.isLoggedIn();
 
     //get logged in user info
-    User.me().success(function(data){
-      vm.user = data;
-    })
+    if(vm.loggedIn){
+      User.me().success(function(data){
+        vm.user = data;
+      })
+    };
     
 
     //function to handle login form
