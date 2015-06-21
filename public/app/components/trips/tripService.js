@@ -15,6 +15,11 @@ tripnoutApp.factory('Trip', function($http) {
 	  return $http.get('/api/trips/' + id);
 	};
 
+	// get a single trip (without addition info)
+	tripFactory.getTrip = function(id) {
+	  return $http.get('/api/trip/' + id);
+	};
+
 	// get all trips
 	tripFactory.all = function() {
 	  return $http.get('/api/trips/');
