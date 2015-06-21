@@ -81,6 +81,15 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           controller: 'udTripController'
         })
 
+        // ---- Search Routes ---- //
+
+        .state('search', {
+          url: '/search/',
+          templateUrl: 'static/app/components/search/search-results.html',
+          controller: 'searchController',
+          params: { query: null }
+        })
+
         // ---- Tutorial Routes ---- //
 
         .state('main-tutorials', {

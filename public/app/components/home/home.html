@@ -1,6 +1,13 @@
-<div id="home-trips">
+<div id="trips">
+
+	<div id="search-box">
+
+		<input type="text" ng-model="mySearch"> 
+		<button ng-click="goSearch(mySearch)">Search</button>
+		
+	</div>
 	
-	<div class="home-trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
+	<div class="trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
 
 		<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ trip.description }}">
 			
