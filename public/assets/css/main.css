@@ -171,6 +171,10 @@ main {
   .profile nav a {
     width: 400px; } }
 
+.preImage {
+  width: 215px;
+  height: 200px; }
+
 @-webkit-keyframes appear {
   from {
     opacity: 0; } }

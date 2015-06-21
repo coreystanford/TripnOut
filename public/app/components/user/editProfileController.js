@@ -42,4 +42,8 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
 
   };
 
+  $scope.preImage = function() {
+
+  }
+
 });

@@ -143,8 +143,11 @@
   // Handle uploads through Flow.js
   .post(multipartMiddleware, function(req, res) {
     flow.post(req, function(status, filename, original_filename, identifier) {
-      console.log(filename);
       var stream = fs.createWriteStream('./public/assets/img/' + filename);
+      if (req.body['source'] == 'profile'){
+        
+        stream = fs.createWriteStream('./public/assets/profile/' + filename);
+      };
       flow.write(identifier, stream);
       if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
         res.header("Access-Control-Allow-Origin", "*");
