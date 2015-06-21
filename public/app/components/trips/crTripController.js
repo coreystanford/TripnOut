@@ -49,6 +49,16 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
 
     };
 
+    $scope.submitForm = function(isValid, trip){
+
+      $scope.submitted = true;
+
+      if(isValid) {
+        $scope.createTrip(trip);
+      }
+
+    };
+
     $scope.createTrip = function(){
 
     	$scope.tripdata.author = $scope.me._id;

@@ -18,7 +18,7 @@ tripnoutApp.directive("addsection", function($compile){
 					// add a text field
 					angular.element(document.getElementById('content'))
 					.append(
-		                $compile("<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = textType'><md-input-container><textarea ng-model='tripdata.content["+scope.count+"].content'> columns='2' required></textarea></md-input-container></div>")(scope)
+		                $compile("<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = textType'><md-input-container><textarea ng-model='tripdata.content["+scope.count+"].content'> columns='2' placeholder='Begin writing...' required></textarea></md-input-container></div>")(scope)
 		            );
 				break;
 
@@ -36,7 +36,7 @@ tripnoutApp.directive("addsection", function($compile){
 					angular.element(document.getElementById('content'))
 					.append(
 		                $compile(
-	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = videoType'><md-input-container><input type='text' ng-model='tripdata.content["+scope.count+"].content' required></md-input-container></div>")(scope)
+	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = videoType'><md-input-container><input type='text' ng-model='tripdata.content["+scope.count+"].content' placeholder='Enter a Youtube Video URL' required></md-input-container></div>")(scope)
 		            );
 				break;
 

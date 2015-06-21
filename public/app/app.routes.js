@@ -99,7 +99,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
     $urlRouterProvider.otherwise('/');
 
     // Remove the hashtag in the url
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 
     // Check for token on any request for express.js Middleware (api.js)
     $httpProvider.interceptors.push('AuthInterceptor');
