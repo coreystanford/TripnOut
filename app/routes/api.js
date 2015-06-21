@@ -84,6 +84,23 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
+  // ---- SEARCH ---- //
+
+  apiRouter.route('/search/:query')
+  .get(function(req, res){
+    var results = {};
+    Trip.find(
+        { $text : { $search : "'"+req.params.query+"'" } },
+        { score: { $meta: 'textScore' } }
+    )
+    .where('public_trip').equals(true)
+    .sort({ score: { $meta: 'textScore' } })
+    .exec(function(err, tripResults) {
+        //results['trips'] = tripResults;
+        res.json(tripResults);
+    });
+  });
+
   // ---- GET LATEST TRIPS ---- //
 
   apiRouter.route('/trips/latest/:limit/:offset')
@@ -106,6 +123,15 @@
       Trip.populate(trip, { path: 'author' }, function(err, trip){
         res.json(trip);
       });
+    });
+  });
+
+  apiRouter.route('/trip/:trip_id')
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      res.json(trip);
     });
   });
 
@@ -388,7 +414,7 @@
             trip.content.push(req.body.content[i]);
           };
         }
-        if (req.body.public_trip) trip.public_trip = req.body.public_trip;
+        trip.public_trip = req.body.public_trip;
    
         // save the trip
         trip.save(function(err) {

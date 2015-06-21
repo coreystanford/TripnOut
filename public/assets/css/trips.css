@@ -7,18 +7,18 @@
   font-size: 0;
 }
 
-#home-trips {
+#trips {
   position: relative;
   width: 100%;
 }
-#home-trips .home-trip {
+#trips .trip {
   width: 100%;
   position: relative;
   cursor: pointer;
   overflow: hidden;
   min-height: 400px;
 }
-#home-trips .home-trip img {
+#trips .trip img {
   position: absolute;
   left: 50%;
   min-width: 100%;
@@ -27,7 +27,7 @@
   height: auto;
   transform: translateX(-50%);
 }
-#home-trips .home-trip .titles {
+#trips .trip .titles {
   position: relative;
   top: 10%;
   left: 15%;
@@ -69,13 +69,13 @@
   color: black;
 }
 
-#createTripForm {
+#createTripForm, #updateTripForm {
   max-width: 800px;
   width: 90%;
   margin: 0 auto;
   text-align: left;
 }
-#createTripForm img {
+#createTripForm img, #updateTripForm img {
   width: 100%;
 }
 

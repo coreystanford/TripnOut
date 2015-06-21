@@ -20,5 +20,7 @@ var TripSchema   = new Schema({
     public_trip: { type: Boolean, default: true }
 });
 
+TripSchema.index({ title: 'text', country: 'text' });
+
 // return the model
 module.exports = mongoose.model('Trip', TripSchema);

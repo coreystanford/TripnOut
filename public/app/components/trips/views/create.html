@@ -43,6 +43,7 @@
 					<div ng-if="$flow.files[0]">
 						<img flow-img="$flow.files[0]" />
 						<span style="display:none" ng-init="tripdata.thumbnail = $flow.files[0].name"></span>
+						<span style="display:none" ng-init="$flow.files[0]['imgType'] = 'profile'"></span>
 					</div>
 				</div>
 			</div>

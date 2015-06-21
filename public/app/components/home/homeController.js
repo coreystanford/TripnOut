@@ -1,6 +1,6 @@
 "use strict";
 
-tripnoutApp.controller('homeController', function($scope, Trip) {
+tripnoutApp.controller('homeController', function($scope, $state, Trip, Search) {
 
     $scope.processing = true;
     $scope.load = true;
@@ -33,6 +33,12 @@ tripnoutApp.controller('homeController', function($scope, Trip) {
 		  }
 	      
 	    });
+    };
+
+    $scope.goSearch = function(qu){
+        
+        $state.go('search', {query: qu});
+
     };
 
 });
