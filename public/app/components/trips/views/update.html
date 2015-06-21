@@ -3,3 +3,126 @@
 <h1>Update {{ trip.title }}</h1>
 	
 </div>
+
+<form accept-charset="utf-8" id="updateTripForm" name="updateTripForm" novalidate>
+
+	<div>
+
+		<div class="form-group">
+			<p>* = Required</p>
+		</div>
+
+		<div id="details">
+
+			<md-input-container>
+			    <label>Title *</label>
+				<input type="text" ng-model="trip.title" name="title" required>
+		    </md-input-container>
+		    <p ng-show="updateTripForm.title.$invalid && !updateTripForm.title.$pristine || updateTripForm.title.$invalid && submitted" class="field-error">Please enter a title.</p>
+
+		    <md-input-container>
+			    <label>Description *</label>
+			    <textarea ng-model="trip.description" name="description" columns="1" md-maxlength="250" required></textarea>
+		    </md-input-container>
+		    <p ng-show="updateTripForm.description.$invalid && !updateTripForm.description.$pristine || updateTripForm.description.$invalid && submitted" class="field-error">Please enter a description under 250 characters.</p>
+
+			<md-select placeholder="Select a Country" ng-model="trip.country" name="country" required>
+		    	<md-option ng-repeat="country in countries" value="{{country}}">{{country}}</md-option>
+		    </md-select> *
+		    <p ng-show="updateTripForm.country.$invalid && !updateTripForm.country.$pristine || updateTripForm.country.$invalid && submitted" class="field-error">Please select a country.</p>
+
+		    <div class="form-group">
+			    <h4>Make this trip searchable through the homepage?</h4>
+			    <md-switch ng-model="trip.public_trip" aria-label="Switch 1" ng-change="onChange(trip.public_trip)">
+					{{ publicMsg }}
+				</md-switch>
+			</div>
+
+			<div class="form-group">
+				<h3>Add a Thumbnail</h3>
+				<div flow-init flow-files-submitted="$flow.upload()">
+					<div ng-class="dropClass" flow-drop ng-if="!$flow.files[0]" flow-drag-enter="dropClass = 'drop drag-over'" flow-drag-leave="dropClass='drop'">
+					    <span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
+					</div>
+					<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
+					
+
+					<span style="display:none" ng-init="trip.thumbnail = $flow.files[0].name"></span>
+				</div>
+				<img src="/static/assets/img/{{trip.thumbnail}}">
+			</div>
+
+		</div>
+
+		<div class="form-group">
+
+			<h3>Build Your Trip:</h3>
+
+		</div>
+
+		<div id="content">
+			
+			<div ng-repeat="content in trip.content">
+
+				<div ng-if="content.datatype == 'text'">
+					<md-input-container>
+						<textarea ng-model='content.content' columns='2' placeholder='Begin writing...' required>{{ content.content }}</textarea>
+					</md-input-container>
+				</div>
+
+				<div ng-if="content.datatype == 'image'">
+					<div flow-init flow-files-submitted='$flow.upload()'>
+						<div ng-class='dropClass' flow-drop 
+							flow-drag-enter='dropClass = "drop drag-over"' 
+							flow-drag-leave='dropClass="drop"'>
+							<span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
+						</div>
+						<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
+						<img ng-if="!$flow.files[0]" src="/static/assets/img/{{content.content}}">
+					</div>
+				</div>
+
+				<div ng-if="content.datatype == 'video'">
+					<md-input-container>
+						<input type='text' ng-model='content[$index].content' placeholder='Enter a Youtube Video URL' required>
+					</md-input-container>
+					<video ng-src="content.content"></video>
+				</div>
+
+		</div>
+
+		</div>
+
+		<div class="form-group center">
+
+			<div ng-show="displayButton">
+				<md-button class="md-raised addSectionBtn" ng-click="showOptions()">Add Section</md-button>
+			</div>
+
+		</div>
+
+		<div class="form-group center">
+
+			<div ng-hide="displayButton">
+				<md-button addsection datatype="text" ng-click="showOptions()" class="md-raised">Add a Text Area</md-button>
+				<md-button addsection datatype="image" ng-click="showOptions()" class="md-raised">Add an Image</md-button>
+				<md-button addsection datatype="video" ng-click="showOptions()" class="md-raised">Embed a Video</md-button>
+			</div>
+
+		</div>
+
+		<div id="content-stroke"></div>
+
+		<div class="form-group center">
+
+			<md-button type="submit" class="md-raised submitBtn" ng-click="submitForm(updateTripForm.$valid, trip)">Update Trip</md-button>
+
+		</div>
+
+	</div>
+
+	<br><br><br>
+	{{ trip }}
+	<br><br><br>
+
+</form>

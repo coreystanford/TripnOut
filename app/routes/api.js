@@ -109,6 +109,15 @@
     });
   });
 
+  apiRouter.route('/trip/:trip_id')
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      res.json(trip);
+    });
+  });
+
   // ---- REGISTER USER ---- //
 
   apiRouter.route('/users')
@@ -372,7 +381,7 @@
       if (err) res.send(err);
 
       if(trip.author == req.params.user_id){
-
+        console.log(req.body);
         // update the trips info only if its new
         if (req.body.title) trip.title = req.body.title;
         if (req.body.description) trip.description = req.body.description;
@@ -385,7 +394,7 @@
             trip.content.push(req.body.content[i]);
           };
         }
-        if (req.body.public_trip) trip.public_trip = req.body.public_trip;
+        trip.public_trip = req.body.public_trip;
    
         // save the trip
         trip.save(function(err) {

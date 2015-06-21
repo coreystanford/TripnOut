@@ -18,7 +18,7 @@ tripnoutApp.directive("addsection", function($compile){
 					// add a text field
 					angular.element(document.getElementById('content'))
 					.append(
-		                $compile("<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = textType'><md-input-container><textarea ng-model='tripdata.content["+scope.count+"].content'> columns='2' placeholder='Begin writing...' required></textarea></md-input-container></div>")(scope)
+		                $compile("<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = textType'><md-input-container><textarea ng-model='tripdata.content["+scope.count+"].content' columns='2' placeholder='Begin writing...' required></textarea></md-input-container></div>")(scope)
 		            );
 				break;
 
@@ -27,7 +27,7 @@ tripnoutApp.directive("addsection", function($compile){
 					angular.element(document.getElementById('content'))
 					.append(
 		                $compile(
-	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = imageType'><div flow-init flow-files-submitted='$flow.upload()'><div ng-class='dropClass' flow-drop ng-if='!$flow.files[0]' flow-drag-enter='dropClass = \"drop drag-over\"' flow-drag-leave='dropClass=\"drop\"'><span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here</div><div ng-if='$flow.files[0]'><img flow-img='$flow.files[0]' /><span style='display:none' ng-init='tripdata.content["+scope.count+"].content = $flow.files[0].name'></span></div></div><div ng-flow-init>")(scope)
+	                        "<div class='section' ng-init='tripdata.content["+scope.count+"].datatype = imageType'><div flow-init flow-files-submitted='$flow.upload()'><div ng-class='dropClass' flow-drop ng-if='!$flow.files[0]' flow-drag-enter='dropClass = \"drop drag-over\"' flow-drag-leave='dropClass=\"drop\"'><span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here</div><div ng-if='$flow.files[0]'><img flow-img='$flow.files[0]' /><span style='display:none' ng-init='tripdata.content["+scope.count+"].content = $flow.files[0].name'></span></div></div>")(scope)
 		            );
 				break;
 
