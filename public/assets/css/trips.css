@@ -88,10 +88,24 @@
   text-align: center;
 }
 
+#details {
+  padding: 0 0 0 0;
+}
+
+#content {
+  padding: 25px 0;
+  border-top: 1px solid #ffab40;
+}
+
 .addSectionBtn {
   margin: 25px 0;
   background-color: #ffab40 !important;
   color: white !important;
+}
+
+#content-stroke {
+  padding: 5px 0;
+  border-top: 1px solid #ffab40;
 }
 
 .section {
@@ -118,3 +132,8 @@
 
 .uploadBtn {
   cursor: pointer;
+}
+
+.md-visually-hidden {
+  display: none;
+}

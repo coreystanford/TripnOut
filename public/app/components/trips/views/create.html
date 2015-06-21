@@ -1,35 +1,41 @@
 <h1>Make a New Trip</h1>
 
-<form accept-charset="utf-8" id="createTripForm">
-
-	<input type="hidden" ng-model="tripdata.author" value="{{ user_id }}">
+<form accept-charset="utf-8" id="createTripForm" name="createTripForm" novalidate>
 
 	<div>
+
+		<div class="form-group">
+			<p>* = Required</p>
+		</div>
+
 		<div id="details">
 
 			<md-input-container>
-			    <label>Title</label>
-				<input type="text" ng-model="tripdata.title" required>
+			    <label>Title *</label>
+				<input type="text" ng-model="tripdata.title" name="title" required>
 		    </md-input-container>
+		    <p ng-show="createTripForm.title.$invalid && !createTripForm.title.$pristine || createTripForm.title.$invalid && submitted" class="field-error">Please enter a title.</p>
 
 		    <md-input-container>
-			    <label>Description</label>
-			    <textarea ng-model="tripdata.description" columns="1" md-maxlength="250" required></textarea>
+			    <label>Description *</label>
+			    <textarea ng-model="tripdata.description" name="description" columns="1" md-maxlength="250" required></textarea>
 		    </md-input-container>
+		    <p ng-show="createTripForm.description.$invalid && !createTripForm.description.$pristine || createTripForm.description.$invalid && submitted" class="field-error">Please enter a description under 250 characters.</p>
 
-			<md-select placeholder="Select a Country" ng-model="tripdata.country">
+			<md-select placeholder="Select a Country" ng-model="tripdata.country" name="country" required>
 		    	<md-option ng-repeat="country in countries" value="{{country}}">{{country}}</md-option>
-		    </md-select>
+		    </md-select> *
+		    <p ng-show="createTripForm.country.$invalid && !createTripForm.country.$pristine || createTripForm.country.$invalid && submitted" class="field-error">Please select a country.</p>
 
 		    <div class="form-group">
-			    <p>Make this trip searchable through the homepage?</p>
+			    <h4>Make this trip searchable through the homepage?</h4>
 			    <md-switch ng-model="tripdata.public_trip" aria-label="Switch 1" ng-change="onChange(tripdata.public_trip)">
 					{{ publicMsg }}
 				</md-switch>
 			</div>
 
 			<div class="form-group">
-				<label>Add a Thumbnail</label>
+				<h3>Add a Thumbnail</h3>
 				<div flow-init flow-files-submitted="$flow.upload()">
 					<div ng-class="dropClass" flow-drop ng-if="!$flow.files[0]" flow-drag-enter="dropClass = 'drop drag-over'" flow-drag-leave="dropClass='drop'">
 					    <span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
@@ -42,9 +48,14 @@
 			</div>
 
 		</div>
-		<div id="content">
-			
+
+		<div class="form-group">
+
+			<h3>Build Your Trip:</h3>
+
 		</div>
+
+		<div id="content"></div>
 
 		<div class="form-group center">
 
@@ -64,9 +75,11 @@
 
 		</div>
 
+		<div id="content-stroke"></div>
+
 		<div class="form-group center">
 
-			<md-button class="md-raised submitBtn" ng-click="createTrip()">Create Trip</md-button>
+			<md-button type="submit" class="md-raised submitBtn" ng-click="submitForm(createTripForm.$valid, tripdata)">Create Trip</md-button>
 
 		</div>
 
@@ -74,5 +87,6 @@
 
 	<br><br><br>
 	{{ tripdata }}
+	<br><br><br>
 
 </form>
