@@ -84,6 +84,23 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
+  // ---- SEARCH ---- //
+
+  apiRouter.route('/search/:query')
+  .get(function(req, res){
+    var results = {};
+    Trip.find(
+        { $text : { $search : "'"+req.params.query+"'" } },
+        { score: { $meta: 'textScore' } }
+    )
+    .where('public_trip').equals(true)
+    .sort({ score: { $meta: 'textScore' } })
+    .exec(function(err, tripResults) {
+        //results['trips'] = tripResults;
+        res.json(tripResults);
+    });
+  });
+
   // ---- GET LATEST TRIPS ---- //
 
   apiRouter.route('/trips/latest/:limit/:offset')
@@ -381,7 +398,7 @@
       if (err) res.send(err);
 
       if(trip.author == req.params.user_id){
-        console.log(req.body);
+
         // update the trips info only if its new
         if (req.body.title) trip.title = req.body.title;
         if (req.body.description) trip.description = req.body.description;
