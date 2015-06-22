@@ -1,0 +1,17 @@
+<div id="trips">
+
+	<div class="trip" class="clearfix" ng-repeat="result in results" ui-sref="trip({trip_id: result._id})">
+
+		<img ng-src="/static/assets/img/{{ result.thumbnail }}" alt="{{ result.description }}">
+			
+		<div class="titles">
+
+			<h2>{{ result.title }}</h2>
+			<h4>{{ result.country }}</h4>
+			<h5>{{ result.date | date }}</h5>
+
+		</div>
+
+	</div>
+
+</div>

@@ -6,12 +6,11 @@
 
 html {
   overflow-x: hidden !important;
-  width: 100%;
-  height: 100%; }
+  min-height: 100%; }
 
 body {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  min-height: 100%;
   overflow-x: hidden !important;
   font-family: "Open Sans", sans-serif;
   font-size: 16px; }
@@ -32,15 +31,19 @@ h3 {
   font-weight: 300; }
 
 li {
+  list-style: none;
   font-family: "Didact Gothic", sans-serif; }
 
 a {
   color: black;
   text-decoration: none; }
 
+.loginForm, .editProfile {
+  width: 300px;
+  margin: 0 auto; }
+
 .container {
-  height: 100%;
-  margin-bottom: -50px;
+  min-height: 100%;
   -webkit-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -moz-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   -o-transition: 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -114,16 +117,24 @@ a {
         transform: translateX(0);
         padding: 0;
         position: static;
-        float: right;
-        width: auto;
-        height: auto; } }
-    .header .main-nav ul:first-child {
-      border-bottom: 1px solid white; }
+        text-align: right;
+        right: 0;
+        width: 100%;
+        height: auto; }
+        .header .main-nav .loggedMenu {
+          width: 100%; }
+          .header .main-nav .loggedMenu ul {
+            position: absolute;
+            width: 100%;
+            top: 0; } }
     .header .main-nav ul {
       padding: 15px; }
       @media only screen and (min-width: 768px) {
         .header .main-nav ul {
-          padding: 0; } }
+          padding: 0;
+          position: absolute;
+          bottom: 0;
+          right: 0; } }
       .header .main-nav ul li {
         list-style: none;
         margin: 20px 0;
@@ -135,23 +146,46 @@ a {
 
 main {
   position: relative;
-  height: 100%;
-  margin-bottom: -50px;
-  padding: 15px;
-  text-align: center; }
+  text-align: center;
+  padding-bottom: 300px; }
 
 #public {
-  height: 100%;
+  min-height: 100%;
   position: relative; }
 
 .viewContent {
   position: absolute;
+  height: 100%;
   width: 100%; }
 
-.footer {
-  background: black;
-  color: white;
-  height: 50px; }
+.profile nav .btn {
+  width: 100%; }
+.profile nav a {
+  display: block;
+  margin: 0 auto;
+  width: 100%; }
+.profile nav li {
+  margin: 15px; }
+@media only screen and (min-width: 768px) {
+  .profile nav .btn {
+    width: 400px; }
+  .profile nav a {
+    width: 400px; } }
+
+.editProfileImg {
+  position: relative;
+  min-height: 360px; }
+  .editProfileImg .imgCont {
+    height: 270px; }
+  .editProfileImg .editImgCont {
+    position: absolute;
+    width: 100%; }
+  .editProfileImg .btn {
+    margin: 20px; }
+
+.preImage {
+  width: 200px;
+  height: 215px; }
 
 @-webkit-keyframes appear {
   from {
@@ -171,12 +205,64 @@ main {
 @keyframes disappear {
   to {
     opacity: 0; } }
-.ng-enter {
+@-webkit-keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@-moz-keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%); }
+  to {
+    transform: translateX(0); } }
+@-webkit-keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+@-moz-keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+@keyframes slideRight {
+  to {
+    transform: translateX(100%); } }
+.logInReg {
+  position: absolute;
+  width: 100%; }
+
+.warning {
+  background: red;
+  color: white; }
+
+.loggedIn.ng-enter, .loggedOut.ng-enter {
+  -webkit-animation: appear 0.5s;
+  -moz-animation: appear 0.5s;
+  animation: appear 0.5s; }
+  @media only screen and (min-width: 768px) {
+    .loggedIn.ng-enter, .loggedOut.ng-enter {
+      -webkit-animation: slideLeft 0.5s;
+      -moz-animation: slideLeft 0.5s;
+      animation: slideLeft 0.5s; } }
+
+.loggedIn.ng-leave, .loggedOut.ng-leave {
+  -webkit-animation: disappear 0.5s;
+  -moz-animation: disappear 0.5s;
+  animation: disappear 0.5s; }
+  @media only screen and (min-width: 768px) {
+    .loggedIn.ng-leave, .loggedOut.ng-leave {
+      -webkit-animation: slideRight 0.5s;
+      -moz-animation: slideRight 0.5s;
+      animation: slideRight 0.5s; } }
+
+.ng-enter, .logInReg.ng-enter {
   -webkit-animation: appear 0.5s;
   -moz-animation: appear 0.5s;
   animation: appear 0.5s; }
 
-.ng-leave {
+.ng-leave, .logInReg.ng-leave {
   -webkit-animation: disappear 0.5s;
   -moz-animation: disappear 0.5s;
   animation: disappear 0.5s; }

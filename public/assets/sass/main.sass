@@ -62,12 +62,11 @@ $bezier: cubic-bezier(.42,0,.58,1)
 // general =============================
 html
 	overflow-x: hidden !important
-	width: 100%
-	height: 100%
+	min-height: 100%
 
 body
-	width: 100%
-	height: 100%
+	position: relative
+	min-height: 100%
 	overflow-x: hidden !important
 	font:
 		family: $main-font
@@ -92,6 +91,7 @@ h3
 		weight: 300
 
 li
+	list-style: none
 	font:
 		family: $head-font
 
@@ -99,10 +99,13 @@ a
 	color: $body-color
 	text-decoration: none
 
+.loginForm, .editProfile
+	width: 300px
+	margin: 0 auto
+
 // container ============================
 .container
-	height: 100%
-	margin-bottom: -50px
+	min-height: 100%
 	@include addAnim
 	&.menu
 		@include menuTrans
@@ -169,15 +172,23 @@ a
 			transform: translateX(0)
 			padding: 0
 			position: static
-			float: right
-			width: auto
+			text-align: right
+			right: 0
+			width: 100%
 			height: auto
-		ul:first-child
-			border-bottom: 1px solid white
+			.loggedMenu
+				width: 100%
+				ul
+					position: absolute
+					width: 100%
+					top: 0
 		ul
 			padding: $content-pad
 			@include respond($small-break)
 				padding: 0
+				position: absolute
+				bottom: 0
+				right: 0
 			li
 				list-style: none
 				margin: 20px 0
@@ -191,27 +202,51 @@ a
 
 main
 	position: relative
-	height: 100%
-	margin-bottom: -50px
-	padding: $content-pad
 	text-align: center
+	padding-bottom: 300px
 
 #public
-	height: 100%
+	min-height: 100%
 	position: relative
 
 .viewContent
 	position: absolute
+	height: 100%
 	width: 100%
 
-// footer =================================
+// profile =================================
+.profile
+	nav
+		.btn
+			width: 100%
+		a
+			display: block
+			margin: 0 auto
+			width: 100%
+		li
+			margin: 15px
+		@include respond($small-break)
+			.btn
+				width: 400px
+			a
+				width: 400px
 
-.footer
-	background: black
-	color: white
-	height: 50px
+.editProfileImg
+	position: relative
+	min-height: 360px
+	.imgCont
+		height: 270px
+	.editImgCont
+		position: absolute
+		width: 100%
+	.btn
+		margin: 20px 
 
-// Angular animation ENTER LEAVE
+.preImage
+	width: 200px
+	height: 215px
+
+// Angular animation ENTER LEAVE ========================
 
 @include keyframes('appear')
 	from
@@ -221,8 +256,36 @@ main
 	to
 		opacity: 0
 
-.ng-enter
+@include keyframes('slideLeft')
+	from
+		transform: translateX(100%)
+	to
+		transform: translateX(0)
+
+@include keyframes('slideRight')
+	to
+		transform: translateX(100%)
+
+.logInReg
+	position: absolute
+	width: 100%
+
+.warning
+	background: red
+	color: white
+
+.loggedIn.ng-enter, .loggedOut.ng-enter
+	@include animation('appear 0.5s')
+	@include respond($small-break)
+		@include animation('slideLeft 0.5s')
+
+.loggedIn.ng-leave, .loggedOut.ng-leave
+	@include animation('disappear 0.5s')
+	@include respond($small-break)
+		@include animation('slideRight 0.5s')
+
+.ng-enter, .logInReg.ng-enter
 	@include animation('appear 0.5s')
 
-.ng-leave
+.ng-leave, .logInReg.ng-leave
 	@include animation('disappear 0.5s')
