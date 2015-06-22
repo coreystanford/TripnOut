@@ -1,20 +1,42 @@
 // https://scotch.io/tutorials/angularjs-best-practices-directory-structure
-// Angular UI Router - https://github.com/angular-ui/ui-router
-// Flow - https://github.com/flowjs/ng-flow
-
-
 
 "use strict";
 
 var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'ngMaterial', 'flow'])
 
-.config(function($mdThemingProvider) {
+.config(function($mdThemingProvider, flowFactoryProvider) {
+
     $mdThemingProvider.theme('default')
+<<<<<<< HEAD
         .primaryPalette('deep-orange')
         .accentPalette('blue');  
 }); 
+=======
+        .primaryPalette('red')
+        .accentPalette('orange');  
+>>>>>>> master
 
-tripnoutApp.run([ '$rootScope', 'Auth',function($rootScope, Auth){
+    //var validToken = ;
+
+    // http://ngmodules.org/modules/ng-flow
+    flowFactoryProvider.defaults = {
+      target: '/api/upload',
+      //query: { 'x-access-token': validToken },
+      singleFile: true,
+      attributes: { accept: 'image/*' },
+      permanentErrors: [404, 500, 501],
+      maxChunkRetries: 1,
+      chunkRetryInterval: 5000,
+      simultaneousUploads: 1
+    };
+
+    flowFactoryProvider.on('catchAll', function (event) {
+      console.log('catchAll', arguments);
+    });
+
+})
+
+.run(['$rootScope', 'Auth',function($rootScope, Auth){
 	
 	  //check to see if a user is logged in on every request
     $rootScope.$on('$routeChangeStart', function() {
