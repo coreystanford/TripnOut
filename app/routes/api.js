@@ -112,6 +112,15 @@
     });
   });
 
+  apiRouter.route('/trip/:trip_id')
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      res.json(trip);
+    });
+  });
+
   // ---- REGISTER USER ---- //
 
   apiRouter.route('/users')
