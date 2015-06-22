@@ -20,6 +20,45 @@ tripnoutApp.controller('udTripController', function($rootScope, $scope, $state, 
       console.log($scope.trip);
     });
 
+    $scope.thumb = true;
+    $scope.newThumb = function(){
+      if($scope.thumb){
+        $scope.thumb = false;
+      } else {
+        $scope.thumb = true;
+      }
+    };
+
+    $scope.addSection = function(type){
+
+      var newContent = {
+        datatype: type,
+        content: ''
+      };
+
+      $scope.trip.content.push(newContent);
+    }
+
+    $scope.removeSection = function(index){
+
+      if(index > -1){
+        $scope.trip.content.splice(index, 1);
+      }
+
+    };
+
+    $scope.displayButton = true;
+
+    $scope.showOptions = function(){
+
+      if($scope.displayButton){
+        $scope.displayButton = false;
+      } else {
+        $scope.displayButton = true;
+      }
+
+    };
+
     $scope.publicMsg = "Yes, Share Publicly";
 
     $scope.onChange = function(setting){
@@ -31,13 +70,6 @@ tripnoutApp.controller('udTripController', function($rootScope, $scope, $state, 
       }
 
     }
-
-    $scope.deleteTrip = function(){
-      Trip.delete($scope.trip_id, $scope.me._id).success(function(response){
-        $scope.message = response;
-        $state.go('my-trips', { msg: response.message});
-      });
-    };
 
     $scope.submitForm = function(isValid, trip){
 
@@ -52,6 +84,13 @@ tripnoutApp.controller('udTripController', function($rootScope, $scope, $state, 
     $scope.updateTrip = function(trip, me){
       console.log(trip);
       Trip.update(trip._id, me, trip).success(function(response){
+        $scope.message = response;
+        $state.go('my-trips', { msg: response.message});
+      });
+    };
+
+    $scope.deleteTrip = function(){
+      Trip.delete($scope.trip_id, $scope.me._id).success(function(response){
         $scope.message = response;
         $state.go('my-trips', { msg: response.message});
       });

@@ -39,54 +39,65 @@
 			</div>
 
 			<div class="form-group">
-				<h3>Add a Thumbnail</h3>
-				<div flow-init flow-files-submitted="$flow.upload()">
-					<div ng-class="dropClass" flow-drop ng-if="!$flow.files[0]" flow-drag-enter="dropClass = 'drop drag-over'" flow-drag-leave="dropClass='drop'">
-					    <span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
+				<h3>Current Thumbnail</h3>
+				<div ng-if="thumb">
+					<img src="/static/assets/img/{{trip.thumbnail}}">
+					<div class="right pad">
+						<md-button ng-click="newThumb()" class="md-raised">Add a new thumbnail</md-button>
 					</div>
-					<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
-					
-
-					<span style="display:none" ng-init="trip.thumbnail = $flow.files[0].name"></span>
 				</div>
-				<img src="/static/assets/img/{{trip.thumbnail}}">
+				<div ng-if="!thumb">
+					<div flow-init flow-files-submitted="$flow.upload()">
+						<div ng-class="dropClass" flow-drop ng-if="!$flow.files[0]" flow-drag-enter="dropClass = 'drop drag-over'" flow-drag-leave="dropClass='drop'">
+						    <span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
+						</div>
+						<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
+						<span ng-if="$flow.files[0]" style="display:none" ng-init="trip.thumbnail = $flow.files[0].name"></span>
+					</div>
+				</div>
 			</div>
 
 		</div>
 
-		<div class="form-group">
-
-			<h3>Build Your Trip:</h3>
-
-		</div>
+		<h2>Build Your Trip:</h2>
 
 		<div id="content">
 			
 			<div ng-repeat="content in trip.content">
 
-				<div ng-if="content.datatype == 'text'">
+				<div class="section" ng-if="content.datatype == 'text'">
 					<md-input-container>
 						<textarea ng-model='content.content' columns='2' placeholder='Begin writing...' required>{{ content.content }}</textarea>
 					</md-input-container>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
+					</div>
 				</div>
 
-				<div ng-if="content.datatype == 'image'">
+				<div class="section" ng-if="content.datatype == 'image'">
 					<div flow-init flow-files-submitted='$flow.upload()'>
+						<img ng-if="!$flow.files[0] && content.content" src="/static/assets/img/{{content.content}}">
 						<div ng-class='dropClass' flow-drop 
 							flow-drag-enter='dropClass = "drop drag-over"' 
 							flow-drag-leave='dropClass="drop"'>
 							<span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
 						</div>
 						<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
-						<img ng-if="!$flow.files[0]" src="/static/assets/img/{{content.content}}">
+						<span ng-if="$flow.files[0]" style="display:none" ng-init="content.content = $flow.files[0].name"></span>
+					</div>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
 					</div>
 				</div>
 
-				<div ng-if="content.datatype == 'video'">
+				<div class="section" ng-if="content.datatype == 'video'">
 					<md-input-container>
-						<input type='text' ng-model='content[$index].content' placeholder='Enter a Youtube Video URL' required>
+						<input type='text' ng-model='content.content' placeholder='Enter a Youtube Video Embed Code' required>
 					</md-input-container>
-					<video ng-src="content.content"></video>
+					<youtube ng-if="content.content" code="content.content"></youtube>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
+					</div>
 				</div>
 
 		</div>
@@ -104,9 +115,9 @@
 		<div class="form-group center">
 
 			<div ng-hide="displayButton">
-				<md-button addsection datatype="text" ng-click="showOptions()" class="md-raised">Add a Text Area</md-button>
-				<md-button addsection datatype="image" ng-click="showOptions()" class="md-raised">Add an Image</md-button>
-				<md-button addsection datatype="video" ng-click="showOptions()" class="md-raised">Embed a Video</md-button>
+				<md-button ng-click="addSection('text'); showOptions()" class="md-raised">Add a Text Area</md-button>
+				<md-button ng-click="addSection('image'); showOptions()" class="md-raised">Add an Image</md-button>
+				<md-button ng-click="addSection('video'); showOptions()" class="md-raised">Embed a Video</md-button>
 			</div>
 
 		</div>
@@ -116,6 +127,7 @@
 		<div class="form-group center">
 
 			<md-button type="submit" class="md-raised submitBtn" ng-click="submitForm(updateTripForm.$valid, trip)">Update Trip</md-button>
+			<md-button class="md-raised" ui-sref="my-trips({user_id: user_id})">Cancel</md-button>
 
 		</div>
 
