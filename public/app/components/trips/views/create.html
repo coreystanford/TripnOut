@@ -85,7 +85,7 @@
 					<md-input-container>
 						<input type='text' ng-model='content.content' placeholder='Enter a Youtube Video URL' required>
 					</md-input-container>
-					<video ng-if="content.content" ng-src="content.content"></video>
+					<youtube ng-if="content.content" code="content.content"></youtube>
 					<div class="right">
 						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
 					</div>
@@ -116,6 +116,7 @@
 		<div class="form-group center">
 
 			<md-button type="submit" class="md-raised submitBtn" ng-click="submitForm(createTripForm.$valid, tripdata)">Create Trip</md-button>
+			<md-button class="md-raised" ui-sref="my-trips({user_id: user_id})">Cancel</md-button>
 
 		</div>
 

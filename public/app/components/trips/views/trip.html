@@ -13,7 +13,7 @@
 				<img src="/static/assets/img/{{content.content}}" alt="{{content.alt}}">
 			</div>
 			<div ng-if="content.datatype == 'video'">
-				<video ng-src="content.content" poster="/static/assets/imgs/{{ content.alt }}"></video>
+				<youtube code="content.content"></youtube>
 			</div>
 
 		</div>
