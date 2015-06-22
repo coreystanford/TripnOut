@@ -3,7 +3,7 @@ tripnoutApp.directive('youtube', function($sce) {
     restrict: 'EA',
     scope: { code:'=' },
     replace: true,
-    template: '<iframe style="overflow:hidden;min-height:500px;max-width: 800px;height:100%;width:100%" width="100%" height="100%" src="{{url}}" frameborder="0" allowfullscreen></iframe>',
+    template: '<iframe style="overflow:hidden;min-height:500px;max-width:900px;height:100%;width:100%" width="100%" height="100%" src="{{url}}" frameborder="0" allowfullscreen></iframe>',
     link: function (scope) {
         scope.$watch('code', function (newVal) {
            if (newVal) {
