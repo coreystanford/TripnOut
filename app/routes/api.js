@@ -14,6 +14,9 @@
  var flow = require('../upload/flow-node.js')('tmp');
  var fs    = require('fs');
 
+ //image adjustments through easyimage
+ var easyimage = require('easyimage');
+
  // Configure access control allow origin header stuff
  var ACCESS_CONTROLL_ALLOW_ORIGIN = false;
 
@@ -84,23 +87,6 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
-  // ---- SEARCH ---- //
-
-  apiRouter.route('/search/:query')
-  .get(function(req, res){
-    var results = {};
-    Trip.find(
-        { $text : { $search : "'"+req.params.query+"'" } },
-        { score: { $meta: 'textScore' } }
-    )
-    .where('public_trip').equals(true)
-    .sort({ score: { $meta: 'textScore' } })
-    .exec(function(err, tripResults) {
-        //results['trips'] = tripResults;
-        res.json(tripResults);
-    });
-  });
-
   // ---- GET LATEST TRIPS ---- //
 
   apiRouter.route('/trips/latest/:limit/:offset')
@@ -123,15 +109,6 @@
       Trip.populate(trip, { path: 'author' }, function(err, trip){
         res.json(trip);
       });
-    });
-  });
-
-  apiRouter.route('/trip/:trip_id')
-  .get(function(req, res) {
-    Trip.findById(req.params.trip_id, function(err, trip) {
-      if (err) res.send(err);
-      // return that trip
-      res.json(trip);
     });
   });
 
@@ -169,11 +146,70 @@
   // Handle uploads through Flow.js
   .post(multipartMiddleware, function(req, res) {
     flow.post(req, function(status, filename, original_filename, identifier) {
-      console.log(filename);
-      var stream = fs.createWriteStream('./public/assets/img/' + filename);
+      if (req.body['source'] == 'profile'){
+        var fpath = './public/assets/img/profile/' + filename;
+      } else {
+        var fpath = './public/assets/img/' + filename;
+      }
+      var stream = fs.createWriteStream(fpath);
       flow.write(identifier, stream);
       if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
         res.header("Access-Control-Allow-Origin", "*");
+      }
+      if (req.body['source'] == 'profile'){
+        easyimage.info('./public/assets/img/profile/'+filename).then(
+            function(image){
+              if(image.height > image.width){
+                var factor = image.height / image.width;
+                easyimage.rescrop({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  width: 270, height: 270*factor,
+                  cropheight: 270,
+                  x:0, y:0
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              } else if (image.width > image.height){
+                var factor = image.width / image.height;
+                easyimage.rescrop({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  height: 270, width: 270*factor,
+                  cropwidth: 270,
+                  x:0, y:0
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              } else {
+                easyimage.resize({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  width: 270, height: 270
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              }
+            },
+            function(err){
+              console.log(err);
+            }
+          );
       }
       res.status(status).send();
     });
@@ -292,6 +328,7 @@
       if (req.body.name) user.name = req.body.name;
       if (req.body.username) user.username = req.body.username;
       if (req.body.password) user.password = req.body.password;
+      if (req.body.pic) user.pic = req.body.pic;
  
       // save the user
       user.save(function(err) {
@@ -411,7 +448,7 @@
             trip.content.push(req.body.content[i]);
           };
         }
-        trip.public_trip = req.body.public_trip;
+        if (req.body.public_trip) trip.public_trip = req.body.public_trip;
    
         // save the trip
         trip.save(function(err) {

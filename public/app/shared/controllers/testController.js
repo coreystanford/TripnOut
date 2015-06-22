@@ -36,6 +36,9 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
           if(data.success)
           {
             vm.loggedIn = Auth.isLoggedIn();
+            User.me().success(function(data){
+              vm.user = data;
+            });
             $state.go('profile');
           }
           else

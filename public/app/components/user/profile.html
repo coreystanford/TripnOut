@@ -1,6 +1,6 @@
 <div class="profile">
 	<h2>Hello, {{ me.name }}!</h2>
-	<img src="static/assets/img/default_profile_small.png" alt="Profile Pic">
+	<img ng-src="{{ img }}" alt="Profile Pic">
 	<nav>
 		<ul>
 			<li><md-button class="btn md-raised" ui-sref="editProfile">Edit Profile</md-button></li>
