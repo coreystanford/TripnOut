@@ -7,17 +7,11 @@ var tripnoutApp = angular.module('tripnoutApp', ['ui.router', 'ngAnimate', 'ngMa
 .config(function($mdThemingProvider, flowFactoryProvider) {
 
     $mdThemingProvider.theme('default')
-<<<<<<< HEAD
-        .primaryPalette('red')
-        .accentPalette('orange');  
-
-=======
         .primaryPalette('deep-orange')
         .accentPalette('blue');  
 }); 
 
 
->>>>>>> Ian
     //var validToken = ;
 
     // http://ngmodules.org/modules/ng-flow
