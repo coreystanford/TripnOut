@@ -87,6 +87,23 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
+  // ---- SEARCH ---- //    
+   
+  apiRouter.route('/search/:query')    
+  .get(function(req, res){   
+    var results = {};    
+    Trip.find(   
+        { $text : { $search : "'"+req.params.query+"'" } },    
+        { score: { $meta: 'textScore' } }    
+    )    
+    .where('public_trip').equals(true)   
+    .sort({ score: { $meta: 'textScore' } })   
+    .exec(function(err, tripResults) {   
+        //results['trips'] = tripResults;    
+        res.json(tripResults);   
+    });    
+  });
+
   // ---- GET LATEST TRIPS ---- //
 
   apiRouter.route('/trips/latest/:limit/:offset')
