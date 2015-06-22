@@ -35,6 +35,24 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
     $scope.imageType = "image";
     $scope.videoType = "video";
 
+    $scope.addSection = function(type){
+
+      var newContent = {
+        datatype: type,
+        content: ''
+      };
+
+      $scope.tripdata.content.push(newContent);
+    }
+
+    $scope.removeSection = function(index){
+
+      if(index > -1){
+        $scope.tripdata.content.splice(index, 1);
+      }
+
+    };
+
   	$scope.displayButton = true;
 
   	$scope.message = $stateParams.msg;
