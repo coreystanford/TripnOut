@@ -1,5 +1,26 @@
 <div class="editProfile">
 	<h1>{{ me.name }} - Edit Profile</h1>
+	<div class="editProfileImg">
+		<div class="editImgCont" ng-if="imgBool==true" flow-init="{query: { source: 'profile' } }" flow-files-submitted="onUpload($flow)">
+			<div class="imgCont">
+				<img class="preImage" flow-img="$flow.files[0]" >
+			</div>
+			<input type="file" flow-btn />
+			<md-button class="btn md-raised" ng-click="changeImg()">
+				<span>{{imgConfirm}}</span>
+			</md-button>
+		</div>
+
+		<div class="editImgCont" ng-if="imgBool==false">
+			<div class="imgCont">
+				<img ng-src="{{ img }}" alt="profile pic" >
+			</div>
+			<md-button class="btn md-raised" ng-click="changeImg()">
+				<span>Change Picture</span>
+			</md-button>
+		</div>
+	</div>
+
 	<form ng-submit="saveUser()">
 		<md-input-container>
 			<label>Name</label>
@@ -12,13 +33,4 @@
 
 	    </md-button>
 	</form>
-	<div flow-init="{query: { source: 'profile' } }" flow-files-submitted='$flow.upload()'>
-		<input type="file" flow-btn />
-		<input type="file" flow-btn flow-directory />
-		<div flow-drag-enter="style={border: '4px solid green'}" flow-drag-leave="style={}" ng-style="style" flow-drop>
-			DRAG DROP
-		</div>
-		<span flow-btn>Upload File</span>
-		<img class="preImage" flow-img="$flow.files[0]" >
-	</div>
 </div>

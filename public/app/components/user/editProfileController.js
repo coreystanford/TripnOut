@@ -10,8 +10,27 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
   //get the user data for the user you want to edit
   //$routeParams is the waywe grab data from the url
 
+  $scope.imgBool = false;
+  $scope.imgConfirm = 'Cancel';
+  $scope.changeImg = function() {
+    if ($scope.imgBool){
+      $scope.imgBool = false;
+      $scope.imgConfirm = 'Cancel';
+    }
+    else {
+      $scope.imgBool = true;
+    }
+  }
+
+  
+
   User.me().success(function(data){
     $scope.me = data;
+    if (!data.pic || data.pic == ""){
+      $scope.img = '/static/assets/img/default_profile_small.png';
+    } else {
+      $scope.img = '/static/assets/img/profile/' + data.pic;
+    }
   })
 
   User.me()
@@ -22,9 +41,17 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
       $scope.userData = data;
     });
 
+  $scope.onUpload = function($flow) {
+    $scope.me.pic = $flow.files[0].name;
+    $scope.img = '/static/assets/img/profile/' + $scope.me.pic;
+    $scope.userData.pic = $flow.files[0].name;
+    $scope.saveUser();
+    $flow.upload();
+    $scope.imgConfirm = "OK";
+  }
+
   $scope.saveUser = function()  {
     $scope.processing = true;
-
     //clear the message
     $scope.message = '';
 
@@ -33,17 +60,10 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
       .success(function(data) {
         $scope.processing = false;
 
-        //clear the form
-        $scope.userData = {};
-        $scope.message = data.message;
         $scope.success = true;
-        $state.go('profile');
+        $scope.me.name = $scope.userData.name;
       });
 
   };
-
-  $scope.preImage = function() {
-
-  }
 
 });

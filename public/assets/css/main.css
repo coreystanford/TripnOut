@@ -146,7 +146,8 @@ a {
 
 main {
   position: relative;
-  text-align: center; }
+  text-align: center;
+  padding-bottom: 300px; }
 
 #public {
   min-height: 100%;
@@ -171,9 +172,20 @@ main {
   .profile nav a {
     width: 400px; } }
 
+.editProfileImg {
+  position: relative;
+  min-height: 360px; }
+  .editProfileImg .imgCont {
+    height: 270px; }
+  .editProfileImg .editImgCont {
+    position: absolute;
+    width: 100%; }
+  .editProfileImg .btn {
+    margin: 20px; }
+
 .preImage {
-  width: 215px;
-  height: 200px; }
+  width: 200px;
+  height: 215px; }
 
 @-webkit-keyframes appear {
   from {
