@@ -50,13 +50,48 @@
 
 		</div>
 
-		<div class="form-group">
+		<h2>Build Your Trip:</h2>
 
-			<h3>Build Your Trip:</h3>
+		<div id="content">
+			
+			<div ng-repeat="content in tripdata.content">
+
+				<div class="section" ng-if="content.datatype == 'text'">
+					<md-input-container>
+						<textarea ng-model='content.content' columns='2' placeholder='Begin writing...' required>{{ content.content }}</textarea>
+					</md-input-container>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
+					</div>	
+				</div>
+
+				<div class="section" ng-if="content.datatype == 'image'">
+					<div flow-init flow-files-submitted='$flow.upload()'>
+						<img ng-if="!$flow.files[0] && content.content" src="/static/assets/img/{{content.content}}">
+						<div ng-class='dropClass' flow-drop 
+							flow-drag-enter='dropClass = "drop drag-over"' 
+							flow-drag-leave='dropClass="drop"'>
+							<span class='uploadBtn' flow-btn>Upload File</span> <strong>OR</strong> Drag And Drop your file here
+						</div>
+						<img ng-if="$flow.files[0]" flow-img='$flow.files[0]' />
+						<span ng-if="$flow.files[0]" style="display:none" ng-init="content.content = $flow.files[0].name"></span>
+					</div>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
+					</div>
+				</div>
+
+				<div class="section" ng-if="content.datatype == 'video'">
+					<md-input-container>
+						<input type='text' ng-model='content.content' placeholder='Enter a Youtube Video URL' required>
+					</md-input-container>
+					<video ng-if="content.content" ng-src="content.content"></video>
+					<div class="right">
+						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
+					</div>
+				</div>
 
 		</div>
-
-		<div id="content"></div>
 
 		<div class="form-group center">
 
@@ -69,9 +104,9 @@
 		<div class="form-group center">
 
 			<div ng-hide="displayButton">
-				<md-button addsection datatype="text" ng-click="showOptions()" class="md-raised">Add a Text Area</md-button>
-				<md-button addsection datatype="image" ng-click="showOptions()" class="md-raised">Add an Image</md-button>
-				<md-button addsection datatype="video" ng-click="showOptions()" class="md-raised">Embed a Video</md-button>
+				<md-button ng-click="addSection('text'); showOptions()" class="md-raised">Add a Text Area</md-button>
+				<md-button ng-click="addSection('image'); showOptions()" class="md-raised">Add an Image</md-button>
+				<md-button ng-click="addSection('video'); showOptions()" class="md-raised">Embed a Video</md-button>
 			</div>
 
 		</div>
