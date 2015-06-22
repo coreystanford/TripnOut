@@ -92,9 +92,9 @@
 
 				<div class="section" ng-if="content.datatype == 'video'">
 					<md-input-container>
-						<input type='text' ng-model='content.content' placeholder='Enter a Youtube Video URL' required>
+						<input type='text' ng-model='content.content' placeholder='Enter a Youtube Video Embed Code' required>
 					</md-input-container>
-					<video ng-if="content.content" ng-src="content.content"></video>
+					<youtube ng-if="content.content" code="content.content"></youtube>
 					<div class="right">
 						<md-button ng-click="removeSection($index)" class="md-raised md-warn">Remove</md-button>
 					</div>
@@ -127,6 +127,7 @@
 		<div class="form-group center">
 
 			<md-button type="submit" class="md-raised submitBtn" ng-click="submitForm(updateTripForm.$valid, trip)">Update Trip</md-button>
+			<md-button class="md-raised" ui-sref="my-trips({user_id: user_id})">Cancel</md-button>
 
 		</div>
 

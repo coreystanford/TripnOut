@@ -96,10 +96,6 @@
   border-top: 1px solid #ffab40;
 }
 
-.build-trip {
-  padding: 30px 0 0 0;
-}
-
 .addSectionBtn {
   margin: 25px 0;
   background-color: #ffab40 !important;
@@ -124,8 +120,8 @@
 }
 
 .submitBtn {
-  width: 400px;
-  max-width: 80%;
+  width: 300px;
+  max-width: 60%;
 }
 
 .drop {
