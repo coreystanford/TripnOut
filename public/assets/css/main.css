@@ -77,6 +77,8 @@ a {
       @media only screen and (min-width: 768px) {
         .header .title h1 {
           display: block;
+          min-height: 0;
+          margin: 0;
           float: left; } }
     .header .title .hamburger {
       display: block;
@@ -142,7 +144,8 @@ a {
         @media only screen and (min-width: 768px) {
           .header .main-nav ul li {
             display: inline-block;
-            margin: 10px 20px; } }
+            margin: 10px 20px;
+            font-size: 1em; } }
 
 main {
   position: relative;

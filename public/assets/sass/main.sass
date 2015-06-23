@@ -137,6 +137,8 @@ a
 			z-index: 1
 			@include respond($small-break)
 				display: block
+				min-height: 0
+				margin: 0
 				float: left
 		.hamburger
 			display: block
@@ -197,6 +199,8 @@ a
 				@include respond($small-break)
 					display: inline-block
 					margin: 10px 20px
+					font:
+						size: 1em
 
 // main =================================
 
@@ -213,6 +217,10 @@ main
 	position: absolute
 	height: 100%
 	width: 100%
+
+
+// login ================================
+
 
 // profile =================================
 .profile
