@@ -9,8 +9,11 @@ tripnoutApp.controller('userController', function($scope, User){
 
   //grab logged in user
   User.me().success(function(data){
-    console.log(data);
     $scope.me = data;
+    if(!data.pic || data.pic == "")
+      $scope.img = '/static/assets/img/default_profile_small.png';
+    else
+      $scope.img = '/static/assets/img/profile/' + data.pic;
   })
 
   //grab all the users at page locationProvider

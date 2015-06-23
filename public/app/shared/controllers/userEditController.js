@@ -7,9 +7,6 @@ tripnoutApp.controller('userEditController', function($scope, $stateParams, User
   //differentiates between create or edit pages
   $scope.type = 'edit';
 
-  // This is for the ui-sref when linking to the user's trips (by Corey)
-  $scope.user_id = $stateParams.user_id;
-
   //get the user data for the user you want to edit
   //$routeParams is the waywe grab data from the url
   User.get($stateParams.user_id)

@@ -13,12 +13,14 @@ var TripSchema   = new Schema({
     author: { type: Schema.ObjectId, ref: 'User' },
     thumbnail: { type: String, default: 'default.jpg' },
     content: [{
-    	type: String,
-    	content: String
+    	datatype: { type: String },
+    	content: { type: String }
     }],
     date: { type: Date, default: Date.now },
-    public_trip: Boolean
+    public_trip: { type: Boolean, default: true }
 });
+
+TripSchema.index({ title: 'text', country: 'text' });
 
 // return the model
 module.exports = mongoose.model('Trip', TripSchema);

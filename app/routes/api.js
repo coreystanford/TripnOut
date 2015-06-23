@@ -1,3 +1,4 @@
+  process.env.TMPDIR = 'tmp'; // to avoid the EXDEV rename error, see http://stackoverflow.com/q/21071303/76173
  // load schemas
  var User     = require('../models/user.js');
  var Trip     = require('../models/trip.js');
@@ -6,6 +7,18 @@
  // load configuration and tokens
  var config   = require('../../config');
  var jwt      = require('jsonwebtoken');
+
+ // load upload requirements
+ var multipart  = require('connect-multiparty');
+ var multipartMiddleware = multipart();
+ var flow = require('../upload/flow-node.js')('tmp');
+ var fs    = require('fs');
+
+ //image adjustments through easyimage
+ var easyimage = require('easyimage');
+
+ // Configure access control allow origin header stuff
+ var ACCESS_CONTROLL_ALLOW_ORIGIN = false;
 
  // add to exports
  module.exports = function(app, express) {
@@ -23,7 +36,7 @@
    // select the name username and password explicitly
    User.findOne({
      username: req.body.username
-   }).select('_id name username password').exec(function(err, user) {
+   }).select('_id name username pic password').exec(function(err, user) {
  
      if (err) throw err;
  
@@ -47,8 +60,10 @@
          // if user is found and password is right
          // create a token
          var token = jwt.sign({
+                     _id: user._id,
                      name: user.name,
-                     username: user.username
+                     username: user.username,
+                     pic: user.pic
                     }, config.secret, {
                      expiresInMinutes: 1440 // expires in 24 hours
                     });
@@ -72,11 +87,28 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
+  // ---- SEARCH ---- //    
+   
+  apiRouter.route('/search/:query')    
+  .get(function(req, res){   
+    var results = {};    
+    Trip.find(   
+        { $text : { $search : "'"+req.params.query+"'" } },    
+        { score: { $meta: 'textScore' } }    
+    )    
+    .where('public_trip').equals(true)   
+    .sort({ score: { $meta: 'textScore' } })   
+    .exec(function(err, tripResults) {   
+        //results['trips'] = tripResults;    
+        res.json(tripResults);   
+    });    
+  });
+
   // ---- GET LATEST TRIPS ---- //
 
   apiRouter.route('/trips/latest/:limit/:offset')
    .get(function(req, res) {
-    Trip.find( { $where: 'this.public_trip == true' }, function(err, trips) {
+    Trip.find( { public_trip: { $ne: false } }, function(err, trips) {
       if (err) res.send(err);
       // return the trips
       res.json(trips);
@@ -95,6 +127,148 @@
         res.json(trip);
       });
     });
+  });
+
+  apiRouter.route('/trip/:trip_id')
+  .get(function(req, res) {
+    Trip.findById(req.params.trip_id, function(err, trip) {
+      if (err) res.send(err);
+      // return that trip
+      res.json(trip);
+    });
+  });
+
+  // ---- REGISTER USER ---- //
+
+  apiRouter.route('/users')
+  .post(function(req, res) {
+    
+    // create a new instance of the User model
+    var user = new User();    
+ 
+    // set the users information (comes from the request)
+    user.name = req.body.name;  
+    user.username = req.body.username;
+    user.password = req.body.password;
+ 
+    // save the user and check for errors
+    user.save(function(err) {
+             if (err) {
+                 // duplicate entry
+                 if (err.code == 11000) 
+                     return res.json({ success: false, message: 'A user with that username already exists. '});
+                 else 
+                     return res.send(err);
+             }
+ 
+      res.json({ message: 'Registration Successful!' });
+    });
+
+  });
+
+  // ---- IMAGE UPLOAD ---- //
+
+  apiRouter.route('/upload')
+  // Handle uploads through Flow.js
+  .post(multipartMiddleware, function(req, res) {
+    flow.post(req, function(status, filename, original_filename, identifier) {
+      if (req.body['source'] == 'profile'){
+        var fpath = './public/assets/img/profile/' + filename;
+      } else {
+        var fpath = './public/assets/img/' + filename;
+      }
+      var stream = fs.createWriteStream(fpath);
+      flow.write(identifier, stream);
+      if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
+        res.header("Access-Control-Allow-Origin", "*");
+      }
+      if (req.body['source'] == 'profile'){
+        easyimage.info('./public/assets/img/profile/'+filename).then(
+            function(image){
+              if(image.height > image.width){
+                var factor = image.height / image.width;
+                easyimage.rescrop({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  width: 270, height: 270*factor,
+                  cropheight: 270,
+                  x:0, y:0
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              } else if (image.width > image.height){
+                var factor = image.width / image.height;
+                easyimage.rescrop({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  height: 270, width: 270*factor,
+                  cropwidth: 270,
+                  x:0, y:0
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              } else {
+                easyimage.resize({
+                  src: './public/assets/img/profile/' + filename,
+                  dst: './public/assets/img/profile/' + filename,
+                  width: 270, height: 270
+                }).then(
+                  function(image){
+                    console.log('Resized: ' + image.width + ' x ' + image.height);
+                  },
+                  function(err){
+                    console.log(err);
+                  }
+                );
+              }
+            },
+            function(err){
+              console.log(err);
+            }
+          );
+      }
+      res.status(status).send();
+    });
+  })
+
+  .options(function(req, res){
+    console.log('OPTIONS');
+    if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
+      res.header("Access-Control-Allow-Origin", "*");
+    }
+    res.status(200).send();
+  })
+
+  // Handle status checks on chunks through Flow.js
+  .get(function(req, res) {
+    flow.get(req, function(status, filename, original_filename, identifier) {
+      console.log('GET', status);
+      if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
+        res.header("Access-Control-Allow-Origin", "*");
+      }
+
+      if (status == 'found') {
+        status = 200;
+      } else {
+        status = 204;
+      }
+
+      res.status(status).send();
+    });
+  });
+
+  app.get('/download/:identifier', function(req, res) {
+    flow.write(req.params.identifier, res);
   });
 
   // ---------------------------- //
@@ -143,35 +317,9 @@
   // -------- USERS -------- //
   // ----------------------- //
  
-  // ---- Create User ---- //
+  // ---- Get All Users ---- //
 
   apiRouter.route('/users')
-
- 	.post(function(req, res) {
- 		
- 		// create a new instance of the User model
- 		var user = new User(); 		
- 
- 		// set the users information (comes from the request)
- 		user.name = req.body.name;  
- 		user.username = req.body.username;
- 		user.password = req.body.password;
- 
- 		// save the user and check for errors
- 		user.save(function(err) {
-             if (err) {
-                 // duplicate entry
-                 if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A user with that\
-  username already exists. '});
-                 else 
-                     return res.send(err);
-             }
- 
- 			res.json({ message: 'User created!' });
- 		});
-
-  })
   .get(function(req, res) {
     User.find(function(err, users) {
       if (err) res.send(err);
@@ -206,6 +354,7 @@
       if (req.body.name) user.name = req.body.name;
       if (req.body.username) user.username = req.body.username;
       if (req.body.password) user.password = req.body.password;
+      if (req.body.pic) user.pic = req.body.pic;
  
       // save the user
       user.save(function(err) {
@@ -234,7 +383,12 @@
 
   // api endpoint to get user information
   apiRouter.get('/me', function(req, res) {
-    res.send(req.decoded);
+    var me = req.decoded;
+    User.find({username: me.username}, function(err, user){
+      User.populate(user, [{path: 'trips.trip'}, {path: 'tutorials.tutorial'}], function(err, user){
+        res.json(user[0]);
+      });
+    });
   });
 
   // ----------------------- //
@@ -250,24 +404,24 @@
     // create a new instance of the User model
     var trip = new Trip();    
  
+    console.log(req.body);
+
     // set the users information (comes from the request)
     trip.title = req.body.title; 
     trip.description = req.body.description;
     trip.author = req.body.author;
+    for (var i = 0; i < req.body.content.length; i++) {
+      console.log(req.body.content[i]);
+      trip.content.push(req.body.content[i]);
+    };
     trip.country = req.body.country;
     trip.thumbnail = req.body.thumbnail;
     trip.content = req.body.content;
     trip.public_trip = req.body.public_trip;
  
-    // save the user and check for errors
+    // save the trip and check for errors
     trip.save(function(err) {
-             if (err) {
-                 // duplicate entry
-                 if (err.code == 11000) 
-                     return res.json({ success: false, message: 'A trip with that username already exists. '});
-                 else 
-                     return res.send(err);
-             }
+      if (err) { return res.send(err); }
     });
 
     // Add the trip to the array of trips associated with the User's account
@@ -297,7 +451,7 @@
 
   // -------- Update / Delete Trip BY ID -------- //
 
- apiRouter.route('/trips/:trip_id')
+ apiRouter.route('/trips/:trip_id/:user_id')
 
   // update the trip with this id 
   .put(function(req, res) {
@@ -306,22 +460,35 @@
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
 
-      // update the trips info only if its new
-      if (req.body.title) trip.title = req.body.title;
-      if (req.body.description) trip.description = req.body.description;
-      if (req.body.author) trip.author = req.body.author;
-      if (req.body.country) trip.country = req.body.country;
-      if (req.body.thumbnail) trip.thumbnail = req.body.thumbnail;
-      if (req.body.content) trip.content = req.body.content;
-      if (req.body.public_trip) trip.public_trip = req.body.public_trip;
- 
-      // save the trip
-      trip.save(function(err) {
-        if (err) res.send(err);
-        // return a message
-        res.json({ message: 'User updated!' });
-      });
- 
+      if(trip.author == req.params.user_id){
+
+        // update the trips info only if its new
+        if (req.body.title) trip.title = req.body.title;
+        if (req.body.description) trip.description = req.body.description;
+        if (req.body.author) trip.author = req.body.author;
+        if (req.body.country) trip.country = req.body.country;
+        if (req.body.thumbnail) trip.thumbnail = req.body.thumbnail;
+        if (req.body.content) {
+          trip.content = new Array();
+          for (var i = 0; i < req.body.content.length; i++) {
+            trip.content.push(req.body.content[i]);
+          };
+        }
+        if (req.body.public_trip) trip.public_trip = req.body.public_trip;
+   
+        // save the trip
+        trip.save(function(err) {
+          if (err) res.send(err);
+          // return a message
+          res.json({ message: 'User updated!' });
+        });
+
+      } else {
+
+        res.json({ message: 'Unauthorized' });
+      
+      }
+   
     });
   })
 
@@ -330,21 +497,28 @@
 
     Trip.find({ _id: req.params.trip_id }, function(err, trip) {
 
-      User.findOneAndUpdate(
-       { _id: trip[0].author },
-       { $pull: { 'trips': { 'trip': trip[0]._id } } },function(err, user){
+      if(trip[0].author == req.params.user_id){
 
-         if (err) return res.send(err);
+        User.findOneAndUpdate(
+         { _id: trip[0].author },
+         { $pull: { 'trips': { 'trip': trip[0]._id } } },function(err, user){
 
-         Trip.remove({
-            _id: req.params.trip_id
-         }, function(err, trip) {
            if (err) return res.send(err);
-           
-           res.json({ message: 'Successfully deleted' });
+
+           Trip.remove({
+              _id: req.params.trip_id
+           }, function(err, trip) {
+             if (err) return res.send(err); 
+             res.json({ message: 'Successfully deleted' });
+           });
+    
          });
-  
-       });
+
+      } else {
+
+        res.json({ message: 'Unauthorized' });
+      
+      }
     
     });
   

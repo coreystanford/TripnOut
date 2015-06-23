@@ -1,32 +1,66 @@
-<div class="row col-sm-6 col-sm-offset-3">
+<div class="logInReg" ng-if="type!='create'">
+  <h1>Login</h1>
+  <form ng-submit="main.doLogin()" class="loginForm">
 
-  <div class="jumbotron">
-    <h1>Login</h1>
+    <!--USERNAME INPUT-->
+    <md-input-container>
+      <label>Username</label>
+      <input required type="text" class="form-control" ng-model="main.loginData.username">
+    </md-input-container>
 
-    <form ng-submit="doLogin() ">
+    <!--PASSWORD INPUT-->
+    <md-input-container>
+      <label>Password</label>
+      <input required type="password" class="form-control" ng-model="main.loginData.password">
+    </md-input-container>
+    <div class="alert alert-danger" ng-if="error">
+      {{ error }}
+    </div>
+    <!-- LOGIN BUTTON-->
+    <md-button type="submit" aria-label="Login" class="md-raised">
+      <span ng-if="!main.processing">Login</span>
 
-      <!--USERNAME INPUT-->
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" ng-model="loginData.username">
-      </div>
+      <span ng-if="main.processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
 
-      <!--PASSWORD INPUT-->
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" ng-model="loginData.password">
-      </div>
-      <div class="alert alert-danger" ng-if="error">
-        {{ error }}
-      </div>
-      <!-- LOGIN BUTTON-->
-      <button type="submit" class="btn btn-block btn-primary">
-        <span ng-if="!processing">Login</span>
+    </md-button>
 
-        <span ng-if="processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
+  </form>
+</div>
 
-      </button>
-
-    </form>
+<div class="logInReg" ng-if="type=='create'">
+  <h1>Register</h1>
+  <div ng-if="type=='create' && success">
+    <h2 class="warning">{{ message }}</h2>
   </div>
+
+  <form ng-submit="saveUser()" class="loginForm">
+    <!--NAME INPUT-->
+    <md-input-container>
+      <label>Name</label>
+      <input required type="text" ng-model="userData.name">
+    </md-input-container>
+
+    <!--USERNAME INPUT-->
+    <md-input-container>
+      <label>Username</label>
+      <input required type="text" class="form-control" ng-model="userData.username">
+    </md-input-container>
+
+    <!--PASSWORD INPUT-->
+    <md-input-container>
+      <label>Password</label>
+      <input required type="password" class="form-control" ng-model="userData.password">
+    </md-input-container>
+    <div class="alert alert-danger" ng-if="error">
+      {{ error }}
+    </div>
+    <!-- LOGIN BUTTON-->
+    <md-button type="submit" aria-label="Register" class="md-raised">
+      <span ng-if="!processing">Register</span>
+
+      <span ng-if="processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
+
+    </md-button>
+
+  </form>
 </div>

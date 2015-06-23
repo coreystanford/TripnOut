@@ -2,6 +2,7 @@
 
 tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
+    // Angular UI Router - https://github.com/angular-ui/ui-router
     $stateProvider
 
         // ---- Homepage Route ---- //
@@ -16,8 +17,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 
         .state('login', {
           url: '/login',
-          templateUrl: 'static/app/components/login/login.html',
-          controller: 'mainController'
+          templateUrl: 'static/app/components/login/login.html'
         })
 
         .state('profile', {
@@ -27,7 +27,7 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         })
 
         .state('create', {
-          url: '/user/create',
+          url: '/register',
           templateUrl: 'static/app/components/login/login.html',
           controller: 'userCreateController'
         })
@@ -36,6 +36,14 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           url: '/users/:user_id',
           templateUrl: 'static/app/components/login/single.html',
           controller: 'userEditController'
+        })
+
+        // ---- Profile Routes ---- //
+
+        .state('editProfile', {
+          url: '/edit_me',
+          templateUrl: 'static/app/components/user/editProfile.html',
+          controller: 'editProfileController'
         })
 
         // ---- Public Trip Routes ---- //
@@ -49,34 +57,58 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         // ---- Admin Trip Routes ---- //
 
         .state('my-trips', {
-          url: '/users/:user_id/trips',
+          url: '/me/trips',
           templateUrl: 'static/app/components/trips/views/my-trips.html',
-          controller: 'crTripController'
+          controller: 'crTripController',
+          params: { msg: null }
         })
 
         .state('create-my-trip', {
-          url: '/users/:user_id/trips/create',
+          url: '/me/trips/create',
           templateUrl: 'static/app/components/trips/views/create.html',
           controller: 'crTripController'
         })
 
         .state('update-my-trip', {
-          url: '/users/:user_id/trips/update/:trip_id',
+          url: '/me/trips/update/:trip_id',
           templateUrl: 'static/app/components/trips/views/update.html',
           controller: 'udTripController'
         })
 
         .state('delete-my-trip', {
-          url: '/users/:user_id/trips/delete/:trip_id',
+          url: '/me/trips/delete/:trip_id',
           templateUrl: 'static/app/components/trips/views/delete.html',
           controller: 'udTripController'
+        })
+
+        // ---- Search Routes ---- //
+
+        .state('search', {
+          url: '/search/',
+          templateUrl: 'static/app/components/search/search-results.html',
+          controller: 'searchController',
+          params: { query: null }
+        })
+
+        // ---- Tutorial Routes ---- //
+
+        .state('main-tutorials', {
+            url: '/tutorials',
+            templateUrl: 'static/app/components/tutorials/views/main-tutorials.html',
+            controller: 'tutorialController'
+        })
+        
+        .state('create-tutorial', {
+            url: '/create-tutorial',
+            templateUrl: 'static/app/components/tutorials/views/create-tutorial.html',
+            controller: 'crTutorialController'
         });
 
     // Default route
     $urlRouterProvider.otherwise('/');
 
     // Remove the hashtag in the url
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 
     // Check for token on any request for express.js Middleware (api.js)
     $httpProvider.interceptors.push('AuthInterceptor');

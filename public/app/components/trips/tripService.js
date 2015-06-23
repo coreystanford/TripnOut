@@ -15,6 +15,11 @@ tripnoutApp.factory('Trip', function($http) {
 	  return $http.get('/api/trips/' + id);
 	};
 
+	// get a single trip (without addition info)
+	tripFactory.getTrip = function(id) {
+	  return $http.get('/api/trip/' + id);
+	};
+
 	// get all trips
 	tripFactory.all = function() {
 	  return $http.get('/api/trips/');
@@ -26,13 +31,13 @@ tripnoutApp.factory('Trip', function($http) {
 	};
 
 	// update a user
-	tripFactory.update = function(id, tripData) {
-	  return $http.put('/api/trips/' + id, tripData);
+	tripFactory.update = function(trip_id, user_id, tripData) {
+	  return $http.put('/api/trips/' + trip_id + '/' + user_id, tripData);
 	};
 
 	// delete a user
-	tripFactory.delete = function(id) {
-	  return $http.delete('/api/trips/' + id);
+	tripFactory.delete = function(trip_id, user_id) {
+	  return $http.delete('/api/trips/' + trip_id + '/' + user_id);
 	};
 
 	// return entire userFactory object

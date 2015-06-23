@@ -1,5 +1,5 @@
 
-tripnoutApp.controller('mainController', function($scope, $location, Auth) {
+tripnoutApp.controller('mainController', function($scope, $state, $location, Auth) {
 
   //menu boolean
   $scope.menu = false;
@@ -25,10 +25,14 @@ tripnoutApp.controller('mainController', function($scope, $location, Auth) {
 
           //if a user successfully logs in, redirect to users page
           if(data.success)
-          $location.path('/me');
+          {
+            $scope.loggedIn = Auth.isLoggedIn();
+            $state.go('profile');
+          }
           else
             $scope.error = data.message;
         });
+        
     };
 
     //function to handle logging out
@@ -36,7 +40,7 @@ tripnoutApp.controller('mainController', function($scope, $location, Auth) {
       Auth.logout();
       //reset all user info
       $scope.user = {};
-      $location.path('/login');
+      $scope.loggedIn = Auth.isLoggedIn();
     };
 
 });
