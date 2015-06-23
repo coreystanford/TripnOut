@@ -65,6 +65,21 @@
   transform: translate(-50%, 0);
 }
 
+#trip {
+  max-width: 900px;
+  width: 90%;
+  margin: 0 auto;
+}
+#trip img {
+  width: 100%;
+}
+#trip .view-trip {
+  padding: 30px 0;
+}
+#trip .view-trip p {
+  padding: 20px 40px;
+}
+
 #my-trips {
   position: relative;
   width: 100%;
