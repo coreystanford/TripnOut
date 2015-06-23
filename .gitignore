@@ -44,3 +44,5 @@ config.js
 /node_modules
 
 .settings/settings.json
+
+.settings/launch.json
