@@ -34,11 +34,11 @@
 		<div class="changePw" ng-if="pwBool">
 			<md-input-container>
 				<label>New Password</label>
-				<input type="text" ng-model="newPw.pw">
+				<input type="password" ng-model="newPw.pw">
 			</md-input-container>
 			<md-input-container>
 				<label>Retype Password</label>
-				<input type="text" ng-model="newPw.pw2">
+				<input type="password" ng-model="newPw.pw2">
 			</md-input-container>
 			<div>
 				<md-button type="button" class="btn" ng-click="changePw()">
@@ -46,6 +46,7 @@
 				</md-button>
 			</div>
 		</div>
+		<h3 ng-if="success">{{message}}</h3>
 		<md-button type="submit" aria-label="Register" class="btn md-raised">
 	      <span ng-if="!processing">Update</span>
 
@@ -53,5 +54,5 @@
 
 	    </md-button>
 	</form>
-	<h3 ng-if="success">{{message}}</h3>
+	
 </div>
