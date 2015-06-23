@@ -26,11 +26,32 @@
 			<label>Name</label>
 			<input type="text" ng-model="userData.name" required>
 		</md-input-container>
-		<md-button type="submit" aria-label="Register" class="md-raised">
+		<div ng-if="!pwBool">
+			<md-button type="button" class="btn" ng-click="changePw()">
+				Change Password
+			</md-button>
+		</div>
+		<div class="changePw" ng-if="pwBool">
+			<md-input-container>
+				<label>New Password</label>
+				<input type="text" ng-model="newPw.pw">
+			</md-input-container>
+			<md-input-container>
+				<label>Retype Password</label>
+				<input type="text" ng-model="newPw.pw2">
+			</md-input-container>
+			<div>
+				<md-button type="button" class="btn" ng-click="changePw()">
+					Cancel
+				</md-button>
+			</div>
+		</div>
+		<md-button type="submit" aria-label="Register" class="btn md-raised">
 	      <span ng-if="!processing">Update</span>
 
 	      <span ng-if="processing" class="spinner"><md-progress-circular md-mode="indeterminate"></md-progress-circular></span>
 
 	    </md-button>
 	</form>
+	<h3 ng-if="success">{{message}}</h3>
 </div>
