@@ -99,6 +99,9 @@ a
 	color: $body-color
 	text-decoration: none
 
+.btn
+	margin: 20px 0
+
 .loginForm, .editProfile
 	width: 300px
 	margin: 0 auto
@@ -137,6 +140,8 @@ a
 			z-index: 1
 			@include respond($small-break)
 				display: block
+				min-height: 0
+				margin: 0
 				float: left
 		.hamburger
 			display: block
@@ -197,13 +202,14 @@ a
 				@include respond($small-break)
 					display: inline-block
 					margin: 10px 20px
+					font:
+						size: 1em
 
 // main =================================
 
 main
 	position: relative
 	text-align: center
-	padding-bottom: 300px
 
 #public
 	min-height: 100%
@@ -213,6 +219,11 @@ main
 	position: absolute
 	height: 100%
 	width: 100%
+	padding-bottom: 100px
+
+
+// login ================================
+
 
 // profile =================================
 .profile
@@ -239,8 +250,6 @@ main
 	.editImgCont
 		position: absolute
 		width: 100%
-	.btn
-		margin: 20px 
 
 .preImage
 	width: 200px
