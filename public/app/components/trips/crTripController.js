@@ -1,6 +1,6 @@
 "use strict";
 // http://ngmodules.org/modules/ng-flow
-tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, $stateParams, Auth, User, Trip) {
+tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, $stateParams, $sce, Auth, User, Trip) {
 
 	  //get info if a person is logged in
   	$scope.loggedIn = Auth.isLoggedIn();
@@ -15,6 +15,8 @@ tripnoutApp.controller('crTripController', function($rootScope, $scope, $state, 
 
   	$scope.tripdata = {};
   	$scope.tripdata.content = new Array();
+
+    
     
     $scope.tripdata.public_trip = true;
     $scope.publicMsg = "Yes, Share Publicly";
