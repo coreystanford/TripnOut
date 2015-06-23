@@ -7,7 +7,7 @@ tripnoutApp.controller('homeController', function($scope, $state, Trip, Search) 
 
     var offset = 0;
     var run = 1;
-    var limit = 5;
+    var limit = 3;
 
     Trip.latest(limit, offset)
     .success(function(data) {
@@ -16,6 +16,7 @@ tripnoutApp.controller('homeController', function($scope, $state, Trip, Search) 
     });
 
     $scope.loadMore = function(){
+        console.log("loading")
     	run++;
     	offset = (run * limit) - limit;
 
@@ -35,9 +36,15 @@ tripnoutApp.controller('homeController', function($scope, $state, Trip, Search) 
 	    });
     };
 
-    $scope.goSearch = function(qu){
-        
-        $state.go('search', {query: qu});
+    $scope.submitted = false;
+
+    $scope.goSearch = function(qu, isValid){
+
+        $scope.submitted = true;
+
+        if(isValid){
+            $state.go('search', {query: qu});
+        }
 
     };
 

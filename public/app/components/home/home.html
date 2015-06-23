@@ -1,27 +1,35 @@
-<div id="trips">
+<div id="trips" infinite-scroll="loadMore()" infinite-scroll-distance="1">
+	<div>
+		<div id="search-box">
 
-	<div id="search-box">
+		<form name="searchForm" novalidate>
 
-		<input type="text" ng-model="mySearch"> 
-		<button ng-click="goSearch(mySearch)">Search</button>
-		
-	</div>
-	
-	<div class="trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
+			<input type="text" ng-model="mySearch" name="search" placeholder="Find a Trip..." required> 
+			<button type="submit" id="searchBtn" ng-click="goSearch(mySearch, searchForm.$valid)">Go</button>
+			<p id="search-error" ng-show="searchForm.search.$invalid && !createTripForm.title.$pristine && submitted" class="field-error">Please enter a search.</p>
 
-		<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ trip.description }}">
+		</form>
 			
-		<div class="titles">
+		</div>
+		
+		<div class="trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
 
-			<h2>{{ trip.title }}</h2>
-			<h4>{{ trip.country }}</h4>
-			<h5>{{ trip.date | date }}</h5>
+			<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ trip.description }}">
+				
+			<div class="titles">
 
+				<h2>{{ trip.title }}</h2>
+				<h4>{{ trip.country }}</h4>
+				<h5>{{ trip.date | date }}</h5>
+
+			</div>
+
+		</div>	
+
+		<div class="form-group">
+			<md-button class="md-raised" ng-if="load" ng-click="loadMore()">Load More</md-button>
+			<p ng-if="!load">No More Trips to Load</p>
 		</div>
 
-	</div>	
-
-	<md-button class="md-raised" ng-if="load" ng-click="loadMore()">Load More</md-button>
-	<p ng-if="!load">No More Trips to Load</p>
-
+	</div>
 </div>
