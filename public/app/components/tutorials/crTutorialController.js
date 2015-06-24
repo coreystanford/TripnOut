@@ -9,13 +9,13 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
       $scope.userTrips = data.trips;
 
     });
-    
+
     var prepStepCount = 1;
     var keyItemCount = 1;
     var phraseCount = 1;
     var clothingCount = 1;
     var placesCount = 1;
-    
+
     $scope.tutorial = {};
     $scope.tutorial.choice = 'No';
     $scope.tutorial.prepSteps = false;
@@ -25,19 +25,19 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
     $scope.tutorial.temperature = false;
     $scope.tutorial.clothing = false;
     $scope.tutorial.keyPlaces = false;
-    
+
     $scope.tutorialdata = {};
     $scope.tutorialdata.content = new Array();
     $scope.tutorialdata.trip_link = null;
-    
+
     Auth.getUser()
          .success(function(data) {
 
       $scope.tutorialdata.author = data._id;
 
     });
-    
-    
+
+
     $scope.resetTripLink = function(){
         console.log("1st: " + $scope.tutorialdata.trip_link);
         if($scope.tutorial.choice == 'No'){
@@ -45,10 +45,10 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
             console.log("2nd: " + $scope.tutorialdata.trip_link);
         }
     }
-    
+
     $scope.addNewData = function(titleData, typeData, index){
         console.log(index);
-        
+
          switch(typeData){
             case 'prepSteps':
                 $scope.tutorial.prepSteps = true;
@@ -74,24 +74,24 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
                 $scope.tutorial.keyPlaces = true;
                 var stepNum = titleData + " " + (placesCount);
                 placesCount++;
-                break;    
-            
+                break;
+
         }
-        
+
         var newData = {
             title: stepNum,
             input: ''
-        
+
         }
-        
+
         var item = $scope.tutorialdata.content[index];
         item.data.push(newData);
     }
-    
-    
-    
+
+
+
     $scope.addCompartment = function(typeData, titleData){
-        
+
         switch(typeData){
             case 'prepSteps':
                 $scope.tutorial.prepSteps = true;
@@ -125,30 +125,30 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
                 $scope.tutorial.keyPlaces = true;
                 var stepNum = titleData + " " + (placesCount);
                 placesCount++;
-                break;    
-            
+                break;
+
         }
-        
-        
-        
+
+
+
       var newContent = {
         type: typeData,
         data: [{
             title: stepNum,
             input: ''
         }
-        ] 
+        ]
       };
-          
+
     $scope.tutorialdata.content.push(newContent);
     }
-    
+
     $scope.removeSection = function(typeData, index){
         console.log(index);
       if(index > -1){
         $scope.tutorialdata.content.splice(index, 1);
       }
-        
+
     switch(typeData){
             case 'prepSteps':
                 $scope.tutorial.prepSteps = false;
@@ -175,9 +175,9 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
             case 'keyPlaces':
                 $scope.tutorial.keyPlaces = false;
                 placesCount = 1;
-                break;    
-            
-        }   
+                break;
+
+        }
 
     };
 

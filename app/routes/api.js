@@ -25,38 +25,38 @@
 
   // get an instance of the express router
   var apiRouter = express.Router();
-  
+
   // -------------------------------- //
   // -------- AUTHENTICATION -------- //
   // -------------------------------- //
 
   apiRouter.post('/authenticate', function(req, res) {
- 
+
    // find the user
    // select the name username and password explicitly
    User.findOne({
      username: req.body.username
    }).select('_id name username pic password').exec(function(err, user) {
- 
+
      if (err) throw err;
- 
+
      // no user with that username was found
      if (!user) {
-       res.json({ 
-         success: false, 
-         message: 'Authentication failed. User not found.' 
+       res.json({
+         success: false,
+         message: 'Authentication failed. User not found.'
        });
      } else if (user) {
- 
+
        // check if password matches
        var validPassword = user.comparePassword(req.body.password);
        if (!validPassword) {
-         res.json({ 
-           success: false, 
-           message: 'Authentication failed. Wrong password.' 
+         res.json({
+           success: false,
+           message: 'Authentication failed. Wrong password.'
          });
        } else {
- 
+
          // if user is found and password is right
          // create a token
          var token = jwt.sign({
@@ -76,10 +76,10 @@
            token: token,
            id: user._id
          });
-       }   
- 
+       }
+
      }
- 
+
    });
  });
 
@@ -87,21 +87,21 @@
   // -------- ALLOWED ANONYMOUS REQUESTS -------- //
   // -------------------------------------------- //
 
-  // ---- SEARCH ---- //    
-   
-  apiRouter.route('/search/:query')    
-  .get(function(req, res){   
-    var results = {};    
-    Trip.find(   
-        { $text : { $search : "'"+req.params.query+"'" } },    
-        { score: { $meta: 'textScore' } }    
-    )    
-    .where('public_trip').equals(true)   
-    .sort({ score: { $meta: 'textScore' } })   
-    .exec(function(err, tripResults) {   
-        //results['trips'] = tripResults;    
-        res.json(tripResults);   
-    });    
+  // ---- SEARCH ---- //
+
+  apiRouter.route('/search/:query')
+  .get(function(req, res){
+    var results = {};
+    Trip.find(
+        { $text : { $search : "'"+req.params.query+"'" } },
+        { score: { $meta: 'textScore' } }
+    )
+    .where('public_trip').equals(true)
+    .sort({ score: { $meta: 'textScore' } })
+    .exec(function(err, tripResults) {
+        //results['trips'] = tripResults;
+        res.json(tripResults);
+    });
   });
 
   // ---- GET LATEST TRIPS ---- //
@@ -118,7 +118,7 @@
    // ---- GET TRIP BY ID ---- //
 
   apiRouter.route('/trips/:trip_id')
-  // get the trip with that id 
+  // get the trip with that id
   .get(function(req, res) {
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
@@ -142,25 +142,25 @@
 
   apiRouter.route('/users')
   .post(function(req, res) {
-    
+
     // create a new instance of the User model
-    var user = new User();    
- 
+    var user = new User();
+
     // set the users information (comes from the request)
-    user.name = req.body.name;  
+    user.name = req.body.name;
     user.username = req.body.username;
     user.password = req.body.password;
- 
+
     // save the user and check for errors
     user.save(function(err) {
              if (err) {
                  // duplicate entry
-                 if (err.code == 11000) 
+                 if (err.code == 11000)
                      return res.json({ success: false, message: 'A user with that username already exists. '});
-                 else 
+                 else
                      return res.send(err);
              }
- 
+
       res.json({ message: 'Registration Successful!' });
     });
 
@@ -280,43 +280,43 @@
 
    // check header or url parameters or post parameters for token
    var token = req.body.token || req.params.token || req.headers['x-access-token'];
- 
+
    // decode token
    if (token) {
- 
+
      // verifies secret and checks exp
-     jwt.verify(token, config.secret, function(err, decoded) {      
+     jwt.verify(token, config.secret, function(err, decoded) {
        if (err) {
-         return res.status(403).send({ 
-             success: false, 
-           message: 'Failed to authenticate token.' 
-         });    
+         return res.status(403).send({
+             success: false,
+           message: 'Failed to authenticate token.'
+         });
        } else {
          // if everything is good, save to request for use in other routes
-         req.decoded = decoded;   
- 
+         req.decoded = decoded;
+
          next();
- 
-       } 
+
+       }
      });
- 
+
    } else {
- 
+
      // if there is no token
      // return an HTTP response of 403 (access forbidden) and an error message
-     return res.status(403).send({ 
-       success: false, 
-       message: 'No token provided.' 
+     return res.status(403).send({
+       success: false,
+       message: 'No token provided.'
      });
-     
+
    }
- 
+
   });
 
   // ----------------------- //
   // -------- USERS -------- //
   // ----------------------- //
- 
+
   // ---- Get All Users ---- //
 
   apiRouter.route('/users')
@@ -332,7 +332,7 @@
 
  apiRouter.route('/users/:user_id')
 
-  // get the user with that id 
+  // get the user with that id
   .get(function(req, res) {
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
@@ -343,36 +343,36 @@
     });
   })
 
-  // update the user with this id 
+  // update the user with this id
   .put(function(req, res) {
- 
+
     // use our user model to find the user we want
     User.findById(req.params.user_id, function(err, user) {
       if (err) res.send(err);
- 
+
       // update the users info only if its new
       if (req.body.name) user.name = req.body.name;
       if (req.body.username) user.username = req.body.username;
       if (req.body.password) user.password = req.body.password;
       if (req.body.pic) user.pic = req.body.pic;
- 
+
       // save the user
       user.save(function(err) {
         if (err) res.send(err);
         // return a message
         res.json({ message: 'User updated!' });
       });
- 
+
     });
   })
 
-  // delete the user with this id 
+  // delete the user with this id
   .delete(function(req, res) {
     User.remove({
       _id: req.params.user_id
     }, function(err, user) {
       if (err) return res.send(err);
- 
+
       res.json({ message: 'Successfully deleted' });
     });
   });
@@ -400,14 +400,14 @@
   apiRouter.route('/trips')
 
   .post(function(req, res) {
-    
+
     // create a new instance of the User model
-    var trip = new Trip();    
- 
+    var trip = new Trip();
+
     console.log(req.body);
 
     // set the users information (comes from the request)
-    trip.title = req.body.title; 
+    trip.title = req.body.title;
     trip.description = req.body.description;
     trip.author = req.body.author;
     for (var i = 0; i < req.body.content.length; i++) {
@@ -418,7 +418,7 @@
     trip.thumbnail = req.body.thumbnail;
     trip.content = req.body.content;
     trip.public_trip = req.body.public_trip;
- 
+
     // save the trip and check for errors
     trip.save(function(err) {
       if (err) { return res.send(err); }
@@ -453,9 +453,9 @@
 
  apiRouter.route('/trips/:trip_id/:user_id')
 
-  // update the trip with this id 
+  // update the trip with this id
   .put(function(req, res) {
- 
+
     // use our trip model to find the trip we want
     Trip.findById(req.params.trip_id, function(err, trip) {
       if (err) res.send(err);
@@ -475,7 +475,7 @@
           };
         }
         if (req.body.public_trip) trip.public_trip = req.body.public_trip;
-   
+
         // save the trip
         trip.save(function(err) {
           if (err) res.send(err);
@@ -486,13 +486,13 @@
       } else {
 
         res.json({ message: 'Unauthorized' });
-      
+
       }
-   
+
     });
   })
 
-  // delete the trip with this id 
+  // delete the trip with this id
   .delete(function(req, res) {
 
     Trip.find({ _id: req.params.trip_id }, function(err, trip) {
@@ -508,22 +508,22 @@
            Trip.remove({
               _id: req.params.trip_id
            }, function(err, trip) {
-             if (err) return res.send(err); 
+             if (err) return res.send(err);
              res.json({ message: 'Successfully deleted' });
            });
-    
+
          });
 
       } else {
 
         res.json({ message: 'Unauthorized' });
-      
+
       }
-    
+
     });
-  
+
   });
-     
+
   // ---------------------- //
   // ------- TUTORIAL ----- //
   // ---------------------- //
@@ -531,31 +531,37 @@
   apiRouter.route('/tutorials')
 
   .post(function(req, res) {
-    
-    var tutorial = new Tutorial();    
- 
-    tutorial.title = req.body.title; 
+
+    var tutorial = new Tutorial();
+
+    tutorial.title = req.body.title;
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
-    if(req.body.trip_link) tutorial.trip_link = req.body.trip_link;  
-    tutorial.content = req.body.content
+    if(req.body.trip_link) tutorial.trip_link = req.body.trip_link;
+    for( var i = 0; i < req.body.content; i++)
+    {
+      tutorial.content.push(req.body.content[i].type);
+      for( var i = 0; i < req.body.content[x].data; i++) {
+      tutorial.content.push(req.body.content[x].data);
+      }
+    }
     tutorial.date = new Date();
     tutorial.author = req.body.author;
     tutorial.approved = req.body.approved;
- 
+
     tutorial.save(function(err) {
              if (err) {
 
-                 if (err.code == 11000) 
+                 if (err.code == 11000)
                      return res.json({ success: false, message: 'A tutorial with that name already exists. '});
-                 else 
+                 else
                      return res.send(err);
              }
- 
+
       //res.json({ message: 'Tutorial created!' });
     });
-      
-    console.log("**** " + tutorial._id + " ****" );  
+
+    console.log("**** " + tutorial._id + " ****" );
     var newTutorial = {
       tutorial: tutorial._id
     };
@@ -563,14 +569,14 @@
     User.findByIdAndUpdate(
         req.body.author,
         { $push: { tutorials: newTutorial }},
-        
+
         { safe: true, upsert: true },
-        
+
         function(err, tutorial) {
             if (err) res.send(err);
             res.json({ message: 'User Tutorial added!' });
         }
-    ); 
+    );
 
   })
 
@@ -582,10 +588,20 @@
     });
   });
 
+  apiRouter.route('/tutorials/author')
+  .get(function(req, res) {
+    Tutorial.find(function(err, tutorials) {
+      if (err) res.send(err);
+      Tutorial.populate(tutorials, {path: 'author'}, function(err, tutorials){
+        res.json(tutorials);
+      });
+    });
+  });
+
+
   // -------- Tutorial BY ID -------- //
 
  apiRouter.route('/tutorials/:tutorial_id')
- 
   .get(function(req, res) {
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
       if (err) res.send(err);
@@ -596,23 +612,23 @@
   })
 
   .put(function(req, res) {
- 
+
     Tutorial.findById(req.params.tutorial_id, function(err, tutorial) {
       if (err) res.send(err);
- 
+
       if (req.body.title) tutorial.title = req.body.title;
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
-      if (req.body.trip_link) tutorial.trip_link = req.body.trip_link;    
+      if (req.body.trip_link) tutorial.trip_link = req.body.trip_link;
       if (req.body.content) tutorial.content = req.body.content;
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
- 
+
       trip.save(function(err) {
         if (err) res.send(err);
         res.json({ message: 'Tutorial updated!' });
       });
- 
+
     });
   })
 
@@ -630,15 +646,15 @@
             _id: req.params.tutorial_id
          }, function(err, tutorial) {
            if (err) return res.send(err);
-           
+
            res.json({ message: 'Successfully deleted' });
          });
-  
+
        });
-    
+
     });
-  
-  });   
+
+  });
 
   return apiRouter;
 

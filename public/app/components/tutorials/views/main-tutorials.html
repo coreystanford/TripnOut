@@ -4,12 +4,11 @@
 <div>
 <md-content class="md-padding">
 
-  <md-card  ng-repeat="tutorial in allTutorials">
+  <md-card   ng-repeat="tutorial in allTutorials" ui-sref="tutorial({tutorial_id: tutorial._id})">
 
   <md-card-content>
       <div>
-          <p ng-repeat="user in allUsers" ng-if="tutorial.author == user._id">{{  user.username  }}</p>
-
+          <p>{{  tutorial.author.name  }}</p>
           <p>{{ tutorial.title }}</p>
           <p>{{  tutorial.description}}</p>
       </div>

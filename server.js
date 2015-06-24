@@ -1,6 +1,6 @@
  // BASE SETUP
  // ======================================
- 
+
  // CALL THE PACKAGES --------------------
  var express    = require('express'); // call express
  var app        = express(); // define our app using express
@@ -20,7 +20,7 @@
  // use body parser so we can grab information from POST requests
  app.use(bodyParser.urlencoded({ extended: true }));
  app.use(bodyParser.json());
- 
+
  // configure our app to handle CORS requests
  app.use(function(req, res, next) {
    res.setHeader('Access-Control-Allow-Origin', '*');
@@ -28,20 +28,20 @@
    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
    next();
  });
- 
- // log all requests to the console 
+
+ // log all requests to the console
  app.use(morgan('dev'));
- 
+
  // ROUTES FOR OUR API
  // =============================
 
  var apiRoutes = require('./app/routes/api')(app, express);
- 
+
  // REGISTER OUR ROUTES -------------------------------
  // all of our routes will be prefixed with /api
  app.use('/api', apiRoutes);
 
- // MAIN CATCHALL ROUTE --------------- 
+ // MAIN CATCHALL ROUTE ---------------
  // SEND USERS TO FRONTEND ------------
 
  // set the public folder to serve public assets
@@ -75,4 +75,3 @@ io.on('connection', function(socket){
  http.listen(config.port, function(){
  	console.log('Magic happens on port ' + config.port);
  });
- 
