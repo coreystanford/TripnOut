@@ -1,5 +1,9 @@
 
-tripnoutApp.controller('testController', function($state, $location, Auth, User) {
+tripnoutApp.controller('testController', function($interval, $state, $location, Auth, User, Socket) {
+
+  Socket.on('users', function(users){
+    console.log(users);
+  });
 
   var vm = this;
   //menu boolean
@@ -16,6 +20,8 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
     if(vm.loggedIn){
       User.me().success(function(data){
         vm.user = data;
+        vm.user.online = true;
+        onlineStatus(vm.user);
       })
     };
     
@@ -62,9 +68,10 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
 
     var onlineStatus = function(user) {
       if(user.online == true){
-        console.log('true');
+        Socket.emit('online', { username: user.username });
+        
       } else {
-        console.log('not true');
+        Socket.emit('offline', { username: user.username });
       }
     }
 

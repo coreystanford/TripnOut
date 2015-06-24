@@ -9,7 +9,6 @@ var UserSchema   = new Schema({
     username: { type: String, required: true, index: { unique: true }},
     password: { type: String, required: true, select: false },
     pic: String,
-    online: Boolean,
     trips: [{ trip:{ type: Schema.ObjectId, ref: 'Trip' }}],
     tutorials: [{tutorial: { type: Schema.ObjectId, ref: 'Tutorial' }}]
 });
