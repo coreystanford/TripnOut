@@ -29,6 +29,7 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $loc
     $scope.tutorialdata = {};
     $scope.tutorialdata.content = new Array();
     $scope.tutorialdata.trip_link = null;
+    $scope.tutorialdata.approved = true;
     
     Auth.getUser()
          .success(function(data) {
