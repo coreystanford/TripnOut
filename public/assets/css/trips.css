@@ -28,10 +28,22 @@
   transform: translateX(-50%);
 }
 #trips .trip .titles {
+  z-index: 5;
   position: relative;
   top: 10%;
   left: 15%;
   text-align: left;
+}
+#trips .trip #bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+#trips .trip:hover #bg {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 #search-box {
