@@ -9,6 +9,8 @@
  var morgan     = require('morgan'); // used to see requests
  var mongoose   = require('mongoose'); // for working w/ our database
  var path 		= require('path');
+ var http		= require('http').Server(app);
+ var io			= require('socket.io')(http); // socket.io for messaging
 
  // DATABASE CONNECTION -------------------
 
@@ -52,5 +54,7 @@
 
  // START THE SERVER
  // ===============================
- app.listen(config.port);
- console.log('Magic happens on port ' + config.port);
+ app.listen(config.port, function(){
+ 	console.log('Magic happens on port ' + config.port);
+ });
+ 

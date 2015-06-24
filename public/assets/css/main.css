@@ -69,7 +69,8 @@ a {
     width: 100%; }
     @media only screen and (min-width: 768px) {
       .header .title {
-        display: block; } }
+        display: block;
+        margin-left: 50px; } }
     .header .title h1 {
       display: table-cell;
       vertical-align: center;
