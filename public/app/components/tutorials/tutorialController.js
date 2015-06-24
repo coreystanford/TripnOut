@@ -5,13 +5,18 @@ tripnoutApp.controller('tutorialController', function($rootScope, $scope, $locat
     $scope.loggedIn = Auth.isLoggedIn();
 
 
+    Tutorial.all()
+    .success(function(data) {
+      console.log(data);
+      $scope.allTutorials = data;
+    });
 
-        Tutorial.allWithAuthor()
-        .success(function(data) {
-          console.log(data);
-          $scope.allTutorials = data;
-        });
-
+    //grabbing user data
+    User.all()
+    .success(function(data) {
+      console.log(data);
+      $scope.allUsers = data;
+    });
 
 
 

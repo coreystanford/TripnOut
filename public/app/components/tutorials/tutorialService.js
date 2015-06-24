@@ -10,11 +10,6 @@ tripnoutApp.factory('Tutorial', function($http) {
 	  return $http.get('/api/tutorials/');
 	};
 
-	//get all the tutorials for an author
-	tutorialFactory.allWithAuthor = function() {
-		return $http.get('/api/tutorials/author');
-	};
-
 	// get a single tutorial
 	tutorialFactory.get = function(id) {
 	  return $http.get('/api/tutorials/' + id);
