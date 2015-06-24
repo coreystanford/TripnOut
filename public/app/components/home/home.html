@@ -14,13 +14,14 @@
 		
 		<div class="trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
 
+			<div id="bg"></div>
+
 			<img ng-src="/static/assets/img/{{ trip.thumbnail }}" alt="{{ trip.description }}">
 				
 			<div class="titles">
 
 				<h2>{{ trip.title }}</h2>
 				<h4>{{ trip.country }}</h4>
-				<h5>{{ trip.date | date }}</h5>
 
 			</div>
 
