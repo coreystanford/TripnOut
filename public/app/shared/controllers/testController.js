@@ -1,5 +1,9 @@
 
-tripnoutApp.controller('testController', function($state, $location, Auth, User) {
+tripnoutApp.controller('testController', function($interval, $state, $location, Auth, User, Socket) {
+
+  Socket.on('users', function(users){
+    console.log(users);
+  });
 
   var vm = this;
   //menu boolean
@@ -16,6 +20,8 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
     if(vm.loggedIn){
       User.me().success(function(data){
         vm.user = data;
+        vm.user.online = true;
+        onlineStatus(vm.user);
       })
     };
     
@@ -38,6 +44,8 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
             vm.loggedIn = Auth.isLoggedIn();
             User.me().success(function(data){
               vm.user = data;
+              vm.user.online = true;
+              onlineStatus(vm.user);
             });
             $state.go('profile');
           }
@@ -52,9 +60,19 @@ tripnoutApp.controller('testController', function($state, $location, Auth, User)
       Auth.logout();
       //reset all user info
       vm.user = {};
+      onlineStatus(vm.user);
       vm.loggedIn = Auth.isLoggedIn();
       vm.showMain();
       $state.go('home');
     };
+
+    var onlineStatus = function(user) {
+      if(user.online == true){
+        Socket.emit('online', { username: user.username });
+        
+      } else {
+        Socket.emit('offline', { username: user.username });
+      }
+    }
 
 });

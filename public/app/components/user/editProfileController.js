@@ -1,12 +1,24 @@
 "use strict";
 
 //controller applied to user edit page
-tripnoutApp.controller('editProfileController', function($scope, $state, User) {
+tripnoutApp.controller('editProfileController', function($timeout, $scope, $state, User) {
 
   //variable to hide/show elements of the view
   //differentiates between create or edit pages
   $scope.type = 'edit';
   $scope.process = false;
+
+
+  $scope.pwBool = false;
+  $scope.newPw = { pw: "", pw2: ""};
+  $scope.changePw = function(){
+    if($scope.pwBool){
+      $scope.pwBool = false;
+      $scope.newPw = { pw: "", pw2: ""};
+    }
+    else
+      $scope.pwBool = true;
+  };
   //get the user data for the user you want to edit
   //$routeParams is the waywe grab data from the url
 
@@ -23,7 +35,6 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
   }
 
   
-
   User.me().success(function(data){
     $scope.me = data;
     if (!data.pic || data.pic == ""){
@@ -41,6 +52,7 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
       $scope.userData = data;
     });
 
+    // on new photo upload, update database and upload image
   $scope.onUpload = function($flow) {
     $scope.me.pic = $flow.files[0].name;
     $scope.img = '/static/assets/img/profile/' + $scope.me.pic;
@@ -55,12 +67,51 @@ tripnoutApp.controller('editProfileController', function($scope, $state, User) {
     //clear the message
     $scope.message = '';
 
+    if($scope.pwBool){
+      if($scope.newPw.pw == $scope.newPw.pw2 && $scope.newPw.pw != "")
+      {
+        $scope.userData.password = $scope.newPw.pw2;
+
+        User.update($scope.userData._id, $scope.userData)
+          .success(function(data) {
+            $scope.processing = false;
+
+            $scope.success = true;
+            $scope.message = data.message;
+            $timeout(function(){$scope.success = false}, 3000);
+            $scope.me.name = $scope.userData.name;
+            $scope.newPw = { pw: "", pw2: ""};
+            $scope.pwBool = false;
+          });
+      }
+      else if($scope.newPw.pw != $scope.newPw.pw2)
+      {
+        $scope.processing = false;
+        $scope.message = "Passwords do not match";
+        $scope.success = true;
+        $timeout(function(){$scope.success = false}, 3000);
+
+        return;
+      }
+      else if($scope.newPw.pw == "")
+      {
+        $scope.processing = false;
+        $scope.message = "Password field is empty!";
+        $scope.success = true;
+        $timeout(function(){$scope.success = false}, 3000);
+
+        return;
+      }
+    }
+
     //use the create function in the userService
     User.update($scope.userData._id, $scope.userData)
       .success(function(data) {
         $scope.processing = false;
 
         $scope.success = true;
+        $scope.message = data.message;
+        $timeout(function(){$scope.success = false}, 3000);
         $scope.me.name = $scope.userData.name;
       });
 

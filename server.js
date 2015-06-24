@@ -9,6 +9,8 @@
  var morgan     = require('morgan'); // used to see requests
  var mongoose   = require('mongoose'); // for working w/ our database
  var path 		= require('path');
+ var http		= require('http').Server(app);
+ var io			= require('socket.io')(http); // socket.io for messaging
 
  // DATABASE CONNECTION -------------------
 
@@ -50,7 +52,27 @@
    res.sendFile(path.join(__dirname + '/public/index.html'));
  });
 
+var users = {};
+
+io.on('connection', function(socket){
+ 	socket.on('online', function(data){
+ 		var key = String(socket.id);
+ 		users[key] = data.username;
+		io.emit('users', users);
+	});
+	socket.on('offline', function(){
+		delete users[String(socket.id)];
+		io.emit('users', users);
+	});
+	socket.on('disconnect', function(){
+		delete users[String(socket.id)];
+		io.emit('users', users);
+	})
+});
+
  // START THE SERVER
  // ===============================
- app.listen(config.port);
- console.log('Magic happens on port ' + config.port);
+ http.listen(config.port, function(){
+ 	console.log('Magic happens on port ' + config.port);
+ });
+ 

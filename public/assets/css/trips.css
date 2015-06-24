@@ -34,6 +34,52 @@
   text-align: left;
 }
 
+#search-box {
+  min-height: 150px;
+  line-height: 150px;
+}
+#search-box input[type="text"] {
+  max-width: 300px;
+  width: 40%;
+  padding: 5px 10px;
+  font-size: 18px;
+}
+#search-box #searchBtn {
+  font-size: 18px;
+  padding: 6px 10px;
+  background: black;
+  color: white;
+  border: none;
+  outline: none;
+}
+#search-box #searchBtn:hover {
+  background: #333333;
+}
+#search-box #searchBtn:active {
+  background: #555555;
+}
+#search-box p {
+  position: absolute;
+  top: 95px;
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+}
+
+#trip {
+  max-width: 900px;
+  width: 90%;
+  margin: 0 auto;
+}
+#trip img {
+  width: 100%;
+}
+#trip .view-trip {
+  padding: 30px 0;
+}
+#trip .view-trip p {
+  padding: 20px 40px;
+}
+
 #my-trips {
   position: relative;
   width: 100%;

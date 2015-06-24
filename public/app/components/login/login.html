@@ -1,5 +1,6 @@
 <div class="logInReg" ng-if="type!='create'">
   <h1>Login</h1>
+  <h2 class="warning">{{ main.error }}</h2>
   <form ng-submit="main.doLogin()" class="loginForm">
 
     <!--USERNAME INPUT-->
@@ -17,14 +18,15 @@
       {{ error }}
     </div>
     <!-- LOGIN BUTTON-->
-    <md-button type="submit" aria-label="Login" class="md-raised">
+    <md-button type="submit" aria-label="Login" class="btn md-raised">
       <span ng-if="!main.processing">Login</span>
 
-      <span ng-if="main.processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
+      <span ng-if="main.processing" class="spinner"><md-progress-circular md-mode="indeterminate"></md-progress-circular></span>
 
     </md-button>
 
   </form>
+
 </div>
 
 <div class="logInReg" ng-if="type=='create'">
@@ -55,10 +57,10 @@
       {{ error }}
     </div>
     <!-- LOGIN BUTTON-->
-    <md-button type="submit" aria-label="Register" class="md-raised">
+    <md-button type="submit" aria-label="Register" class="btn md-raised">
       <span ng-if="!processing">Register</span>
 
-      <span ng-if="processing" class="spinner"><span class="gyphicon glyphicon-repeat"></span></span>
+      <span ng-if="processing" class="spinner"><md-progress-circular md-mode="indeterminate"></md-progress-circular></span>
 
     </md-button>
 

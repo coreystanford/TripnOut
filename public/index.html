@@ -21,7 +21,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
     <script src="/static/assets/lib/flow.min.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
     <script>document.write('<base href="' + document.location + '" />');</script>
+
 </head>
 <body ng-app="tripnoutApp" ng-controller="testController as main" flow-prevent-drop>
 	<div class="container" ng-class="{ 'menu': main.menu }">
@@ -35,20 +38,16 @@
 			<nav class="main-nav">
 				<div class="loggedMenu">
 					<ul class="loggedOut" ng-if="!main.loggedIn">
-						<li><a ng-click="main.showMain()" ui-sref="home"><i class="fa fa-home fa-lg fa-fw"></i> Home</a></li>
+                    	<li><a ng-click="main.showMain()" ui-sref="main-tutorials"><i class="fa fa-list-ol fa-lg fa-fw"></i> Tutorials</a></li>
 						<li><a ng-click="main.showMain()" ui-sref="login"><i class="fa fa-sign-in fa-lg fa-fw"></i> Login</a></li>
 						<li><a ng-click="main.showMain()" ui-sref="create"><i class="fa fa-user-plus fa-lg fa-fw"></i> Register</a></li>
 					</ul>
 					<ul class="loggedIn" ng-if="main.loggedIn">
-						<li><a ng-click="main.showMain()" ui-sref="home"><i class="fa fa-home fa-lg fa-fw"></i> Home</a></li>
+                    	<li><a ng-click="main.showMain()" ui-sref="main-tutorials"><i class="fa fa-list-ol fa-lg fa-fw"></i> Tutorials</a></li>
 						<li><a ng-click="main.showMain()" ui-sref="profile"><i class="fa fa-user fa-lg fa-fw"></i> My Profile</a></li>
 						<li><a ng-click="main.doLogout()" ui-sref="home"><i class="fa fa-sign-out fa-lg fa-fw"></i> Logout</a></li>
 					</ul>
 				</div>
-				<ul>
-					<li>Trips</li>
-                    <li><a ng-click="main.showMain()" ui-sref="main-tutorials"><i class="fa fa-list-ol fa-lg fa-fw"></i> Tutorials</a></li>
-				</ul>
 			</nav>
 		</header>
 
@@ -84,7 +83,9 @@
 <script type="text/javascript" src="/static/app/shared/services/authService.js"></script>
 <script type="text/javascript" src="/static/app/shared/services/userService.js"></script>
 <script type="text/javascript" src="/static/app/components/trips/tripService.js"></script>
+<script type="text/javascript" src="/static/app/components/tutorials/tutorialService.js"></script>
 <script type="text/javascript" src="/static/app/components/search/searchService.js"></script>
+<script type="text/javascript" src="/static/app/shared/services/socket.js"></script>
 
 <!-- Directives -->
 <script type="text/javascript" src="/static/app/components/trips/my-trip.js"></script>
