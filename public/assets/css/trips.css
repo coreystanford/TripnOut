@@ -17,6 +17,8 @@
   cursor: pointer;
   overflow: hidden;
   min-height: 400px;
+  color: white;
+  text-align: left;
 }
 #trips .trip img {
   position: absolute;
@@ -28,12 +30,23 @@
   height: auto;
   transform: translateX(-50%);
 }
-#trips .trip .titles {
+#trips .trip h1 {
   z-index: 5;
-  position: relative;
-  top: 10%;
+  position: absolute;
+  top: 0;
   left: 15%;
-  text-align: left;
+  padding: 15px 20px;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+#trips .trip h3 {
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  right: 15%;
+  padding: 10px 15px;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 #trips .trip #bg {
   position: absolute;
@@ -44,7 +57,10 @@
   z-index: 1;
 }
 #trips .trip:hover #bg {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+}
+#trips .trip:hover h1, #trips .trip h3 {
+  background: black;
 }
 
 #search-box {
@@ -83,6 +99,11 @@
   height: 500px;
   margin: 0 0 40px 0;
 }
+@media only screen and (max-width: 768px) {
+  #map {
+    display: none;
+  }
+}
 
 #trip {
   max-width: 900px;
@@ -92,10 +113,18 @@
 #trip img {
   width: 100%;
 }
+#trip h1 {
+  display: inline-block;
+  clear: both;
+  background: black;
+  padding: 15px 20px;
+  color: white;
+}
 #trip .view-trip {
   padding: 30px 0;
 }
 #trip .view-trip p {
+  text-align: left;
   padding: 20px 40px;
 }
 
@@ -108,6 +137,8 @@
   position: relative;
   overflow: hidden;
   min-height: 400px;
+  color: white;
+  text-align: left;
 }
 #my-trips .my-trip img {
   position: absolute;
@@ -119,11 +150,23 @@
   height: auto;
   transform: translateX(-50%);
 }
-#my-trips .my-trip .titles {
-  position: relative;
-  top: 10%;
+#my-trips .my-trip h1 {
+  z-index: 5;
+  position: absolute;
+  top: 0;
   left: 15%;
-  text-align: left;
+  padding: 15px 20px;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+#my-trips .my-trip h3 {
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  padding: 10px 15px;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 #my-trips .my-trip .buttons {
   position: absolute;
