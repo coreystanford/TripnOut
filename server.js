@@ -55,19 +55,23 @@
 var users = {};
 
 io.on('connection', function(socket){
+	var thisuser = "";
  	socket.on('online', function(data){
- 		var key = String(socket.id);
- 		users[key] = data.username;
+ 		thisuser = data.username;
+ 		users[thisuser] = String(socket.id);
 		io.emit('users', users);
 	});
 	socket.on('offline', function(){
-		delete users[String(socket.id)];
+		delete users[thisuser];
 		io.emit('users', users);
 	});
 	socket.on('disconnect', function(){
-		delete users[String(socket.id)];
-		io.emit('users', users);
-	})
+		if(users[thisuser] !== undefined){
+			delete users[thisuser];
+			thisuser = "";
+			io.emit('users', users);
+		};
+	});
 });
 
  // START THE SERVER

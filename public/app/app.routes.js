@@ -20,12 +20,6 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           templateUrl: 'static/app/components/login/login.html'
         })
 
-        .state('profile', {
-          url: '/me',
-          templateUrl: 'static/app/components/user/profile.html',
-          controller: 'userController'
-        })
-
         .state('create', {
           url: '/register',
           templateUrl: 'static/app/components/login/login.html',
@@ -38,7 +32,19 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           controller: 'userEditController'
         })
 
+        .state('members', {
+          url: '/members',
+          templateUrl: 'static/app/components/user/userlist.html',
+          controller: 'membersController'
+        })
+
         // ---- Profile Routes ---- //
+
+        .state('profile', {
+          url: '/me',
+          templateUrl: 'static/app/components/user/profile.html',
+          controller: 'userController'
+        })
 
         .state('editProfile', {
           url: '/edit_me',
