@@ -97,6 +97,12 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         })
 
         // ---- Tutorial Routes ---- //
+    
+        .state('myTutorials', {
+            url: '/my-tutorials',
+            templateUrl: 'static/app/components/tutorials/views/myTutorials.html',
+            controller: 'myTutorials'
+        })
 
         .state('main-tutorials', {
             url: '/tutorials',
@@ -108,6 +114,21 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             url: '/create-tutorial',
             templateUrl: 'static/app/components/tutorials/views/create-tutorial.html',
             controller: 'crTutorialController'
+        })
+        .state('detailTutorial', {
+            url: '/tutorial-detail/:tutorial_id',
+            templateUrl: 'static/app/components/tutorials/views/detailTutorial.html',
+            controller: 'detailTutorial'
+        })
+        .state('updateTutorial', {
+            url: '/update-tutorial/:tutorial_id',
+            templateUrl: 'static/app/components/tutorials/views/updateTutorial.html',
+            controller: 'updateTutorial'
+        })
+        .state('deleteTutorial', {
+            url: '/delete-tutorial/:tutorial_id',
+            templateUrl: 'static/app/components/tutorials/views/deleteTutorial.html',
+            controller: 'deleteController'
         });
 
     // Default route

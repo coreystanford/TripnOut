@@ -21,13 +21,13 @@ tripnoutApp.factory('Tutorial', function($http) {
 	};
 
 	// update a user
-	tutorialFactory.update = function(tutorial_id, user_id, tutorialData) {
-	  return $http.put('/api/tutorials/' + tutorial_id + '/' + user_id, tutorialData);
+	tutorialFactory.update = function(tutorial_id, tutorialData) {
+	  return $http.put('/api/tutorials/' + tutorial_id, tutorialData);
 	};
 
 	// delete a user
-	tutorialFactory.delete = function(tutorial_id, user_id) {
-	  return $http.delete('/api/tutorials/' + tutorial_id + '/' + user_id);
+	tutorialFactory.delete = function(tutorial_id) {
+	  return $http.delete('/api/tutorials/' + tutorial_id); 
 	};
 
 	// return entire userFactory object
