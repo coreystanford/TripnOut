@@ -1,11 +1,21 @@
 
 tripnoutApp.controller('testController', function($interval, $state, $location, Auth, User, Socket) {
+  var vm = this;
+
+  vm.members;
 
   Socket.on('users', function(users){
-    console.log(users);
+    vm.onlineList = users;
+      for (var key in vm.members){
+        var user = vm.members[key];
+        if (vm.onlineList[user.username] !== undefined){
+          vm.members[key].online = true;
+        } else {
+          vm.members[key].online = false;
+        }
+      };
   });
 
-  var vm = this;
   //menu boolean
   vm.menu = false;
 
@@ -22,8 +32,13 @@ tripnoutApp.controller('testController', function($interval, $state, $location, 
         vm.user = data;
         vm.user.online = true;
         onlineStatus(vm.user);
-      })
+      });
+      User.all().success(function(users){
+        vm.members = users;
+      });
     };
+
+    
     
 
     //function to handle login form
@@ -47,6 +62,9 @@ tripnoutApp.controller('testController', function($interval, $state, $location, 
               vm.user.online = true;
               onlineStatus(vm.user);
             });
+            User.all().success(function(users){
+              vm.members = users;
+            });
             $state.go('profile');
           }
           else
@@ -69,7 +87,6 @@ tripnoutApp.controller('testController', function($interval, $state, $location, 
     var onlineStatus = function(user) {
       if(user.online == true){
         Socket.emit('online', { username: user.username });
-        
       } else {
         Socket.emit('offline', { username: user.username });
       }
