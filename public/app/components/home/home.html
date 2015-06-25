@@ -2,16 +2,18 @@
 	<div>
 		<div id="search-box">
 
-		<form name="searchForm" novalidate>
+			<form name="searchForm" novalidate>
 
-			<input type="text" ng-model="mySearch" name="search" placeholder="Find a Trip..." required> 
-			<button type="submit" id="searchBtn" ng-click="goSearch(mySearch, searchForm.$valid)">Go</button>
-			<p id="search-error" ng-show="searchForm.search.$invalid && !createTripForm.title.$pristine && submitted" class="field-error">Please enter a search.</p>
+				<input type="text" ng-model="mySearch" name="search" placeholder="Find a Trip..." required> 
+				<button type="submit" id="searchBtn" ng-click="goSearch(mySearch, searchForm.$valid)">Go</button>
+				<p id="search-error" ng-if="searchForm.search.$invalid && !createTripForm.title.$pristine && submitted" class="field-error">Please enter a search.</p>
 
-		</form>
+			</form>
 			
 		</div>
-		
+
+		<div vector-map id="map"></div>
+
 		<div class="trip" class="clearfix" ng-repeat="trip in trips" ui-sref="trip({trip_id: trip._id})">
 
 			<div id="bg"></div>

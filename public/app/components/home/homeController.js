@@ -41,6 +41,7 @@ tripnoutApp.controller('homeController', function($scope, $state, Trip, Search) 
     $scope.goSearch = function(qu, isValid){
 
         $scope.submitted = true;
+        $scope.mySearch = qu;
 
         if(isValid){
             $state.go('search', {query: qu});
