@@ -26,7 +26,6 @@
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
   height: auto;
   transform: translateX(-50%);
 }
@@ -146,7 +145,6 @@
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
   height: auto;
   transform: translateX(-50%);
 }
