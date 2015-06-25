@@ -43,6 +43,7 @@
 						<li><a ng-click="main.showMain()" ui-sref="create"><i class="fa fa-user-plus fa-lg fa-fw"></i> Register</a></li>
 					</ul>
 					<ul class="loggedIn" ng-if="main.loggedIn">
+						<li><a ng-click="main.showMain()" ui-sref="members"><i class="fa fa-users fa-lg fa-fw"></i> Members</li>
                     	<li><a ng-click="main.showMain()" ui-sref="main-tutorials"><i class="fa fa-list-ol fa-lg fa-fw"></i> Tutorials</a></li>
 						<li><a ng-click="main.showMain()" ui-sref="profile"><i class="fa fa-user fa-lg fa-fw"></i> My Profile</a></li>
 						<li><a ng-click="main.doLogout()" ui-sref="home"><i class="fa fa-sign-out fa-lg fa-fw"></i> Logout</a></li>
@@ -78,6 +79,7 @@
 <script type="text/javascript" src="/static/app/shared/controllers/userCreateController.js"></script>
 <script type="text/javascript" src="/static/app/shared/controllers/userEditController.js"></script>
 <script type="text/javascript" src="/static/app/components/user/editProfileController.js"></script>
+<script type="text/javascript" src="/static/app/components/user/membersController.js"></script>
 
 <!-- Services -->
 <script type="text/javascript" src="/static/app/shared/services/authService.js"></script>
