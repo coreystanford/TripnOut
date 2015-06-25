@@ -109,6 +109,11 @@ tripnoutApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             templateUrl: 'static/app/components/tutorials/views/create-tutorial.html',
             controller: 'crTutorialController'
         })
+        .state('detailTutorial', {
+            url: '/tutorial-detail/:tutorial_id',
+            templateUrl: 'static/app/components/tutorials/views/detailTutorial.html',
+            controller: 'detailTutorial'
+        })
         .state('updateTutorial', {
             url: '/update-tutorial/:tutorial_id',
             templateUrl: 'static/app/components/tutorials/views/updateTutorial.html',
