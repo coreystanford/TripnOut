@@ -21,10 +21,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
     <script src="/static/assets/lib/flow.min.js"></script>
-
+    <script src="/static/assets/lib/ammap.js"></script>
+    <script src="/static/assets/lib/worldLow.js"></script>
+    <script src="/static/assets/lib/dark.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>document.write('<base href="' + document.location + '" />');</script>
-
 </head>
 <body ng-app="tripnoutApp" ng-controller="testController as main" flow-prevent-drop>
 	<div class="container" ng-class="{ 'menu': main.menu }">
@@ -80,7 +81,6 @@
 <script type="text/javascript" src="/static/app/shared/controllers/userEditController.js"></script>
 <script type="text/javascript" src="/static/app/components/user/editProfileController.js"></script>
 <script type="text/javascript" src="/static/app/components/user/membersController.js"></script>
-
 <!-- Services -->
 <script type="text/javascript" src="/static/app/shared/services/authService.js"></script>
 <script type="text/javascript" src="/static/app/shared/services/userService.js"></script>
@@ -88,10 +88,11 @@
 <script type="text/javascript" src="/static/app/components/tutorials/tutorialService.js"></script>
 <script type="text/javascript" src="/static/app/components/search/searchService.js"></script>
 <script type="text/javascript" src="/static/app/shared/services/socket.js"></script>
-
 <!-- Directives -->
 <script type="text/javascript" src="/static/app/components/trips/my-trip.js"></script>
 <script type="text/javascript" src="/static/app/components/trips/addSection.js"></script>
 <script type="text/javascript" src="/static/app/shared/directives/youtube.js"></script>
+<script type="text/javascript" src="/static/app/shared/directives/vectorMap.js"></script>
+
 </body>
 </html>
