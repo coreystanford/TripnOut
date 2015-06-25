@@ -538,7 +538,10 @@
     tutorial.description = req.body.description;
     tutorial.participants = req.body.participants;
     if(req.body.trip_link) tutorial.trip_link = req.body.trip_link;  
-    tutorial.content = req.body.content
+    for (var i = 0; i < req.body.content.length; i++) {
+      console.log(req.body.content[i]);
+      tutorial.content.push(req.body.content[i]);
+    };
     tutorial.date = new Date();
     tutorial.author = req.body.author;
     tutorial.approved = req.body.approved;
@@ -604,11 +607,16 @@
       if (req.body.description) tutorial.description = req.body.description;
       if (req.body.participants) tutorial.participants = req.body.participants;
       if (req.body.trip_link) tutorial.trip_link = req.body.trip_link;    
-      if (req.body.content) tutorial.content = req.body.content;
+      if (req.body.content) {
+          tutorial.content = new Array();
+          for (var i = 0; i < req.body.content.length; i++) {
+            tutorial.content.push(req.body.content[i]);
+          };
+        }
       if (req.body.author) tutorial.author = req.body.author;
       if (req.body.approved) tutorial.approved = req.body.approved;
  
-      trip.save(function(err) {
+      tutorial.save(function(err) {
         if (err) res.send(err);
         res.json({ message: 'Tutorial updated!' });
       });

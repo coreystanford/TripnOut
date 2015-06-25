@@ -9,10 +9,11 @@ var TutorialSchema   = new Schema({
     participants: Number,
     trip_link: String,
     content: [{
-    	type: String,
+    	type: { type: String},
+        name: { type: String},
         data: [{
-            title: String,
-            input: String
+            title: {type: String },
+            input: {type: String }
         }]
     }],
     author: { type: Schema.ObjectId, ref: 'User' },

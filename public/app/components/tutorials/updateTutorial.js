@@ -1,4 +1,4 @@
-tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $state, $location, $stateParams, Auth, Tutorial) {
+tripnoutApp.controller('updateTutorial', function($rootScope, $scope, $state, $location, $stateParams, Auth, Tutorial) {
 
 	  //get info if a person is logged in
   	$scope.loggedIn = Auth.isLoggedIn();
@@ -8,6 +8,12 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $sta
 
       $scope.userTrips = data.trips;
 
+    });
+    
+    Tutorial.get($stateParams.tutorial_id)
+    .success(function(data) {
+      $scope.tutorialdata = data;
+      console.log($scope.tutorialdata);
     });
     
     var prepStepCount = 1;
@@ -25,18 +31,6 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $sta
     $scope.tutorial.temperature = false;
     $scope.tutorial.clothing = false;
     $scope.tutorial.keyPlaces = false;
-    
-    $scope.tutorialdata = {};
-    $scope.tutorialdata.content = new Array();
-    $scope.tutorialdata.trip_link = null;
-    $scope.tutorialdata.approved = true;
-    
-    Auth.getUser()
-         .success(function(data) {
-
-      $scope.tutorialdata.author = data._id;
-
-    });
     
     
     $scope.resetTripLink = function(){
@@ -84,7 +78,7 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $sta
             title: stepNum,
             input: ''
         
-        }
+            }
         
         var item = $scope.tutorialdata.content[index];
         item.data.push(newData);
@@ -191,9 +185,9 @@ tripnoutApp.controller('crTutorialController', function($rootScope, $scope, $sta
 
     };
     
-    $scope.createTutorial = function(){
+    $scope.updateTutorial = function(){
 
-    	Tutorial.create($scope.tutorialdata)
+    	Tutorial.update($stateParams.tutorial_id, $scope.tutorialdata)
     	.success(function(response){
     		$state.go('myTutorials');
     	});
