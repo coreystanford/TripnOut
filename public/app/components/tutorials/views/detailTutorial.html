@@ -1,23 +1,18 @@
 <form accept-charset="utf-8" id="createTripForm" name="createTutorialForm"> 
    
     <md-input-container flex="">
-        <label for="tutorial_title">Title</label><br/>
-        <p>{{ tutorialdata.participants}}</p>
+        <h1>Title</h1>
+        <p>{{ tutorialdata.title}}</p>
     </md-input-container>
 
     <md-input-container flex="">
-        <label for="tutorial_description">Description</label><br/>
-    <p>{{ tutorialdata.participants}}</p>
+        <h1>Description</h1>
+        <p>{{ tutorialdata.description}}</p>
     </md-input-container>  
 
     <label for="tutorial_participants">Recommended Number of Participants</label>&nbsp;&nbsp;
     <p>{{ tutorialdata.participants}}</p>
     <br/><br/>
-    
-    <div ng-if="{{ tutorialdata.trip_link }}">    
-        <label for="tutorial_story">Link to a Story?</label>
-        <p>{{ tutorialdata.trip_link }}</p>
-    </div>
     
     <div id="components">
       
@@ -85,11 +80,7 @@
                     {{ article.title }}<p>{{article.input}}</p>
                 </li>
             </ul>
-            <br> 
-            <div class="right">
-                <md-button ng-click="addNewData('Article', 'clothing', $parent.$index)" class="md-raised md-accent">Add Article</md-button>
-				<md-button ng-click="removeSection('clothing', $index)" class="md-raised md-warn">Remove</md-button>
-            </div>	  
+            <br>	  
         </div>
         
         <div id="keyPlaces" ng-if="content.type == 'keyPlaces'">

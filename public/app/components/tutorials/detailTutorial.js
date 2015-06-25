@@ -2,8 +2,6 @@ tripnoutApp.controller('detailTutorial', function($rootScope, $scope, $location,
 
 	  //get info if a person is logged in
 
-    $scope.loggedIn = Auth.isLoggedIn();
-
   	Auth.getUser()
     .success(function(data) {
 
@@ -16,6 +14,5 @@ tripnoutApp.controller('detailTutorial', function($rootScope, $scope, $location,
       $scope.tutorialdata = data;
       console.log($scope.tutorialdata);
     });
-
 
 });
